@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
-OUTPUT=/opt/bin
+BINARY=dtools
 
 if [ "$#" -gt 0 ]; then
-    OUTPUT=$1
+    BINARY=$1
 fi
-go build -o ${OUTPUT}/dtools .
+
+go build -o /opt/bin/${BINARY} .
 
