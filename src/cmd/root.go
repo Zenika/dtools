@@ -13,8 +13,7 @@ var version = "0.100-0 (2023.xx.yy)"
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "dtools",
-	Short:   "Add a short description here",
-	Long:    "Add a long description here",
+	Short:   "Docker client",
 	Version: version,
 	Long: `This tools allows you to a software directory structure.
 This follows my template and allows you with minimal effort to package your software once built`,
