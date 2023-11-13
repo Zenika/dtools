@@ -4,19 +4,19 @@
 package cmd
 
 import (
+	"dtools/auth"
 	"github.com/spf13/cobra"
 	"os"
 )
-
-var version = "0.100-0 (2023.xx.yy)"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "dtools",
 	Short:   "Docker client",
-	Version: version,
-	Long: `This tools allows you to a software directory structure.
-This follows my template and allows you with minimal effort to package your software once built`,
+	Version: "0.00.01-0 (2023.11.11)",
+	Long: `A modern-day docker client.
+This tools will perform the same tasks as the official docker tool, with some extra features, especially
+Where you handle remote docker repositories.`,
 }
 
 func Execute() {
@@ -27,5 +27,5 @@ func Execute() {
 }
 
 func init() {
-
+	rootCmd.PersistentFlags().StringVarP(&auth.ConnectURI, "host", "H", "unix:///var/run/docker.sock", "Remote hosts:port to connect to")
 }
