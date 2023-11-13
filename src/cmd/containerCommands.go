@@ -83,8 +83,46 @@ var restartCmd = &cobra.Command{
 	},
 }
 
+var pauseCmd = &cobra.Command{
+	Use:   "pause",
+	Short: "Pauses one or many running container(s)",
+	Long:  `n/a`,
+	Run: func(cmd *cobra.Command, args []string) {
+		container.PauseContainer(args)
+	},
+}
+
+var unpauseCmd = &cobra.Command{
+	Use:     "unpause",
+	Aliases: []string{"resume"},
+	Short:   "Resumes one or many paused container(s)",
+	Long:    `This can only used with containers in a PAUSED state.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		container.UnpauseContainer(args)
+	},
+}
+
+var renameCmd = &cobra.Command{
+	Use: "rename",
+	//Aliases: []string{"execute"},
+	Short: "Renames a container",
+	//Long:    `Executes a command on the named container. Options are mostly the same as docker exec`,
+	Run: func(cmd *cobra.Command, args []string) {
+		container.RenameContainer(args[0], args[1])
+	},
+}
+
+var rmCmd = &cobra.Command{
+	Use:   "rm",
+	Short: "Removes one or many containers",
+	Long:  `This will remove stopped container(s).`,
+	Run: func(cmd *cobra.Command, args []string) {
+		container.RemoveContainer(args)
+	},
+}
+
 func init() {
-	rootCmd.AddCommand(lsCmd)
+	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd)
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
 
 	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")

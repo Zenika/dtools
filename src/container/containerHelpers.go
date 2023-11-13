@@ -31,7 +31,7 @@ func getContainerNames() []string {
 	var containerNames []string
 
 	for _, container := range containers {
-		containerNames = append(containerNames, container.Names[0])
+		containerNames = append(containerNames, container.Names[0][1:])
 	}
 	return containerNames
 }

@@ -1,6 +1,6 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/helpers/colours.go
+// Original filename: src/helpers/terminal.go
 // Original timestamp: 2023/11/12 21:06
 
 package helpers
@@ -8,6 +8,8 @@ package helpers
 import (
 	"fmt"
 	"github.com/jwalton/gchalk"
+	"syscall"
+	"unsafe"
 )
 
 var PlainOutput = false
@@ -33,4 +35,25 @@ func Yellow(sentence string) string {
 // FIXME : Normal() is the same as White()
 func Normal(sentence string) string {
 	return fmt.Sprintf("%s", gchalk.WithWhite().Bold(sentence))
+}
+
+// TERMINAL FUNCTIONS
+func GetTerminalSize() (int, int) {
+	var size struct {
+		rows    uint16
+		cols    uint16
+		xpixels uint16
+		ypixels uint16
+	}
+	_, _, err := syscall.Syscall(syscall.SYS_IOCTL, uintptr(syscall.Stdin), syscall.TIOCGWINSZ, uintptr(unsafe.Pointer(&size)))
+	if err != 0 {
+		return 0, 0
+	}
+	return int(size.cols), int(size.rows)
+}
+
+func CenterPrint(text string) {
+	termWidth, _ := GetTerminalSize()
+	padding := (termWidth - len(text)) / 2
+	fmt.Printf("%s[%dC%s", terminalEscape, padding, text)
 }

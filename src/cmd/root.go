@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"dtools/auth"
+	"dtools/helpers"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -19,6 +20,15 @@ This tools will perform the same tasks as the official docker tool, with some ex
 Where you handle remote docker repositories.`,
 }
 
+var clCmd = &cobra.Command{
+	Use:     "changelog",
+	Aliases: []string{"cl"},
+	Short:   "Shows the Changelog",
+	Run: func(cmd *cobra.Command, args []string) {
+		helpers.ChangeLog()
+	},
+}
+
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -27,5 +37,6 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.AddCommand(clCmd)
 	rootCmd.PersistentFlags().StringVarP(&auth.ConnectURI, "host", "H", "unix:///var/run/docker.sock", "Remote hosts:port to connect to")
 }
