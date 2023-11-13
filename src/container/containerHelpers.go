@@ -6,6 +6,8 @@
 package container
 
 import (
+	"context"
+	"dtools/auth"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"strings"
@@ -67,4 +69,16 @@ func getImageTag(name string) string {
 		return name
 	}
 	return name + ":latest"
+}
+
+func getContainerID(containerName string) (string, error) {
+	cli := auth.ClientConnect(false)
+
+	// Inspect the container to get its ID
+	containerInfo, err := cli.ContainerInspect(context.Background(), containerName)
+	if err != nil {
+		return "", err
+	}
+
+	return containerInfo.ID, nil
 }

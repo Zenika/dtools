@@ -1,5 +1,4 @@
-- [ ] fixme 1<br> 
+- [ ] stopall, startall, etc will try to stop/start containers even when already stopped or start<br> 
 - [ ] fixme 2<br>
-- [ ] fixme 3<br>
 
 <br><br><br>
