@@ -14,7 +14,7 @@ import (
 
 var authCmd = &cobra.Command{
 	Use:   "auth { login | logout }",
-	Short: "Provides authentication services to remote registries",
+	Short: "Provides authentication services to remote repo",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("Usage: %s { login | logout }\n", os.Args[0])
 	},
