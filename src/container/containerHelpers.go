@@ -28,6 +28,7 @@ func prettifyPortsList(ports []types.Port) string {
 }
 
 // Returns all container names in a sliced string
+// NOTE: This function might become redundant with the usage of FilterContainersByStatus()
 func getContainerNames() []string {
 	containers := ListContainers(false)
 	var containerNames []string
@@ -71,6 +72,7 @@ func getImageTag(name string) string {
 	return name + ":latest"
 }
 
+// Unused so far, but maybe later: get the container ID (the hex value) from its name
 func getContainerID(containerName string) (string, error) {
 	cli := auth.ClientConnect(false)
 
@@ -81,4 +83,17 @@ func getContainerID(containerName string) (string, error) {
 	}
 
 	return containerInfo.ID, nil
+}
+
+// FilterContainersByStatus
+func FilterContainersByStatus(status string) []string {
+	containerList := ListContainers(false)
+	var filtered []string
+
+	for _, container := range containerList {
+		if container.State == status {
+			filtered = append(filtered, container.Names[0][1:])
+		}
+	}
+	return filtered
 }

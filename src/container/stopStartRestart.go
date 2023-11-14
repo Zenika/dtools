@@ -74,16 +74,16 @@ func RestartContainer(containers []string) error {
 
 // Killall, Stopall, Startall : wrappers around KillContainer, StopContainer, StartContainer
 func Killall() error {
-	KillContainer(getContainerNames())
+	KillContainer(FilterContainersByStatus("running"))
 	return nil
 }
 
 func Stopall() error {
-	StopContainer(getContainerNames())
+	StopContainer(FilterContainersByStatus("running"))
 	return nil
 }
 
 func Startall() error {
-	StartContainer(getContainerNames())
+	StartContainer(FilterContainersByStatus("exited"))
 	return nil
 }
