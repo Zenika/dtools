@@ -1,5 +1,5 @@
 Package: dtools
-Version: 0.100-0
+Version: 00.00.01-0
 Architecture: amd64
 Maintainer: J.F. Gratton <jean-francois@famillegratton.net>
 Description: Docker client

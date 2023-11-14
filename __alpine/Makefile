@@ -3,7 +3,7 @@ all:
 	CGO_ENABLED=0 go build . -o ./dtools.exe
 
 prepare:
-	sudo /opt/bin/install_golang.sh 1.21.2 x86_64
+	sudo /opt/bin/install_golang.sh 1.21.4 x86_64
 	sudo apk update --no-cache
 
 install:
