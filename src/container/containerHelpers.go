@@ -13,6 +13,8 @@ import (
 	"strings"
 )
 
+var StdOut, StdErr, Follow bool
+
 // Prettifies the ports' output
 func prettifyPortsList(ports []types.Port) string {
 	var portsString, sourcePort string
