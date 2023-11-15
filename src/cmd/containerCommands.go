@@ -121,9 +121,30 @@ var rmCmd = &cobra.Command{
 	},
 }
 
+var inspectCmd = &cobra.Command{
+	Use:   "inspect",
+	Short: "Inspects a container",
+	Run: func(cmd *cobra.Command, args []string) {
+		container.Inspect(args[0])
+	},
+}
+
+var logCmd = &cobra.Command{
+	Use:     "log",
+	Aliases: []string{"logs"},
+	Short:   "Shows the container's logs",
+	Run: func(cmd *cobra.Command, args []string) {
+		container.Log(args[0])
+	},
+}
+
 func init() {
-	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd)
+	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd)
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
 
 	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
+
+	logCmd.PersistentFlags().BoolVarP(&container.StdOut, "stdout", "o", true, "Shows stdout")
+	logCmd.PersistentFlags().BoolVarP(&container.StdErr, "stderr", "e", true, "Shows stderr")
+	logCmd.PersistentFlags().BoolVarP(&container.Follow, "follow", "f", false, "Follows (like tail -f)")
 }
