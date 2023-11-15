@@ -8,13 +8,13 @@ package repo
 import (
 	"encoding/json"
 	"os"
+	"path/filepath"
 )
 
 func ReadDefaultFile() (DefaultRegistryStruct, error) {
 	var payload = DefaultRegistryStruct{"", "", ""}
-	rcDir := os.Getenv("HOME")
-
-	jsonfile, err := os.ReadFile(rcDir + "/.config/dtools/defaults.json")
+	
+	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
 	if err != nil {
 		return payload, err
 	}
@@ -27,20 +27,20 @@ func ReadDefaultFile() (DefaultRegistryStruct, error) {
 }
 
 func WriteDefaultFile() error {
-	rcdir := os.Getenv("HOME") + "/.config/dtools"
+	rcdir := filepath.Join(os.Getenv("HOME"), ".config", "dtools")
 	if _, err := os.Stat(rcdir); os.IsNotExist(err) {
-		os.MkdirAll(os.Getenv("HOME")+"/.config/dtools", 0755)
+		os.MkdirAll(rcdir, os.ModePerm)
 	}
 
-	if _, err := os.Stat(rcdir + "/defaults.json"); os.IsExist(err) {
-		os.Remove(rcdir + "/defaults.json")
+	if _, err := os.Stat(filepath.Join(rcdir, "defaults.json")); os.IsExist(err) {
+		os.Remove(filepath.Join(rcdir, "defaults.json"))
 	}
 
 	jStream, err := json.MarshalIndent(RegistryInfo, "", "  ")
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(rcdir+"/defaults.json", jStream, 0600)
+	err = os.WriteFile(filepath.Join(rcdir, "defaults.json"), jStream, 0600)
 	if err != nil {
 		return err
 	} else {
