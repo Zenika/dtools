@@ -13,7 +13,7 @@ import (
 
 func ReadDefaultFile() (DefaultRegistryStruct, error) {
 	var payload = DefaultRegistryStruct{"", "", ""}
-	
+
 	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
 	if err != nil {
 		return payload, err

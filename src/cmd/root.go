@@ -37,6 +37,9 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.DisableAutoGenTag = true
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
+
 	rootCmd.AddCommand(clCmd)
 	rootCmd.PersistentFlags().StringVarP(&auth.ConnectURI, "host", "H", "unix:///var/run/docker.sock", "Remote hosts:port to connect to")
 }

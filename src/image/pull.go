@@ -36,19 +36,19 @@ func PullImage(args []string) {
 	pullOptions := types.ImagePullOptions{bAllImages, "", nil, runtime.GOARCH}
 
 	for _, argElement := range args {
-		var repo string
+		var repository string
 		if reg.Registry != "" {
-			repo = reg.Registry
+			repository = reg.Registry + "/"
 			if strings.HasPrefix(reg.Registry, "https://") {
-				repo = strings.TrimPrefix(reg.Registry, "https://")
+				repository = strings.TrimPrefix(reg.Registry, "https://")
 			}
 			if strings.HasPrefix(reg.Registry, "http://") {
-				repo = strings.TrimPrefix(reg.Registry, "http://")
+				repository = strings.TrimPrefix(reg.Registry, "http://")
 			}
 		}
 		fmt.Printf("Pulling image %s...\n", argElement)
 		argElement = fiximageTag(argElement)
-		pullResponse, err := cli.ImagePull(ctx, repo+"/"+argElement, pullOptions)
+		pullResponse, err := cli.ImagePull(ctx, repository+argElement, pullOptions)
 		if err != nil {
 			a := err.Error()
 			if strings.HasPrefix(a, "Error response from daemon: pull access denied") {
