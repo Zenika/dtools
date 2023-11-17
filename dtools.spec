@@ -10,20 +10,19 @@
 Name:       dtools
 Version:    %{_version}
 Release:    %{_rel}
-Summary:    Docker client
+Summary:    Modern docker client
 
-Group:      virtualisation
+Group:      containers
 License:    GPL2.0
 URL:        https://git.famillegratton.net:3000/devops/dtools
 
 Source0:    %{name}-%{_version}.tar.gz
 BuildArchitectures: x86_64
 BuildRequires: gcc
-#Requires: sudo
-#Obsoletes: vmman1 > 1.140
+Requires: docker
 
 %description
-Docker client
+Modern-day Docker client
 
 %prep
 %autosetup
