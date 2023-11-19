@@ -56,3 +56,6 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 * Sat Nov 18 2023 RPM Builder <builder@famillegratton.net> 00.10.00-0
 - new package built with tito
 
+* Sat Nov 18 2023 RPM Builder <builder@famillegratton.net> 00.10.00-0
+- new package built with tito
+
