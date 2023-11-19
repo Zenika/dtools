@@ -20,6 +20,7 @@ func ChangeLog() {
 	fmt.Print(`
 VERSION		DATE			COMMENT
 -------		----			-------
-1.00.00		2023.10.22		Code reset #2
+0.10.00		2023.11.18		container commands completed, img pull and rmi done
+0.00.01		2023.11.11		Code reset #3
 `)
 }

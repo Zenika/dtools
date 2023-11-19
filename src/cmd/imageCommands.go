@@ -14,8 +14,9 @@ import (
 )
 
 var imageCmd = &cobra.Command{
-	Use:   "image",
-	Short: "Image subcommands",
+	Use:     "image",
+	Aliases: []string{"img"},
+	Short:   "Image subcommands",
 	Long: `You need to provide the subcommands: ls, pull, push, build, rm, load, save.
 Most commands have an alternate form if the verb image is not provided.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -34,6 +35,17 @@ var imgLsCmd = &cobra.Command{
 			allImages = true
 		}
 		image.ListImages(allImages)
+	},
+}
+
+var imgRmCmd = &cobra.Command{
+	Use:     "rmi",
+	Aliases: []string{"imagerm", "imgrm"},
+	Short:   "Image remove",
+	Long: `Similar to docker image rm, this will remove an image from the local inventory
+FIXME FIXME FIXME : full images might not be removed; NEEDS CHECKING.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		image.RemoveImage(args)
 	},
 }
 
