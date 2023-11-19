@@ -32,6 +32,10 @@ func Yellow(sentence string) string {
 	return fmt.Sprintf("%s", gchalk.WithBrightYellow().Bold(sentence))
 }
 
+func Blue(sentence string) string {
+	return fmt.Sprintf("%s", gchalk.WithBrightBlue().Bold(sentence))
+}
+
 // FIXME : Normal() is the same as White()
 func Normal(sentence string) string {
 	return fmt.Sprintf("%s", gchalk.WithWhite().Bold(sentence))

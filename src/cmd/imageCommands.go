@@ -43,7 +43,9 @@ var imgPullCmd = &cobra.Command{
 	Short:   "Pulls an image from a registry",
 	Long:    `Works exactly like docker pull.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		image.PullImage(args)
+		if err := image.PullImage(args); err != nil {
+			fmt.Println(err)
+		}
 	},
 }
 

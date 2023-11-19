@@ -21,11 +21,10 @@ import (
 
 // PullImage: pulls image from repository
 // dtool pull image1:tag1 image2:tag2
-func PullImage(args []string) {
+func PullImage(args []string) error {
 	var reg repo.DefaultRegistryStruct
 	var err error
 	bAllImages := false // temp assignment until we process []args; we might even push bAllImages as a global variable at some point
-	ctx := context.Background()
 	cli := auth.ClientConnect(true)
 
 	if repo.DefaultRegistryFlag {
@@ -48,18 +47,21 @@ func PullImage(args []string) {
 		}
 		fmt.Printf("Pulling image %s...\n", argElement)
 		argElement = fiximageTag(argElement)
-		pullResponse, err := cli.ImagePull(ctx, repository+argElement, pullOptions)
-		if err != nil {
-			a := err.Error()
+		pullResponse, pullerr := cli.ImagePull(context.Background(), repository+argElement, pullOptions)
+		if pullerr != nil {
+			a := pullerr.Error()
 			if strings.HasPrefix(a, "Error response from daemon: pull access denied") {
 				fmt.Printf("%s: either the repository %s does not exist, or login access has not been provided.\n", helpers.Red("Denied"), helpers.White(argElement))
-				continue
+				return helpers.CustomError{Message: fmt.Sprintf("%s: either the repository %s does not exist, or login access has not been provided.\n", helpers.Red("Denied"), helpers.White(argElement))}
 			}
 			if strings.HasPrefix(a, "Error response from daemon: manifest for ") {
 				fmt.Printf("%s %s: manifest not found\n", helpers.Red("Unable to pull"), helpers.Red(argElement))
-				continue
+				return helpers.CustomError{Message: fmt.Sprintf("%s %s: manifest not found\n", helpers.Red("Unable to pull"), helpers.Red(argElement))}
+			}
+			if strings.HasSuffix(a, "connect: connection refused") {
+				return helpers.CustomError{Message: fmt.Sprintf("Connection %s at %s. Are you sure that the daemon is running ?", helpers.Red("REFUSED"), helpers.Blue(repository[:len(repository)-1]))}
 			} else {
-				panic(err)
+				panic(pullerr)
 			}
 		}
 		defer pullResponse.Close()
@@ -67,6 +69,7 @@ func PullImage(args []string) {
 		termFd, isTerm := term.GetFdInfo(os.Stdout)
 		jsonmessage.DisplayJSONMessagesStream(pullResponse, os.Stdout, termFd, isTerm, nil)
 
-		fmt.Printf("%s %s\n", helpers.Green("Successfully pulled"), helpers.Normal(argElement))
+		fmt.Printf("%s %s\n", helpers.Green("Successfully pulled"), helpers.Normal(repository+argElement))
 	}
+	return nil
 }
