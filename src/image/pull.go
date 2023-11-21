@@ -50,16 +50,16 @@ func PullImage(args []string) error {
 		pullResponse, pullerr := cli.ImagePull(context.Background(), repository+argElement, pullOptions)
 		if pullerr != nil {
 			a := pullerr.Error()
-			if strings.HasPrefix(a, "Error response from system: pull access denied") {
+			if strings.HasPrefix(a, "Error response from daemon: pull access denied") {
 				fmt.Printf("%s: either the repository %s does not exist, or login access has not been provided.\n", helpers.Red("Denied"), helpers.White(argElement))
 				return helpers.CustomError{Message: fmt.Sprintf("%s: either the repository %s does not exist, or login access has not been provided.\n", helpers.Red("Denied"), helpers.White(argElement))}
 			}
-			if strings.HasPrefix(a, "Error response from system: manifest for ") {
+			if strings.HasPrefix(a, "Error response from daemon: manifest for ") {
 				fmt.Printf("%s %s: manifest not found\n", helpers.Red("Unable to pull"), helpers.Red(argElement))
 				return helpers.CustomError{Message: fmt.Sprintf("%s %s: manifest not found\n", helpers.Red("Unable to pull"), helpers.Red(argElement))}
 			}
 			if strings.HasSuffix(a, "connect: connection refused") {
-				return helpers.CustomError{Message: fmt.Sprintf("Connection %s at %s. Are you sure that the system is running ?", helpers.Red("REFUSED"), helpers.Blue(repository[:len(repository)-1]))}
+				return helpers.CustomError{Message: fmt.Sprintf("Connection %s at %s. Are you sure that the daemon is running ?", helpers.Red("REFUSED"), helpers.Blue(repository[:len(repository)-1]))}
 			} else {
 				panic(pullerr)
 			}
