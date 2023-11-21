@@ -25,9 +25,9 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 	containers, err := cli.ContainerList(context.Background(), clo)
 	if err != nil {
 		errmsg := fmt.Sprintf("%v", err)
-		if strings.HasPrefix(errmsg, "Cannot connect to the Docker daemon at") {
+		if strings.HasPrefix(errmsg, "Cannot connect to the Docker system at") {
 
-			fmt.Printf("Unable to connect to %s. Is the Docker daemon running ?\n", helpers.Red(auth.ConnectURI))
+			fmt.Printf("Unable to connect to %s. Is the Docker system running ?\n", helpers.Red(auth.ConnectURI))
 			os.Exit(-1)
 		} else {
 			panic(err)

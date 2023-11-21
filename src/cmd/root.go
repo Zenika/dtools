@@ -20,6 +20,7 @@ This tools will perform the same tasks as the official docker tool, with some ex
 Where you handle remote docker repositories.`,
 }
 
+// Shows changelog
 var clCmd = &cobra.Command{
 	Use:     "changelog",
 	Aliases: []string{"cl"},
@@ -42,4 +43,5 @@ func init() {
 
 	rootCmd.AddCommand(clCmd)
 	rootCmd.PersistentFlags().StringVarP(&auth.ConnectURI, "host", "H", "unix:///var/run/docker.sock", "Remote hosts:port to connect to")
+
 }

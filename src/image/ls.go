@@ -35,7 +35,7 @@ func ListImages(allImg bool) {
 	images, err := cli.ImageList(ctx, types.ImageListOptions{All: true})
 	if err != nil {
 		errmsg := fmt.Sprintf("%v", err)
-		if errmsg == "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?" {
+		if errmsg == "Cannot connect to the Docker system at unix:///var/run/docker.sock. Is the docker system running?" {
 			fmt.Println(errmsg)
 			os.Exit(-1)
 		} else {

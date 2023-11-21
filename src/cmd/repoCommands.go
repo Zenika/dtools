@@ -50,9 +50,20 @@ The file will be overwritten if it already exists.`,
 	},
 }
 
+var repoInfoCmd = &cobra.Command{
+	Use:     "info",
+	Aliases: []string{"ls", "explain"},
+	Short:   "Displays info on current default repo",
+
+	Run: func(cmd *cobra.Command, args []string) {
+		repo.Info()
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(repoCmd)
 	repoCmd.AddCommand(repoRmCmd, repoAddCmd)
+	repoCmd.AddCommand(repoInfoCmd)
 
 	repoAddCmd.Flags().StringVarP(&repo.RegistryInfo.Registry, "registry", "r", "https://index.docker.io/v1/", "Edit the default registry")
 	repoAddCmd.Flags().StringVarP(&repo.RegistryInfo.Username, "username", "u", os.Getenv("USER"), "Edit the login user to default registry")

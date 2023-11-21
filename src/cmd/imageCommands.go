@@ -61,6 +61,17 @@ var imgPullCmd = &cobra.Command{
 	},
 }
 
+var imgPushCmd = &cobra.Command{
+	Use:   "push",
+	Short: "Pushes an image to a registry",
+	Long:  `Works exactly like docker push.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := image.Push(args); err != nil {
+			fmt.Println(err)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd)
 	imageCmd.AddCommand(imgLsCmd, imgPullCmd)
