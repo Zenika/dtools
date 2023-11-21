@@ -4,4 +4,3 @@ Architecture: amd64
 Maintainer: J.F. Gratton <jean-francois@famillegratton.net>
 Description: Docker client
 Section: virtualisation
-Depends: 
