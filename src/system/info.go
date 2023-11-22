@@ -11,6 +11,7 @@ import (
 	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
+	"strings"
 )
 
 var VerboseOutput bool
@@ -44,8 +45,57 @@ func Info() error {
 	}
 	fmt.Printf("• Plugins: %s\n", cInfo.Plugins)
 
-	fmt.Println("\nI'm bored.. there's a lot more to go tru (https://pkg.go.dev/github.com/docker/docker@v24.0.7+incompatible/api/types#Info)")
-	fmt.Println("More later")
+	fmt.Printf("• Swarm: %s\n", cInfo.Swarm.LocalNodeState)
+	if cInfo.Swarm.LocalNodeState != "inactive" && VerboseOutput {
+		fmt.Printf("   Node ID: %s\n", cInfo.Swarm.NodeID)
+		fmt.Printf("   Node Address: %s\n", cInfo.Swarm.NodeAddr)
+		fmt.Printf("   Control available: %t\n", cInfo.Swarm.ControlAvailable)
+		fmt.Printf("   Error: %s\n", cInfo.Swarm.Error)
+		fmt.Printf("   Remote managers: %s\n", cInfo.Swarm.RemoteManagers)
+		fmt.Printf("   Nodes: %v\n", cInfo.Swarm.Nodes)
+		fmt.Printf("   Managers: %v\n", cInfo.Swarm.Managers)
+		fmt.Printf("   Cluster: %s\n", cInfo.Swarm.Cluster)
+		fmt.Printf("   Warnings: %s\n", cInfo.Swarm.Warnings)
+	}
+	fmt.Printf("• Default runtime: %s\n", cInfo.DefaultRuntime)
+
+	if VerboseOutput {
+		fmt.Println("• Available runtimes:")
+		// unmap the Runtimes data
+		for key, _ := range cInfo.Runtimes {
+			fmt.Printf("   %s\n", key)
+		}
+	}
+
+	// ugly temp hacks
+	c := strings.Fields(strings.TrimSpace(strings.Trim(fmt.Sprintf("%s", cInfo.ContainerdCommit), "{}")))
+	if len(c) > 0 {
+		fmt.Printf("• Containerd version: %s\n", c[0])
+	}
+	d := strings.Fields(strings.TrimSpace(strings.Trim(fmt.Sprintf("%s", cInfo.RuncCommit), "{}")))
+	if len(d) > 0 {
+		fmt.Printf("• RunC version: %s\n", d[0])
+	}
+	e := strings.Fields(strings.TrimSpace(strings.Trim(fmt.Sprintf("%s", cInfo.InitCommit), "{}")))
+	if len(e) > 0 {
+		fmt.Printf("• init version: %s\n", e[0])
+	}
+
+	fmt.Printf("• Cgroup driver: %s\n", cInfo.CgroupDriver)
+	fmt.Printf("• Cgroup version: %s\n", cInfo.CgroupVersion)
+	fmt.Println("• Host:")
+	fmt.Printf("   Hostname: %s\n", cInfo.Name)
+	fmt.Printf("   OS type: %s\n", cInfo.OSType)
+	fmt.Printf("   Operating system: %s\n", cInfo.OperatingSystem)
+	fmt.Printf("   Kernel version: %s\n", cInfo.KernelVersion)
+	fmt.Printf("   Architecture: %s\n", cInfo.Architecture)
+	fmt.Printf("   Number of CPUs: %v\n", cInfo.NCPU)
+	fmt.Printf("   Total memory: %2.3f GB\n", (float64)(cInfo.MemTotal)/1024/1024/1024)
+	fmt.Printf("   OOMkiller disabled: %t\n", cInfo.OomKillDisable)
+	fmt.Printf("• Docker root directory: %s\n", cInfo.DockerRootDir)
+	fmt.Printf("• Debug mode: %t\n", cInfo.Debug)
+	fmt.Printf("• Experimental builder: %t\n", cInfo.ExperimentalBuild)
+	fmt.Printf("• Live restore enabled: %t\n", cInfo.LiveRestoreEnabled)
 
 	return nil
 }
