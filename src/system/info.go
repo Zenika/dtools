@@ -1,6 +1,6 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/system/info.go
+// Original filename: src/system/ls.go
 // Original timestamp: 2023/11/20 14:12
 
 package system
