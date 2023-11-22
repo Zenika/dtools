@@ -1,6 +1,6 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/repo/info.go
+// Original filename: src/repo/ls.go
 // Original timestamp: 2023/11/18 22:06
 
 package repo
@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 )
 
-func Info() error {
+func Ls() error {
 	var defaultRepo DefaultRegistryStruct
 	var err error
 	var jsonfile []byte
