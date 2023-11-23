@@ -34,16 +34,13 @@ func PullImage(args []string) error {
 	}
 	pullOptions := types.ImagePullOptions{bAllImages, "", nil, runtime.GOARCH}
 
+	// loop tru all command line args
 	for _, argElement := range args {
 		var repository string
 		if reg.Registry != "" {
 			repository = reg.Registry + "/"
-			if strings.HasPrefix(reg.Registry, "https://") {
-				repository = strings.TrimPrefix(reg.Registry, "https://")
-			}
-			if strings.HasPrefix(reg.Registry, "http://") {
-				repository = strings.TrimPrefix(reg.Registry, "http://")
-			}
+			repository = strings.TrimPrefix(repository, "https://")
+			repository = strings.TrimPrefix(repository, "http://")
 		}
 		fmt.Printf("Pulling image %s...\n", argElement)
 		argElement = fiximageTag(argElement)

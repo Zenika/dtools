@@ -20,7 +20,7 @@ var ConnectURI = ""
 
 var Credentials registry.AuthConfig
 
-func Login(args []string) error {
+func Login(args []string) (string, error) {
 	var addr string
 	var configMap = make(map[string]interface{})
 	ctx := context.Background()
@@ -41,7 +41,7 @@ func Login(args []string) error {
 	}
 	_, err := cli.RegistryLogin(ctx, authConfig)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// Get the path to the Docker config file
@@ -51,9 +51,9 @@ func Login(args []string) error {
 	configData, err := os.ReadFile(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return writeNewConffile(configFile, authConfig)
+			return encodedAuth, writeNewConffile(configFile, authConfig)
 		} else {
-			return err
+			return encodedAuth, err
 		}
 	}
 
@@ -61,7 +61,7 @@ func Login(args []string) error {
 	//configMap := make(map[string]interface{})
 	err = json.Unmarshal(configData, &configMap)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// Update the auth info for the given registry
@@ -76,14 +76,14 @@ func Login(args []string) error {
 	// Marshal the updated data back into JSON format
 	updatedConfigData, err := json.MarshalIndent(configMap, "", "  ")
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// Write the updated config data back to the config file
 	err = os.WriteFile(configFile, updatedConfigData, 0600)
 	if err != nil {
-		return err
+		return "", err
 	}
 	fmt.Printf("Logged in and authentication information saved to %s\n", filepath.Join(os.Getenv("HOME"), ".docker", "config.json"))
-	return nil
+	return encodedAuth, nil
 }

@@ -73,9 +73,10 @@ var imgPushCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd)
-	imageCmd.AddCommand(imgLsCmd, imgPullCmd)
+	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd, imgPushCmd)
+	imageCmd.AddCommand(imgLsCmd, imgPullCmd, imgPushCmd)
 
 	imgLsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
 	imgPullCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
+	imgPushCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
 }

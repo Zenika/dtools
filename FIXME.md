@@ -5,6 +5,7 @@
 - [ ] connect (at large)
 - [ ] Multiple prints of errors with `pull` (<-- needs re-investigation ?)
 - [ ] "beautify" `repo ls`
-- [ ] complete the so-far sparse `system info` subcommand
+- [x] complete the so-far sparse `system info` subcommand
+- [ ] push is not pushing anything
 
 <br><br><br>
