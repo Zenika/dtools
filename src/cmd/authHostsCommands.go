@@ -24,7 +24,7 @@ var loginCmd = &cobra.Command{
 	Use:   "login [server]",
 	Short: "Connects to remote server",
 	Run: func(cmd *cobra.Command, args []string) {
-		if _, err := auth.Login(args); err != nil {
+		if err := auth.Login(args); err != nil {
 			fmt.Println(err)
 		}
 	},
