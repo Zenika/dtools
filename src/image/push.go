@@ -19,6 +19,7 @@ import (
 	"strings"
 )
 
+// Push() : push docker images to remote registy
 func Push(images []string) error {
 	var reg repo.DefaultRegistryStruct
 	var err error

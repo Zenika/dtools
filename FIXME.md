@@ -7,5 +7,6 @@
 - [ ] "beautify" `repo ls`
 - [x] complete the so-far sparse `system info` subcommand
 - [ ] push is not pushing anything
+- [ ] push reports success pushing an image that does not even exist ( !! )
 
 <br><br><br>
