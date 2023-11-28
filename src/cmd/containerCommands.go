@@ -8,7 +8,9 @@ package cmd
 import (
 	"dtools/container"
 	"dtools/helpers"
+	"fmt"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var lsCmd = &cobra.Command{
@@ -134,6 +136,10 @@ var logCmd = &cobra.Command{
 	Aliases: []string{"logs"},
 	Short:   "Shows the container's logs",
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("You must provide a container name")
+			os.Exit(-1)
+		}
 		container.Log(args[0])
 	},
 }
