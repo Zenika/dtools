@@ -72,11 +72,23 @@ var imgPushCmd = &cobra.Command{
 	},
 }
 
+var imgTagCmd = &cobra.Command{
+	Use:   "tag",
+	Short: "Tags an existing image with a new tag",
+	Long:  `Works exactly like docker tag.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := image.Tag(args[0], args[1]); err != nil {
+			fmt.Println(err)
+		}
+	},
+}
+
 func init() {
-	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd, imgPushCmd)
-	imageCmd.AddCommand(imgLsCmd, imgPullCmd, imgPushCmd)
+	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd, imgPushCmd, imgTagCmd, imgRmCmd)
+	imageCmd.AddCommand(imgLsCmd, imgPullCmd, imgPushCmd, imgTagCmd, imgRmCmd)
 
 	imgLsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
+	imgTagCmd.PersistentFlags().BoolVarP(&image.OverwriteTag, "overwritetag", "o", false, "If tag already exists, ")
 	imgPullCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
 	imgPushCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
 }
