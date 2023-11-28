@@ -6,7 +6,10 @@
 package image
 
 import (
+	"context"
 	"fmt"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
 	"math"
 	"strings"
 )
@@ -62,4 +65,22 @@ func fiximageTag(imagetag string) string {
 	} else {
 		return imagetag
 	}
+}
+
+// ImgExists() : check if a given image exists locally.
+// Mostly needed by push
+func ImgExists(cli *client.Client, imageName string) (bool, error) {
+	images, err := cli.ImageList(context.Background(), types.ImageListOptions{})
+	if err != nil {
+		return false, err
+	}
+
+	for _, image := range images {
+		for _, tag := range image.RepoTags {
+			if strings.Contains(tag, imageName) {
+				return true, nil
+			}
+		}
+	}
+	return false, nil
 }
