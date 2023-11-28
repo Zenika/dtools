@@ -53,6 +53,21 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Mon Nov 27 2023 RPM Builder <builder@famillegratton.net> 00.20.00-0
+- Release number bump (jean-francois@famillegratton.net)
+- Fixed issue of blindly pushing non-existing images (jean-
+  francois@famillegratton.net)
+- Sync bergen-> (jean-francois@famillegratton.net)
+- Removed useless return params (jean-francois@famillegratton.net)
+- Fixes to pull, completed broken push (jean-francois@famillegratton.net)
+- Completed dtools info (jean-francois@famillegratton.net)
+- Completed repo subcommands (jean-francois@famillegratton.net)
+- Completed the system info subcommand (jean-francois@famillegratton.net)
+- Fixed dumbass GoLand's excessive refactoring (jean-
+  francois@famillegratton.net)
+- ALPINE - Makefile fix (builder@famillegratton.net)
+- Fixed control file (builder@famillegratton.net)
+
 
 * Sat Nov 18 2023 RPM Builder <builder@famillegratton.net> 00.10.00-0
 - new package built with tito
