@@ -28,7 +28,7 @@ var imgLsCmd = &cobra.Command{
 	Use:     "lsi",
 	Aliases: []string{"imagels", "imgls", "imagelist"},
 	Short:   "Image list",
-	Long:    `Similar to docker image, this will give you an inventory of all image on the hosts.`,
+	Long:    `Similar to docker image, this will give you an inventory of all images on the hosts.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		allImages := false
 		if len(args) > 0 && args[0] == "all" {
