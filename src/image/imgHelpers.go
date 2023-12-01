@@ -28,6 +28,7 @@ type imageInfoStruct struct {
 var ForceRemoval = false
 var OutputTarball string
 var QuietBuild = false
+var OverwriteTag = false
 
 func splitURI(imagetag string) (string, string) {
 	tag := "latest"
@@ -67,7 +68,7 @@ func fiximageTag(imagetag string) string {
 	}
 }
 
-// ImgExists() : check if a given image exists locally.
+// ImgExists() : checks if a given image exists locally.
 // Mostly needed by push
 func ImgExists(cli *client.Client, imageName string) (bool, error) {
 	images, err := cli.ImageList(context.Background(), types.ImageListOptions{})
@@ -82,5 +83,18 @@ func ImgExists(cli *client.Client, imageName string) (bool, error) {
 			}
 		}
 	}
+	return false, nil
+}
+
+// FIXME: might need some firming up, here....
+// TagExists() : checks if the given tag already exists
+func TagExists(cli *client.Client, newTag string) (bool, error) {
+	_, _, err := cli.ImageInspectWithRaw(context.Background(), newTag)
+	if err == nil {
+		return true, nil
+	} else if !client.IsErrNotFound(err) {
+		return false, err
+	}
+
 	return false, nil
 }
