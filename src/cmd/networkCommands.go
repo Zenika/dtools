@@ -31,7 +31,29 @@ var networkLsCmd = &cobra.Command{
 	},
 }
 
+var networkCreateCmd = &cobra.Command{
+	Use:     "create",
+	Aliases: []string{"add"},
+	Short:   "Create a network",
+	Long:    `Similar to docker network ls, this will give you an inventory of all networks on the hosts.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		network.CreateNetwork(args)
+	},
+}
+
+var networkRemoveCmd = &cobra.Command{
+	Use:     "rm",
+	Aliases: []string{"remove", "del"},
+	Short:   "Delete a network",
+	Run: func(cmd *cobra.Command, args []string) {
+		network.RemoveNetwork(args)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(networkCmd)
-	networkCmd.AddCommand(networkLsCmd)
+	networkCmd.AddCommand(networkLsCmd, networkCreateCmd, networkRemoveCmd)
+
+	//networkLsCmd.PersistentFlags().BoolVarP(&network.UsedOnly, "used", "u", false, "Used networks only")
+	//networkLsCmd.PersistentFlags().BoolVarP(&network.UsedOnly, "unused", "U", false, "Unused networks only")
 }
