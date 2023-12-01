@@ -9,11 +9,18 @@ import (
 	"context"
 	"dtools/auth"
 	"dtools/helpers"
+	"fmt"
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
 )
+
+type networkInfoStruct struct {
+	ID, Name, Driver, Scope string
+	Used                    bool
+}
 
 func ListNetworks() error {
 	cli := auth.ClientConnect(true)
@@ -24,18 +31,10 @@ func ListNetworks() error {
 		return err
 	}
 
-	// we now iterate through all containers on the docker host to find any unused networks
-	usedNetworks := make(map[string]bool)
-	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
-	if err != nil {
-		return helpers.CustomError{Message: "Unable to retrieve container list: " + err.Error()}
-	}
-
-	for _, container := range containers {
-		for _, network := range container.NetworkSettings.Networks {
-			usedNetworks[network.NetworkID] = true
-		}
-	}
+	// Now mapping the network list to the above-created struct.
+	// This is done to "prettify the output, below : we map the already-existing
+	// Data into that struct for purely aesthetics reasons.
+	networkInfoList := mapNetworks(networks, cli)
 
 	// FOR LATER USE... MAYBE
 	//if UnusedOnly && UsedOnly {
@@ -47,10 +46,10 @@ func ListNetworks() error {
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"ID", "Name", "Driver", "Scope"})
+	t.AppendHeader(table.Row{"ID", "Name", "Driver", "Scope", "Used"})
 
-	for _, network := range networks {
-		t.AppendRow([]interface{}{network.ID[:12], network.Name, network.Driver, network.Scope})
+	for _, network := range networkInfoList {
+		t.AppendRow([]interface{}{network.ID[:12], network.Name, network.Driver, network.Scope, network.Used})
 	}
 	t.SortBy([]table.SortBy{
 		{Name: "Name", Mode: table.Asc}})
@@ -61,11 +60,40 @@ func ListNetworks() error {
 	}
 	t.Style().Format.Header = text.FormatDefault
 	t.SetRowPainter(func(row table.Row) text.Colors {
-		//if usedNetworks[network.ID[:12]]
+		switch row[4] {
+		case true:
+			return text.Colors{text.FgHiGreen}
+		}
 		return nil
 	})
 
 	t.Render()
 
 	return nil
+}
+
+func mapNetworks(networks []types.NetworkResource, cli *client.Client) []networkInfoStruct {
+	var networkInfoList []networkInfoStruct
+
+	for _, network := range networks {
+		containers, err := cli.NetworkInspect(context.Background(), network.ID, types.NetworkInspectOptions{})
+		if err != nil {
+			fmt.Printf("Error inspecting network %s: %s\n", helpers.Red(network.Name), err)
+			continue
+		}
+
+		used := len(containers.Containers) > 0
+
+		networkInfo := networkInfoStruct{
+			ID:     network.ID,
+			Name:   network.Name,
+			Driver: network.Driver,
+			Scope:  network.Scope,
+			Used:   used,
+		}
+
+		networkInfoList = append(networkInfoList, networkInfo)
+	}
+
+	return networkInfoList
 }

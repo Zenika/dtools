@@ -46,7 +46,7 @@ func ListImages(allImg bool) {
 	// 1. Iterate throught all images and fetch all their tags
 	for _, image := range images {
 		for _, tag := range image.RepoTags {
-			// 2. Iterate throught all tags and collect the information
+			// 2. Iterate through all tags and collect the information
 			imageInfo.reponame, imageInfo.tag = splitURI(tag)
 			imageInfo.id = image.ID[7:] // FIXME: [7:] is to get rid of "sha256:" .. we might need to get _that_ refined
 			// Then we add creation time & size
