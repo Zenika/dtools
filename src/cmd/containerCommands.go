@@ -127,6 +127,10 @@ var inspectCmd = &cobra.Command{
 	Use:   "inspect",
 	Short: "Inspects a container",
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 1 {
+			fmt.Println("You must include a container name")
+			os.Exit(0)
+		}
 		container.Inspect(args[0])
 	},
 }
