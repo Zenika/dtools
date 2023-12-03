@@ -53,6 +53,19 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Sun Dec 03 2023 RPM Builder <builder@famillegratton.net> 00.30.00-0
+- Packaging version bump (jean-francois@famillegratton.net)
+- Mostly English corrections, really (jean-francois@famillegratton.net)
+- Completed network removal command (jean-francois@famillegratton.net)
+- Fixed parameters parsing for the inspect subcommand (jean-
+  francois@famillegratton.net)
+- Minor file refactoring (jean-francois@famillegratton.net)
+- Completed output of network ls (jean-francois@famillegratton.net)
+- Sync Bergen-> (jean-francois@famillegratton.net)
+- Completed network ls (jean-francois@famillegratton.net)
+- Out of band fix for an overlooked issue (jean-francois@famillegratton.net)
+- Enabled rmi, completed tag (jean-francois@famillegratton.net)
+
 * Mon Nov 27 2023 RPM Builder <builder@famillegratton.net> 00.20.00-0
 - Release number bump (jean-francois@famillegratton.net)
 - Fixed issue of blindly pushing non-existing images (jean-
