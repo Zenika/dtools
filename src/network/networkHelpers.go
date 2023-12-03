@@ -38,9 +38,17 @@ func mapNetworks(networks []types.NetworkResource, cli *client.Client) []network
 			Scope:  network.Scope,
 			Used:   used,
 		}
-
 		networkInfoList = append(networkInfoList, networkInfo)
 	}
-
 	return networkInfoList
+}
+
+// maoNameToID() : fetches the network ID from the human-readable network name
+func mapNameToId(cli *client.Client, networkName string) (string, error) {
+	networkSpecs, err := cli.NetworkInspect(context.Background(), networkName, types.NetworkInspectOptions{})
+	if err != nil {
+		return "", err
+	}
+
+	return networkSpecs.ID, nil
 }

@@ -9,6 +9,7 @@ import (
 	"dtools/network"
 	"fmt"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var networkCmd = &cobra.Command{
@@ -46,6 +47,10 @@ var networkRemoveCmd = &cobra.Command{
 	Aliases: []string{"remove", "del"},
 	Short:   "Delete a network",
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("You must provide at least one network name")
+			os.Exit(0)
+		}
 		network.RemoveNetwork(args)
 	},
 }
