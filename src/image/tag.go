@@ -20,18 +20,18 @@ func Tag(sourceTag, newTag string) error {
 		return helpers.CustomError{Message: "Unable to tag image: " + err.Error()}
 	}
 
-	// So now that we've settled the issue of error not, let's concentrate on the outcome
+	// Now that we've settled the issue of error, let's concentrate on the outcome
 	if !OverwriteTag && tExsts {
 		return helpers.CustomError{Message: fmt.Sprintf("Tag %s exists and 'overwritetag' is set to false",
 			helpers.Blue(newTag))}
 	}
 
-	// ... so now we tag
+	// ... and now we tag
 	err = cli.ImageTag(context.Background(), sourceTag, newTag)
 	if err != nil {
 		return helpers.CustomError{Message: "Error tagging image: " + err.Error()}
 	}
-	fmt.Printf("%s %s to %s\n", helpers.Green("Succesfully tagged"), helpers.White(sourceTag),
+	fmt.Printf("%s %s to %s\n", helpers.Green("Successfully tagged"), helpers.White(sourceTag),
 		helpers.White(newTag))
 	return nil
 }

@@ -25,7 +25,7 @@ func RemoveNetwork(args []string) error {
 		if err = cli.NetworkRemove(context.Background(), nID); err != nil {
 			return err
 		}
-		fmt.Printf("%s %s\n", helpers.Green("Succesfully removed"), arg)
+		fmt.Printf("%s %s\n", helpers.Green("Successfully removed"), arg)
 	}
 	return nil
 }
