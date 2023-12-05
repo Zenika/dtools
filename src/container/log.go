@@ -1,6 +1,6 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/container/logs.go
+// Original filename: src/container/log.go
 // Original timestamp: 2023/11/14 19:33
 
 package container

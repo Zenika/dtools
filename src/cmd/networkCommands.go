@@ -55,10 +55,43 @@ var networkRemoveCmd = &cobra.Command{
 	},
 }
 
+var networkConnectCmd = &cobra.Command{
+	Use:     "connect",
+	Example: "connect NETWORK CONTAINER",
+	Short:   "Connects a container to the network",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 2 {
+			fmt.Println("You must provide the network name, then the container name")
+			os.Exit(0)
+		}
+		if err := network.ConnectNetwork(args[0], args[1]); err != nil {
+			fmt.Printf("Error connecting %s to %s: %s\n", args[0], args[1], err)
+		}
+	},
+}
+
+var networkDisConnectCmd = &cobra.Command{
+	Use:     "disconnect",
+	Example: "disconnect NETWORK CONTAINER",
+	Short:   "Disconnects a container to the network",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 2 {
+			fmt.Println("You must provide the network name, then the container name")
+			os.Exit(0)
+		}
+		if err := network.DisconnectNetwork(args[0], args[1]); err != nil {
+			fmt.Printf("Error disconnecting %s to %s: %s\n", args[0], args[1], err)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(networkCmd)
-	networkCmd.AddCommand(networkLsCmd, networkCreateCmd, networkRemoveCmd)
+	networkCmd.AddCommand(networkLsCmd, networkCreateCmd, networkRemoveCmd, networkConnectCmd, networkDisConnectCmd)
 
-	//networkLsCmd.PersistentFlags().BoolVarP(&network.UsedOnly, "used", "u", false, "Used networks only")
+	networkCreateCmd.PersistentFlags().BoolVarP(&network.Attachable, "attachable", "", false, "Enable manual container attachment")
+	networkCreateCmd.PersistentFlags().StringSliceVarP(&network.AuxAddr, "aux-address", "", []string{}, "Auxiliary IPv[46] addresses used by the Network driver")
+	networkDisConnectCmd.PersistentFlags().BoolVarP(&network.ForceDisconnect, "force", "f", false, "Force network disconnection even if the container uses the network")
+
 	//networkLsCmd.PersistentFlags().BoolVarP(&network.UsedOnly, "unused", "U", false, "Unused networks only")
 }

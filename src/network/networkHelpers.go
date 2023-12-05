@@ -13,8 +13,11 @@ import (
 	"github.com/docker/docker/client"
 )
 
-//var UnusedOnly bool
-//var UsedOnly bool
+// var UnusedOnly bool
+// var UsedOnly bool
+var Attachable bool
+var AuxAddr []string
+var ForceDisconnect = false
 
 // mapNetworks() :
 // This function is needed to determine if a network is used by any container.
@@ -46,7 +49,7 @@ func mapNetworks(networks []types.NetworkResource, cli *client.Client) []network
 // mapNameToID() : fetches the network ID from the human-readable network name
 // Basically, we need this function because most dtools functions use human-readable names, while the SDK mostly uses
 // hashes (IDs). We need a way to "translate" those names/IDs
-func mapNameToId(cli *client.Client, networkName string) (string, error) {
+func MapNameToId(cli *client.Client, networkName string) (string, error) {
 	networkSpecs, err := cli.NetworkInspect(context.Background(), networkName, types.NetworkInspectOptions{})
 	if err != nil {
 		return "", err

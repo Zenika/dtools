@@ -18,7 +18,7 @@ func RemoveNetwork(args []string) error {
 	cli := auth.ClientConnect(true)
 
 	for _, arg := range args {
-		nID, err := mapNameToId(cli, arg)
+		nID, err := MapNameToId(cli, arg)
 		if err != nil {
 			return err
 		}
