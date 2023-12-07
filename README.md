@@ -4,6 +4,7 @@ A modern-day era docker client with some extra features.
 
 Most current `docker` commands are implemented, see way below on what's part of this client and what is not.
 
+**Please see MAPPINGS.md to see which docker command is implemented so far and how it translates with dtools**
 <H2>How to use</H2>
 Basically, you use `dtools` as you use `docker` . What is more obvious is that the output is a bit changed from the official docker client, but otherwise both are similar.
 

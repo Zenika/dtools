@@ -153,7 +153,6 @@ func init() {
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
 
 	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
-
 	logCmd.PersistentFlags().BoolVarP(&container.StdOut, "stdout", "o", true, "Shows stdout")
 	logCmd.PersistentFlags().BoolVarP(&container.StdErr, "stderr", "e", true, "Shows stderr")
 	logCmd.PersistentFlags().BoolVarP(&container.Follow, "follow", "f", false, "Follows (like tail -f)")
