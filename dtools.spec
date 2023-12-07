@@ -53,6 +53,13 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Thu Dec 07 2023 RPM Builder <builder@famillegratton.net> 00.31.00-0
+- GO version bump, completed dockergettags and dockergetcatalog (jean-
+  francois@famillegratton.net)
+- Release bump (jean-francois@famillegratton.net)
+- Completed network connect/disconnect; added docker API check before using the
+  soft (jean-francois@famillegratton.net)
+
 * Sun Dec 03 2023 RPM Builder <builder@famillegratton.net> 00.30.00-0
 - Packaging version bump (jean-francois@famillegratton.net)
 - Mostly English corrections, really (jean-francois@famillegratton.net)
