@@ -8,5 +8,6 @@
 - [x] complete the so-far sparse `system info` subcommand
 - [ ] push is not pushing anything
 - [x] push reports success pushing an image that does not even exist ( !! )
+- [ ] minimal Docker API version is currently hardcoded in main() 
 
 <br><br><br>

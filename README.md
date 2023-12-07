@@ -12,6 +12,11 @@ Basically, you use `dtools` as you use `docker` . What is more obvious is that t
 
 Where dtools is different is that some extra management commands were added here. See way below about this.
 
+<H2>Requirements</H2>
+- The foremost requirement is that you already have the docker daemon packages installed : this is needed as this software needs Docker API **v1.43** to run
+- If (unsure yet, so far....) I fail to code a proper equivalent to `docker exec`, the docker client package will also be needed on your system
+
+(the Docker API requirement is a variable in src/main.go, this will be fixed in an ulterior version-- see FIXME.md)
 <H2>Installing....</H2>
 ___
 <H3>Building from source</H3>
