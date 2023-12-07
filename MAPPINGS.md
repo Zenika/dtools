@@ -25,3 +25,5 @@
 | ---                     | repo ls                             | Show the current default docker registry config                                          |
 | ---                     | get catalog                         | List all images from a remote registry                                                   |
 | ---                     | get tags                            | List all tags of from a remote registry docker image                                     |
+
+<br>Other commands will be forthcoming, especially equivalents to `docker system` (all the prune commands, for instance)
