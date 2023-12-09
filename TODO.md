@@ -2,4 +2,5 @@
 - [ ] dtools run
 - [ ] dtools network add
 - [ ] "intelligent" docker system prune
-- [x] META: prettify MAPPINS.md
+- [x] META: prettify MAPPINGS.md
+- [ ] dtools exec. If worse comes to worst, use a shell (os.Exec(), or something like that)

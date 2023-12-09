@@ -62,7 +62,7 @@ func ListImages(allImg bool) {
 	// 3. We now print the results
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"Repository + image name", "Image tag", "Image ID", "Creation time", "Size", "# containers"})
+	t.AppendHeader(table.Row{"Repository/image name", "Image tag", "Image ID", "Creation time", "Size", "# containers"})
 	for _, imgspec := range imageInfoSlice {
 		// This is a design decision: I'll take only the first name in the container slice
 		t.AppendRow([]interface{}{imgspec.reponame, imgspec.tag, imgspec.id[:12], imgspec.created, imgspec.formattedSize, imgspec.nContainers})
