@@ -33,7 +33,7 @@ var infoCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(systemCmd, infoCmd)
+	rootCmd.AddCommand(systemCmd)
 	systemCmd.AddCommand(infoCmd)
 
 	infoCmd.PersistentFlags().BoolVarP(&system.VerboseOutput, "verbose", "v", false, "Verbose output")
