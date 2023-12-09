@@ -10,6 +10,7 @@
 | exec                    | exec                                | **NOT IMPLEMENTED YET** Execute commands in container *(Oh man, so many issues here...)* |
 | stop/kill/start/restart | stop/kill/start/restart             | Stop, kill, start, restart container(s)                                                  |
 | ---                     | stopall/killall/startall/restartall | same as above, but for all containers                                                    |
+| run                     | run                                 | **NOT YET IMPLEMENTED**                                                                  |
 | images, image ls        | image ls, lsi                       | List images (*enhanced output*)                                                          |
 | image rm, rmi           | image rm, rmi                       | Remove image(s)                                                                          |
 | pull                    | pull                                | Pull image (*with extra feature, relies on `repo ls`*)                                   |

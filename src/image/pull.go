@@ -28,7 +28,7 @@ func PullImage(args []string) error {
 	cli := auth.ClientConnect(true)
 
 	if repo.DefaultRegistryFlag {
-		if reg, err = repo.ReadDefaultFile(); err != nil {
+		if err = reg.ReadDefaultFile(); err != nil {
 			reg = repo.DefaultRegistryStruct{}
 		}
 	}

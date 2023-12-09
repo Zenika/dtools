@@ -6,7 +6,9 @@
 package repo
 
 import (
+	"encoding/json"
 	"os"
+	"path/filepath"
 )
 
 type DefaultRegistryStruct struct {
@@ -20,3 +22,18 @@ var RegistryInfo = DefaultRegistryStruct{
 	Username: os.Getenv("USER")}
 
 var DefaultRegistryFlag = false
+
+func (payload DefaultRegistryStruct) ReadDefaultFile() error {
+	//var payload = DefaultRegistryStruct{"", "", ""}
+
+	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(jsonfile, &payload)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -11,21 +11,6 @@ import (
 	"path/filepath"
 )
 
-func ReadDefaultFile() (DefaultRegistryStruct, error) {
-	var payload = DefaultRegistryStruct{"", "", ""}
-
-	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
-	if err != nil {
-		return payload, err
-	}
-
-	err = json.Unmarshal(jsonfile, &payload)
-	if err != nil {
-		return payload, err
-	}
-	return payload, nil
-}
-
 func WriteDefaultFile() error {
 	rcdir := filepath.Join(os.Getenv("HOME"), ".config", "dtools")
 	if _, err := os.Stat(rcdir); os.IsNotExist(err) {

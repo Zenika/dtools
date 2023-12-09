@@ -1,0 +1,4 @@
+- [ ] Refactor all functions in the repo package, so they use type receivers
+- [ ] dtools run
+- [ ] dtools network add
+- [ ] "intelligent" docker system prune
