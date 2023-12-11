@@ -161,9 +161,24 @@ var runCmd = &cobra.Command{
 	},
 }
 
+var dioffCmd = &cobra.Command{
+	Use:   "diff",
+	Short: "Lists diffenrces in a containers filesystem",
+	//Example: "see dtools run -h",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("dtls diff: WIP")
+			os.Exit(-1)
+		}
+		if err := container.DiffContainer(args); err != nil {
+			fmt.Println(err)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd, runCmd)
-	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
+	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd, dioffCmd)
 
 	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
 	logCmd.PersistentFlags().BoolVarP(&container.StdOut, "stdout", "o", true, "Shows stdout")
