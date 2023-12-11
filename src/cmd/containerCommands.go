@@ -148,8 +148,21 @@ var logCmd = &cobra.Command{
 	},
 }
 
+var runCmd = &cobra.Command{
+	Use:     "run",
+	Short:   "Starts (runs) a container",
+	Example: "see dtools run -h",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("WIP")
+			os.Exit(-1)
+		}
+		container.RunContainer(args)
+	},
+}
+
 func init() {
-	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd)
+	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd, runCmd)
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
 
 	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
