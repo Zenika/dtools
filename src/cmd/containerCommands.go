@@ -157,16 +157,37 @@ var runCmd = &cobra.Command{
 			fmt.Println("WIP")
 			os.Exit(-1)
 		}
-		container.RunContainer(args)
+		if err := container.RunContainer(args); err != nil {
+			fmt.Println(err)
+			os.Exit(-1)
+		}
+	},
+}
+
+var execCmd = &cobra.Command{
+	Use:     "exec [flags] containerID command",
+	Short:   "Emulate docker exec command",
+	Example: "see dtools exec -h",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 2 {
+			fmt.Println("You need to provide a container name, and then a command, with its parameters (if needed)")
+			os.Exit(-1)
+		}
+		container.ExecContainer(args[0], args[1:])
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd, runCmd)
+	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd, runCmd, execCmd)
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
 
 	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
+
 	logCmd.PersistentFlags().BoolVarP(&container.StdOut, "stdout", "o", true, "Shows stdout")
 	logCmd.PersistentFlags().BoolVarP(&container.StdErr, "stderr", "e", true, "Shows stderr")
 	logCmd.PersistentFlags().BoolVarP(&container.Follow, "follow", "f", false, "Follows (like tail -f)")
+
+	execCmd.Flags().BoolVarP(&container.Tty, "tty", "t", false, "Allocate a pseudo-TTY")
+	execCmd.Flags().BoolVarP(&container.Interactive, "interactive", "i", false, "Keep STDIN open even if not attached")
+	execCmd.Flags().StringVarP(&container.User, "user", "u", "", "Username or UID (format: <name|uid>[:<group|gid>])")
 }

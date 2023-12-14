@@ -15,6 +15,8 @@ import (
 )
 
 var StdOut, StdErr, Follow bool
+var Tty, Interactive bool
+var User string
 
 // Prettifies the ports' output
 func prettifyPortsList(ports []types.Port) string {
@@ -101,7 +103,7 @@ func FilterContainersByStatus(status string) []string {
 	return filtered
 }
 
-// mapNameToID() : fetches the network ID from the human-readable network name
+// mapNameToID() : fetches the container ID from the hashed container name
 // Basically, we need this function because most dtools functions use human-readable names, while the SDK mostly uses
 // hashes (IDs). We need a way to "translate" those names/IDs
 func MapNameToId(cli *client.Client, containerName string) (string, error) {
