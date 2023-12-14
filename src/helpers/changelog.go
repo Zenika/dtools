@@ -20,6 +20,7 @@ func ChangeLog() {
 	fmt.Print(`
 VERSION		DATE			COMMENT
 -------		----			-------
+0.50.00		2023.12.14		dtools exec, mostly working
 0.40.00		2023.12.07		network commands, etc
 0.10.00		2023.11.18		container commands completed, img pull and rmi done
 0.00.01		2023.11.11		Code reset #3
