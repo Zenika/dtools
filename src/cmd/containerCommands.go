@@ -177,6 +177,21 @@ var execCmd = &cobra.Command{
 	},
 }
 
+var dioffCmd = &cobra.Command{
+	Use:   "diff",
+	Short: "Lists diffenrces in a containers filesystem",
+	//Example: "see dtools run -h",
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("dtls diff: WIP")
+			os.Exit(-1)
+		}
+		if err := container.DiffContainer(args); err != nil {
+			fmt.Println(err)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd, runCmd, execCmd)
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
