@@ -53,6 +53,26 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Thu Dec 14 2023 RPM Builder <builder@famillegratton.net> 00.50.00-0
+- New release with a dtools exec mostly working (jean-
+  francois@famillegratton.net)
+- Completed a somehow broken dtools exec (jean-francois@famillegratton.net)
+- New command : dtools diff (jean-francois@famillegratton.net)
+- Sync zenika->home (jean-francois@famillegratton.net)
+- More .md updates (jean-francois@famillegratton.net)
+- Doc update + output clarification on dtools lsi (jean-
+  francois@famillegratton.net)
+- Doc update, moved dtools info to dtools system info (jean-
+  francois@famillegratton.net)
+- Moved repo.ReadDefaultFile() to a type receiver (jean-
+  francois@famillegratton.net)
+- More workspace cleanup (jean-francois@famillegratton.net)
+- Final doc fix (API version doc) (jean-francois@famillegratton.net)
+- Final doc update... for now (jean-francois@famillegratton.net)
+- Extra update (jean-francois@famillegratton.net)
+- Doc update (jean-francois@famillegratton.net)
+- Extra documentation (jean-francois@famillegratton.net)
+
 * Thu Dec 07 2023 RPM Builder <builder@famillegratton.net> 00.31.00-0
 - GO version bump, completed dockergettags and dockergetcatalog (jean-
   francois@famillegratton.net)
