@@ -173,7 +173,11 @@ var execCmd = &cobra.Command{
 			fmt.Println("You need to provide a container name, and then a command, with its parameters (if needed)")
 			os.Exit(-1)
 		}
-		container.ExecContainer(args[0], args[1:])
+		//if err := container.ExecContainer(args[0], args[1:]); err != nil {
+		if err := container.ExecContainer(args[0], args[1:]); err != nil {
+			fmt.Println("Unable to exec: ", err)
+			os.Exit(-2)
+		}
 	},
 }
 

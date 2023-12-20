@@ -46,7 +46,7 @@ ___
 - TODO: add more
 
 <H3>What is *added* in `dtools`, compared to `docker`</H3>
-- default registry handling: the `dtools registry` subcommand says it all.<br>
-    Once you've used `dtools registry add` coupled with `dtools login` to that registry, using `dtools push -d` or `dtools pull -d` will automatically use that registry.
+- default registry handling: the `dtools repo` subcommand says it all.<br>
+    Once you've used `dtools registry add` coupled with `dtools login` to that registry, using `dtools push -d` or `dtools pull -d` will automatically use that registry.<br>
 - some scripts I used to have at home to list docker images in my own registry, or tags for given image(s) are now part of the dtools client<br><br>
 See the `dtools catalog` subcommand (please note: as of now, it is not yet implemented, but is the subcommand I will implement)
