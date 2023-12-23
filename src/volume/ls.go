@@ -1,0 +1,71 @@
+// dtools
+// Written by J.F. Gratton <jean-francois@famillegratton.net>
+// Original filename: src/network/ls.go
+// Original timestamp: 2023/11/27 21:37
+
+package volume
+
+import (
+	"dtools/auth"
+	"dtools/helpers"
+	//"github.com/docker/docker/api/types"
+	"context"
+	"github.com/docker/docker/api/types/volume"
+	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/jedib0t/go-pretty/v6/text"
+	"os"
+)
+
+type volumeInfoStruct struct {
+	Driver, Name, UsedBy stringgit
+}
+
+func ListVolumes() error {
+	cli := auth.ClientConnect(true)
+
+	// lists all networks
+	volumes, err := cli.VolumeList(context.Background(), volume.ListOptions{})
+	if err != nil {
+		return err
+	}
+
+	// Now mapping the network list to the above-created struct.
+	// This is done to "prettify the output, below : we map the already-existing
+	// Data into that struct for purely aesthetics reasons.
+	//networkInfoList := mapNetworks(networks, cli)
+
+	// FOR LATER USE... MAYBE
+	//if UnusedOnly && UsedOnly {
+	//	fmt.Printf("%s both %s and %s were invoked; ignoring both\n", helpers.Yellow("WARNING: "),
+	//		helpers.Yellow("-u"), helpers.Yellow("-U"))
+	//	UnusedOnly = false
+	//	UsedOnly = false
+	//}
+
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"ID", "Name", "Driver", "Scope", "Used"})
+
+	for _, network := range networkInfoList {
+		t.AppendRow([]interface{}{network.ID[:12], network.Name, network.Driver, network.Scope, network.Used})
+	}
+	t.SortBy([]table.SortBy{
+		{Name: "Name", Mode: table.Asc}})
+	if helpers.PlainOutput {
+		t.SetStyle(table.StyleDefault)
+	} else {
+		t.SetStyle(table.StyleBold)
+	}
+	t.Style().Format.Header = text.FormatDefault
+	t.SetRowPainter(func(row table.Row) text.Colors {
+		switch row[4] {
+		case true:
+			return text.Colors{text.FgHiGreen}
+		}
+		return nil
+	})
+
+	t.Render()
+
+	return nil
+}
