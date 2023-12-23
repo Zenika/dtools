@@ -53,6 +53,10 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Fri Dec 22 2023 RPM Builder <builder@famillegratton.net> 00.60.00-1
+- Removed un-needed dependency that might break dnf (jean-
+  francois@famillegratton.net)
+
 * Fri Dec 22 2023 RPM Builder <builder@famillegratton.net> 00.60.00-0
 - New release : 00.60.00 (jean-francois@famillegratton.net)
 - Removed unused function parameter in API version check (jean-
