@@ -11,6 +11,8 @@ import "github.com/docker/docker/api/types/filters"
 // I stepped-by-stepped Docker's SDK, and for some reason, the code just ignores the flag
 var ForceRemoval = false
 
+var DriverName = "local"
+
 func filterArgs(volumeName string) filters.Args {
 	return filters.NewArgs(filters.KeyValuePair{
 		Key:   "volume",

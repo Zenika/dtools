@@ -6,6 +6,7 @@
 package cmd
 
 import (
+	"dtools/helpers"
 	"dtools/volume"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -40,7 +41,13 @@ var volumeCreateCmd = &cobra.Command{
 	Short:   "Create a network",
 	Long:    `Similar to docker network ls, this will give you an inventory of all networks on the hosts.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		volume.CreateVolume(args)
+		if len(args) == 0 {
+			fmt.Println("You must provide at least one volume name")
+			os.Exit(0)
+		}
+		if err := volume.CreateVolume(args); err != nil {
+			fmt.Printf("%s\n", err)
+		}
 	},
 }
 
@@ -59,11 +66,24 @@ var volumeRemoveCmd = &cobra.Command{
 	},
 }
 
+var volumeDriverLsCmd = &cobra.Command{
+	Use:     "driverlist",
+	Aliases: []string{"drivers", "driverls"},
+	Short:   "List all volume drivers",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf(helpers.Yellow("Unimplemented for now (slated for version 1.00.00+"))
+		//if err := volume.VolumeDriverList(); err != nil {
+		//	fmt.Printf("%s\n", err)
+		//}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(volumeCmd)
-	volumeCmd.AddCommand(volumeLsCmd, volumeCreateCmd, volumeRemoveCmd)
+	volumeCmd.AddCommand(volumeLsCmd, volumeCreateCmd, volumeRemoveCmd, volumeDriverLsCmd)
 
 	volumeRemoveCmd.PersistentFlags().BoolVarP(&volume.ForceRemoval, "force", "f", false, "Force removal of volume, even if in use by a container")
+	volumeCreateCmd.PersistentFlags().StringVarP(&volume.Driver, "driver", "d", "local", "Volume driver")
 	//networkCreateCmd.PersistentFlags().BoolVarP(&network.Attachable, "attachable", "", false, "Enable manual container attachment")
 	//networkCreateCmd.PersistentFlags().StringSliceVarP(&network.AuxAddr, "aux-address", "", []string{}, "Auxiliary IPv[46] addresses used by the Network driver")
 	//networkDisConnectCmd.PersistentFlags().BoolVarP(&network.ForceDisconnect, "force", "f", false, "Force network disconnection even if the container uses the network")

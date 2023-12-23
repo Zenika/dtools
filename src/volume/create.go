@@ -5,6 +5,22 @@
 
 package volume
 
-func CreateVolume(args []string) error {
+import (
+	"context"
+	"dtools/auth"
+	"github.com/docker/docker/api/types/volume"
+)
+
+func CreateVolume(volumes []string) error {
+	var err error
+	cli := auth.ClientConnect(true)
+
+	for _, vol := range volumes {
+		createOps := volume.CreateOptions{Driver: DriverName, Name: vol}
+		_, err = cli.VolumeCreate(context.Background(), createOps)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
