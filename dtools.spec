@@ -3,7 +3,7 @@
 %define _name dtools
 %define _prefix /opt
 %define _version 00.60.00
-%define _rel 0
+%define _rel 1
 %define _arch x86_64
 %define _binaryname dtools
 
@@ -19,7 +19,7 @@ URL:        https://git.famillegratton.net:3000/devops/dtools
 Source0:    %{name}-%{_version}.tar.gz
 BuildArchitectures: x86_64
 BuildRequires: gcc
-Requires: docker
+#Requires: docker
 
 %description
 Modern-day Docker client
