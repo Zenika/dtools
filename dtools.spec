@@ -53,6 +53,18 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Sat Dec 23 2023 RPM Builder <builder@famillegratton.net> 00.70.00-0
+- Fixed unresolved reference (jean-francois@famillegratton.net)
+- Completed vol subcommands (jean-francois@famillegratton.net)
+- Doc update, version bump (jean-francois@famillegratton.net)
+- Completed volume rm (jean-francois@famillegratton.net)
+- Completed volume ls (jean-francois@famillegratton.net)
+- Completed volume ls (jean-francois@famillegratton.net)
+- Extra commands stubs (jean-francois@famillegratton.net)
+- Version bump (jean-francois@famillegratton.net)
+- dtools volume stub (jean-francois@famillegratton.net)
+- Moved CheckAPIversion() into system (jean-francois@famillegratton.net)
+
 * Fri Dec 22 2023 RPM Builder <builder@famillegratton.net> 00.60.00-1
 - Removed un-needed dependency that might break dnf (jean-
   francois@famillegratton.net)
