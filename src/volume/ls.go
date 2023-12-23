@@ -8,64 +8,61 @@ package volume
 import (
 	"dtools/auth"
 	"dtools/helpers"
-	//"github.com/docker/docker/api/types"
-	"context"
+	"fmt"
+	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/volume"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
+	//"github.com/docker/docker/api/types"
+	"context"
 )
 
 type volumeInfoStruct struct {
-	Driver, Name, UsedBy stringgit
+	Driver, Name, UsedBy string
 }
 
 func ListVolumes() error {
+	var volInfo volumeInfoStruct
+	var volInfoSlice []volumeInfoStruct
+
 	cli := auth.ClientConnect(true)
 
-	// lists all networks
+	// List volumes
 	volumes, err := cli.VolumeList(context.Background(), volume.ListOptions{})
 	if err != nil {
-		return err
+		return helpers.CustomError{fmt.Sprintf("Error getting volume list: %s", err)}
 	}
 
-	// Now mapping the network list to the above-created struct.
-	// This is done to "prettify the output, below : we map the already-existing
-	// Data into that struct for purely aesthetics reasons.
-	//networkInfoList := mapNetworks(networks, cli)
+	for _, volume := range volumes.Volumes {
+		volInfo = volumeInfoStruct{Name: volume.Name, Driver: volume.Driver}
 
-	// FOR LATER USE... MAYBE
-	//if UnusedOnly && UsedOnly {
-	//	fmt.Printf("%s both %s and %s were invoked; ignoring both\n", helpers.Yellow("WARNING: "),
-	//		helpers.Yellow("-u"), helpers.Yellow("-U"))
-	//	UnusedOnly = false
-	//	UsedOnly = false
-	//}
+		// List containers using the current volume
+		args := filterArgs(volume.Name)
+		containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{Filters: args, All: true})
+		if err != nil {
+			return helpers.CustomError{fmt.Sprint("Unable to fetch container list: %s", err)}
+		}
+
+		//fmt.Println("Containers using this volume:")
+		for _, container := range containers {
+			volInfo.UsedBy = container.Names[0]
+		}
+		volInfoSlice = append(volInfoSlice, volInfo)
+	}
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"ID", "Name", "Driver", "Scope", "Used"})
-
-	for _, network := range networkInfoList {
-		t.AppendRow([]interface{}{network.ID[:12], network.Name, network.Driver, network.Scope, network.Used})
+	t.AppendHeader(table.Row{"Volume name", "Driver", "Used by container"})
+	for _, vinfo := range volInfoSlice {
+		t.AppendRow([]interface{}{vinfo.Name, vinfo.Driver, vinfo.UsedBy})
 	}
 	t.SortBy([]table.SortBy{
-		{Name: "Name", Mode: table.Asc}})
-	if helpers.PlainOutput {
-		t.SetStyle(table.StyleDefault)
-	} else {
-		t.SetStyle(table.StyleBold)
-	}
-	t.Style().Format.Header = text.FormatDefault
-	t.SetRowPainter(func(row table.Row) text.Colors {
-		switch row[4] {
-		case true:
-			return text.Colors{text.FgHiGreen}
-		}
-		return nil
+		{Name: "Volume name", Mode: table.Asc},
 	})
+	t.SetStyle(table.StyleBold)
 
+	t.Style().Format.Header = text.FormatDefault
 	t.Render()
-
 	return nil
 }

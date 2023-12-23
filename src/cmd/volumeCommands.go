@@ -57,7 +57,7 @@ var volumeRemoveCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(volumeCmd)
-	networkCmd.AddCommand(volumeLsCmd, volumeCreateCmd, volumeRemoveCmd)
+	volumeCmd.AddCommand(volumeLsCmd, volumeCreateCmd, volumeRemoveCmd)
 
 	//networkCreateCmd.PersistentFlags().BoolVarP(&network.Attachable, "attachable", "", false, "Enable manual container attachment")
 	//networkCreateCmd.PersistentFlags().StringSliceVarP(&network.AuxAddr, "aux-address", "", []string{}, "Auxiliary IPv[46] addresses used by the Network driver")
