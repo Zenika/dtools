@@ -2,7 +2,7 @@
 # Packager: builder@famillegratton.net
 pkgname="dtools"
 pkgver=00.70.00
-pkgrel=1
+pkgrel=0
 pkgdir=/data/packages
 builddir="$startdir/src/BUILD"
 pkgdesc="Docker client"
