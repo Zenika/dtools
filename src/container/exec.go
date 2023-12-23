@@ -11,6 +11,7 @@ import (
 	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
+	"golang.org/x/term"
 	"io"
 	"os"
 )
@@ -21,9 +22,20 @@ func ExecContainer(containerName string, command []string) error {
 	ctx := context.Background()
 	cli := auth.ClientConnect(true)
 
+	// Get the file descriptor for stdout, preserve the terminal's state
+	fd := int(os.Stdout.Fd())
+	// Get the current terminal state and disable echo
+	oldState, err := term.MakeRaw(fd)
+	if err != nil {
+		return helpers.CustomError{fmt.Sprintf("Unable to get the terminal state: %s", err)}
+	}
+	defer func() {
+		_ = term.Restore(fd, oldState)
+	}()
+
 	// First, we need to get the containerID
 	if cID, err = MapNameToId(cli, containerName); err != nil {
-		return helpers.CustomError{fmt.Sprint("Unable to translate container name to container ID: %s", err)}
+		return helpers.CustomError{fmt.Sprintf("Unable to translate container name to container ID: %s", err)}
 	}
 
 	// Setup exec context

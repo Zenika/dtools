@@ -13,13 +13,13 @@ Where dtools is different from docker is that some extra management commands wer
 ### What is *not* in `dtools`
 
 - `network add` is not implementing the official flags, so far (will do, eventually)
-- `exec` actually forks a shell to `docker exec`
+- `exec` does not yet work properly.
 - TODO: add more
 
 ### What is *added* in `dtools`, compared to `docker`
 
 - default registry handling: the `dtools repo` subcommand says it all.
-  Once you've used `dtools registry add` coupled with `dtools login` to that registry, using `dtools push -d` or `dtools pull -d` will automatically use that registry.
+  Once you've used `dtools repo add` coupled with `dtools login` to that registry, using `dtools push -d` or `dtools pull -d` will automatically use that registry.
 - some scripts I used to have at home to list docker images in my own registry, or tags for given image(s) are now part of the dtools client.
   See the `dtools catalog` subcommand (please note: as of now, it is not yet implemented, but is the subcommand I will implement)
 
