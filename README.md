@@ -13,7 +13,7 @@ Where dtools is different from docker is that some extra management commands wer
 ### What is *not* in `dtools`
 
 - `network add` is not implementing the official flags, so far (will do, eventually)
-- `exec` does not yet work properly.
+- `run` is not implemented. This is my next task
 - TODO: add more
 
 ### What is *added* in `dtools`, compared to `docker`
@@ -21,14 +21,14 @@ Where dtools is different from docker is that some extra management commands wer
 - default registry handling: the `dtools repo` subcommand says it all.
   Once you've used `dtools repo add` coupled with `dtools login` to that registry, using `dtools push -d` or `dtools pull -d` will automatically use that registry.
 - some scripts I used to have at home to list docker images in my own registry, or tags for given image(s) are now part of the dtools client.
-  See the `dtools catalog` subcommand (please note: as of now, it is not yet implemented, but is the subcommand I will implement)
+  See the `dtools get catalog` and `dtools get tags` subcommands
 
 ## Requirements
 
 - The foremost requirement is that you already have the docker daemon packages installed: this is needed as this software needs Docker API **v1.43** to run
-- If (unsure yet, so far....) I fail to code a proper equivalent to `docker exec`, the docker client package will also be needed on your system
+- no other requirements, so far
 
-(the Docker API requirement is a variable in [`src/main.go`](./src/main.go#L15), this will be fixed in an ulterior version -- see [FIXME.md](./FIXME.md))
+(the Docker API requirement is a variable in [`src/main.go`](./src/main.go#L15), this will be fixed in an ulterior version -- see [FIXME-ROADMAP-TODO.md](./FIXME-ROADMAP-TODO.md))
 
 ## Installing...
 
@@ -52,5 +52,5 @@ The following directories are used in my own CI-CD chain at home:
 - `__alpine`
 - files `rpmbuild-deps.sh` and `dtools.spec`
 
-Eventually, I will publish the artefacts to build the containers that use those files-directories, but as of now, they are way too customized for me to publish.
+Eventually, I will publish the artefacts to build the containers that use those files/directories, but as of now, they are way too customized for me to publish.
 It's a bummer, those containers work oh-so-well ;)

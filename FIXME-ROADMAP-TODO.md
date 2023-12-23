@@ -13,7 +13,7 @@
 - [ ] `dtools network add`
 - [ ] "intelligent" docker system prune
 - [x] META: prettify MAPPINGS.md
-- [ ] `dtools exec` : issues with stdin sent to stdout, CTRL+D not exiting shells
+- [x] `dtools exec` : issues with stdin sent to stdout, CTRL+D not exiting shells
 - [ ] corner case where `dtools rmi` removes an image when a container is running ? <-- needs investigation
 
 <br><br><br>
