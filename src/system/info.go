@@ -24,6 +24,7 @@ func Info() error {
 
 	var cInfo types.Info
 	var err error
+	var apiver float32
 
 	cli := auth.ClientConnect(true)
 	if cInfo, err = cli.Info(context.Background()); err != nil {
@@ -31,6 +32,9 @@ func Info() error {
 	}
 
 	fmt.Printf("\n%s info\n===========\n", helpers.Blue("DAEMON"))
+	if apiver, err = CheckAPIversion(); err == nil {
+		fmt.Printf("• API version: v%v\n", apiver)
+	}
 	fmt.Printf("• Containers: %v\n", cInfo.Containers)
 	if VerboseOutput {
 		fmt.Printf("   Running: %v\n", cInfo.ContainersRunning)
