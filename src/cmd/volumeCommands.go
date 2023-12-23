@@ -28,7 +28,9 @@ var volumeLsCmd = &cobra.Command{
 	Short:   "Volume list",
 	Long:    `Similar to docker network ls, this will give you an inventory of all networks on the hosts.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		volume.ListVolumes()
+		if err := volume.ListVolumes(); err != nil {
+			fmt.Printf("%s\n", err)
+		}
 	},
 }
 
@@ -45,13 +47,15 @@ var volumeCreateCmd = &cobra.Command{
 var volumeRemoveCmd = &cobra.Command{
 	Use:     "rm",
 	Aliases: []string{"remove", "del"},
-	Short:   "Delete a volume",
+	Short:   "Delete one or many volume(s)",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			fmt.Println("You must provide at least one network name")
+			fmt.Println("You must provide at least one volume name")
 			os.Exit(0)
 		}
-		volume.RemoveVolume(args)
+		if err := volume.RemoveVolume(args); err != nil {
+			fmt.Printf("%s\n", err)
+		}
 	},
 }
 
@@ -59,6 +63,7 @@ func init() {
 	rootCmd.AddCommand(volumeCmd)
 	volumeCmd.AddCommand(volumeLsCmd, volumeCreateCmd, volumeRemoveCmd)
 
+	volumeRemoveCmd.PersistentFlags().BoolVarP(&volume.ForceRemoval, "force", "f", false, "Force removal of volume, even if in use by a container")
 	//networkCreateCmd.PersistentFlags().BoolVarP(&network.Attachable, "attachable", "", false, "Enable manual container attachment")
 	//networkCreateCmd.PersistentFlags().StringSliceVarP(&network.AuxAddr, "aux-address", "", []string{}, "Auxiliary IPv[46] addresses used by the Network driver")
 	//networkDisConnectCmd.PersistentFlags().BoolVarP(&network.ForceDisconnect, "force", "f", false, "Force network disconnection even if the container uses the network")

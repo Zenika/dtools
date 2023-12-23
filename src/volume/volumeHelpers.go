@@ -7,6 +7,10 @@ package volume
 
 import "github.com/docker/docker/api/types/filters"
 
+// Please note: ForceRemoval does not work !
+// I stepped-by-stepped Docker's SDK, and for some reason, the code just ignores the flag
+var ForceRemoval = false
+
 func filterArgs(volumeName string) filters.Args {
 	return filters.NewArgs(filters.KeyValuePair{
 		Key:   "volume",
