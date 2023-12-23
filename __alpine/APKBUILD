@@ -1,8 +1,8 @@
 # Maintainer: J.F. Gratton <jean-francois@famillegratton.net>
 # Packager: builder@famillegratton.net
 pkgname="dtools"
-pkgver=00.50.00
-pkgrel=0
+pkgver=00.60.00
+pkgrel=1
 pkgdir=/data/packages
 builddir="$startdir/src/BUILD"
 pkgdesc="Docker client"
