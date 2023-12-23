@@ -15,7 +15,7 @@ func main() {
 	var minimalVersion float32 = 1.43
 	var err error
 	var goodVer float32
-	if goodVer, err = checkAPIversion(minimalVersion); err != nil {
+	if goodVer, err = checkAPIversion(); err != nil {
 		fmt.Printf("Unable to fetch API version: %s", err)
 		os.Exit(0)
 	}
@@ -27,7 +27,7 @@ func main() {
 }
 
 // checkAPIversion() : If the installed Docker API version is below our requirements, we bail out
-func checkAPIversion(minimalVersion float32) (float32, error) {
+func checkAPIversion() (float32, error) {
 	cli := auth.ClientConnect(false)
 
 	// Get Docker server version
