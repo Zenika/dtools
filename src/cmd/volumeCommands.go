@@ -83,7 +83,7 @@ func init() {
 	volumeCmd.AddCommand(volumeLsCmd, volumeCreateCmd, volumeRemoveCmd, volumeDriverLsCmd)
 
 	volumeRemoveCmd.PersistentFlags().BoolVarP(&volume.ForceRemoval, "force", "f", false, "Force removal of volume, even if in use by a container")
-	volumeCreateCmd.PersistentFlags().StringVarP(&volume.Driver, "driver", "d", "local", "Volume driver")
+	volumeCreateCmd.PersistentFlags().StringVarP(&volume.DriverName, "driver", "d", "local", "Volume driver")
 	//networkCreateCmd.PersistentFlags().BoolVarP(&network.Attachable, "attachable", "", false, "Enable manual container attachment")
 	//networkCreateCmd.PersistentFlags().StringSliceVarP(&network.AuxAddr, "aux-address", "", []string{}, "Auxiliary IPv[46] addresses used by the Network driver")
 	//networkDisConnectCmd.PersistentFlags().BoolVarP(&network.ForceDisconnect, "force", "f", false, "Force network disconnection even if the container uses the network")
