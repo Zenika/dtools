@@ -53,6 +53,18 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Fri Dec 22 2023 RPM Builder <builder@famillegratton.net> 00.60.00-0
+- New release : 00.60.00 (jean-francois@famillegratton.net)
+- Removed unused function parameter in API version check (jean-
+  francois@famillegratton.net)
+- doc update (jean-francois@famillegratton.net)
+- Doc update, fixed stdin being echoed to stdout (jean-
+  francois@famillegratton.net)
+- Markdown shakeup by zigarn (Alexandre Garnier) (jean-
+  francois@famillegratton.net)
+- doc reformatting (jean-francois@famillegratton.net)
+- Reverted to kludged dtools exec (jean-francois@famillegratton.net)
+
 * Thu Dec 14 2023 RPM Builder <builder@famillegratton.net> 00.50.00-0
 - New release with a dtools exec mostly working (jean-
   francois@famillegratton.net)
