@@ -26,6 +26,7 @@
 |                    | n/a                     | repo ls                             | Show the current default docker registry config                    |
 |                    | n/a                     | get catalog                         | List all images from a remote registry                             |
 |                    | n/a                     | get tags                            | List all tags of from a remote registry docker image               |
-| **volumes**        |                         | volume                              | **NOT YET IMPLEMENTED**                                            | 
+| **volumes**        | ls                      | { volume, vol } ls                  | List all volumes, with which container uses them                   |
+|                    | rm                      | rm                                  | Remove one or many volumes                                         | 
 
 <br>Other commands will be forthcoming, especially equivalents to `docker system` (all the prune commands, for instance)
