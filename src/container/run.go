@@ -5,6 +5,8 @@
 
 package container
 
+// This one will be lengthy from the sheer number of available command-line switches. See run.txt.
+// Most but not all will be implemented
 func RunContainer(args []string) error {
 	return nil
 }

@@ -151,7 +151,7 @@ var logCmd = &cobra.Command{
 var runCmd = &cobra.Command{
 	Use:     "run",
 	Short:   "Starts (runs) a container",
-	Example: "see dtools run -h",
+	Example: "dtools run [-d] [other flags] [-v VOLUME SPECS] [-p PORT SPECS] image [COMMAND] [ARGS]",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			fmt.Println("WIP")
@@ -181,13 +181,13 @@ var execCmd = &cobra.Command{
 	},
 }
 
-var dioffCmd = &cobra.Command{
+var diffCmd = &cobra.Command{
 	Use:   "diff",
-	Short: "Lists diffenrces in a containers filesystem",
+	Short: "Lists differences in a containers filesystem",
 	//Example: "see dtools run -h",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			fmt.Println("dtls diff: WIP")
+			fmt.Println("dtools diff: WIP")
 			os.Exit(-1)
 		}
 		if err := container.DiffContainer(args); err != nil {
@@ -209,4 +209,18 @@ func init() {
 	execCmd.Flags().BoolVarP(&container.Tty, "tty", "t", false, "Allocate a pseudo-TTY")
 	execCmd.Flags().BoolVarP(&container.Interactive, "interactive", "i", false, "Keep STDIN open even if not attached")
 	execCmd.Flags().StringVarP(&container.User, "user", "u", "", "Username or UID (format: <name|uid>[:<group|gid>])")
+
+	runCmd.Flags().BoolVarP(&container.DetachContainer, "detach", "d", false, "Detach container (run in background)")
+	runCmd.Flags().StringSliceVarP(&container.AddHost, "add-host", "", []string{""}, "Add a host to /etc/hosts. Format is hostname:ip address")
+	runCmd.Flags().Int16VarP(&container.CpuPeriod, "cpu-period", "", 0, "Limit CPU CFS period")
+	runCmd.Flags().Int16VarP(&container.CpuQuota, "cpu-quota", "", 0, "Limit CPU CFS quota")
+	runCmd.Flags().Int16VarP(&container.CpuRtPeriod, "cpu-rtperiod", "", 0, "Limit CPU real-time period in ms")
+	runCmd.Flags().Int16VarP(&container.CpuRtRuntime, "cpu-rtruntime", "", 0, "Limit CPU real-time runtime in ms")
+	runCmd.Flags().Float32VarP(&container.Cpus, "cpus", "", 0, "CPU (fractions allowed)")
+	runCmd.Flags().StringSliceVarP(&container.Dns, "dns", "", []string{""}, "Add a dns entry to /etc/resolv.conf")
+	runCmd.Flags().StringVarP(&container.DnsOptions, "dns-options", "", "", "Add a dns options entry to /etc/resolv.conf (enclose all options within double quotes)")
+	runCmd.Flags().StringVarP(&container.DnsSearchList, "dns-search-list", "", "", "Add a dns search list to /etc/resolv.conf (enclose all domains within double quotes")
+	runCmd.Flags().StringVarP(&container.DomainName, "domainname", "", "", "Set an NIS domain name")
+	runCmd.Flags().StringVarP(&container.EntryPoint, "entrypoint", "", "", "Override the defined ENTRYPOINT")
+
 }

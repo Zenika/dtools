@@ -16,6 +16,7 @@
 |                    | pull                    | pull                                | Pull image (*with extra feature, relies on `repo ls`*)             |
 |                    | push                    | push                                | **BROKEN** Push image (*with extra features, relies on `repo ls`*) |
 |                    | tag                     | tag                                 | Tag a docker image                                                 |
+|                    | build                   | build                               | **NOT YET IMPLEMENTED**                                            |
 | **network**        | ls                      | ls                                  | List networks                                                      |
 |                    | rm                      | rm                                  | Remove network(s)                                                  |
 |                    | connect, disconnect     | connect, disconnect                 | Connect or disconnect a network from a container                   | 
@@ -28,5 +29,6 @@
 |                    | n/a                     | get tags                            | List all tags of from a remote registry docker image               |
 | **volumes**        | ls                      | { volume, vol } ls                  | List all volumes, with which container uses them                   |
 |                    | rm                      | rm                                  | Remove one or many volumes                                         | 
+|                    | create                  | add                                 | Create a volume                                                    |
 
 <br>Other commands will be forthcoming, especially equivalents to `docker system` (all the prune commands, for instance)

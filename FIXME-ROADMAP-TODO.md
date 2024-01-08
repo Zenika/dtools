@@ -15,7 +15,9 @@
 - [x] META: prettify MAPPINGS.md
 - [x] `dtools exec` : issues with stdin sent to stdout, CTRL+D not exiting shells
 - [ ] corner case where `dtools rmi` removes an image when a container is running ? <-- needs investigation
-- [ ] `dtools volume` subcommands
+- [x] `dtools volume` subcommands
 - [ ] `dtools volume driverlist` is not working <<-- slated for v1.00.00+
+- [ ] I broke the -d flag in `dtools { pull | push }` ??
+- [ ] terminal issues when resizing a terminal in `dtools exec -t` <<-- needs investigation
 
 <br><br><br>

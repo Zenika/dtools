@@ -16,12 +16,18 @@ Where dtools is different from docker is that some extra management commands wer
 - `run` is not implemented. This is my next task
 - TODO: add more
 
+### `docker` subcommands not fully implemented in `dtools`
+- `dtools volume create` : compare `docker volume create --help` with `dtools {volume|vol} add --help` to see if your needs are fulfilled with dtools
+- `dtools run` : here, it's a matter of me not having use cases to try the non-implemented subset; remember, I develop from a home system
+
+
 ### What is *added* in `dtools`, compared to `docker`
 
 - default registry handling: the `dtools repo` subcommand says it all.
   Once you've used `dtools repo add` coupled with `dtools login` to that registry, using `dtools push -d` or `dtools pull -d` will automatically use that registry.
 - some scripts I used to have at home to list docker images in my own registry, or tags for given image(s) are now part of the dtools client.
   See the `dtools get catalog` and `dtools get tags` subcommands
+
 
 ## Requirements
 

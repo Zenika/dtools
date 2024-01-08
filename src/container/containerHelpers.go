@@ -14,9 +14,24 @@ import (
 	"strings"
 )
 
+// ///////////////////////////////////////////
+// FLAGS USED IN src/containerCommands.go
+// log
 var StdOut, StdErr, Follow bool
+
+// exec
 var Tty, Interactive bool
 var User string
+
+// run
+var DetachContainer bool
+var AddHost, Dns []string
+var CpuPeriod, CpuQuota, CpuRtPeriod, CpuRtRuntime int16
+var Cpus float32
+var DisableContentTrust bool
+var DnsOptions, DnsSearchList, DomainName, EntryPoint string
+
+/////////////////////////////////////////////
 
 // Prettifies the ports' output
 func prettifyPortsList(ports []types.Port) string {
