@@ -51,7 +51,7 @@ func Login(args []string) error {
 	configData, err := os.ReadFile(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return writeNewConfFile(configFile, authConfig)
+			return writeNewConfFile(configFile)
 		} else {
 			return err
 		}

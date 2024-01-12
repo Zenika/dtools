@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"path/filepath"
 )
 
 var repoCmd = &cobra.Command{
@@ -28,7 +29,7 @@ var repoRmCmd = &cobra.Command{
 	Long: `Removes the default registry file.
 Note that this file is not necessary to get the software to work.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		os.Remove(os.Getenv("USER") + "/.config/dtools/defaults.json")
+		os.Remove(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaults.json"))
 	},
 }
 
@@ -36,7 +37,7 @@ var repoAddCmd = &cobra.Command{
 	Use:     "add",
 	Aliases: []string{"addreg"},
 	Short:   "Create or overwrite the default registry file",
-	Long: `This will create a default registry file in $HOME/.config/dtools/defaults.json.
+	Long: `This will create a default registry file in $HOME/.config/JFG/dtools/defaults.json.
 The file will be overwritten if it already exists.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if repo.RegistryInfo.Registry == "" {

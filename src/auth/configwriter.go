@@ -10,11 +10,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/docker/docker/api/types/registry"
 	"os"
 )
 
-func writeNewConfFile(cfgfile string, authcfg registry.AuthConfig) error {
+func writeNewConfFile(cfgfile string) error {
 	//encodedAuth := base64.StdEncoding.EncodeToString([]byte(Credentials.Username + ":" + Credentials.Password))
 	if Credentials.Password == "" {
 		Credentials.Password = helpers.GetPassword(fmt.Sprintf("Please enter %s's password: ", helpers.White(Credentials.ServerAddress)))
