@@ -12,7 +12,7 @@ import (
 )
 
 func WriteDefaultFile() error {
-	rcdir := filepath.Join(os.Getenv("HOME"), ".config", "dtools")
+	rcdir := filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools")
 	if _, err := os.Stat(rcdir); os.IsNotExist(err) {
 		os.MkdirAll(rcdir, os.ModePerm)
 	}

@@ -26,7 +26,7 @@ var DefaultRegistryFlag = false
 func (payload DefaultRegistryStruct) ReadDefaultFile() error {
 	//var payload = DefaultRegistryStruct{"", "", ""}
 
-	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
+	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaults.json"))
 	if err != nil {
 		return err
 	}

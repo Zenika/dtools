@@ -18,7 +18,7 @@ func Ls() error {
 	var err error
 	var jsonfile []byte
 
-	jsonfile, err = os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
+	jsonfile, err = os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaults.json"))
 	if err != nil {
 		return helpers.CustomError{Message: "Unable to read defaults file"}
 	}
