@@ -14,7 +14,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "dtools",
 	Short:   "Docker client",
-	Version: "0.70.00-0 (2023.12.22)",
+	Version: "0.71.00-0 (2024.01.12)",
 	Long: `A modern-day docker client.
 This tools will perform the same tasks as the official docker tool, with some extra features, especially
 Where you handle remote docker repositories.`,

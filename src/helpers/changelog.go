@@ -20,6 +20,7 @@ func ChangeLog() {
 	fmt.Print(`
 VERSION			DATE			COMMENT
 -------			----			-------
+00.71.00		2024.01.12		GO version bump, configurations are now in .config/JFG/ instead of .config/
 00.70.00		2023.12.23		dtools volume subcommands completed
 00.60.00		2023.12.20		dtools exec now works
 00.50.00		2023.12.14		dtools exec, mostly working

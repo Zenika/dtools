@@ -19,5 +19,6 @@
 - [ ] `dtools volume driverlist` is not working <<-- slated for v1.00.00+
 - [ ] I broke the -d flag in `dtools { pull | push }` ??
 - [ ] terminal issues when resizing a terminal in `dtools exec -t` <<-- needs investigation
+- [ ] API version check at startup fails when docker is not installed on OS. This is a major.
 
 <br><br><br>
