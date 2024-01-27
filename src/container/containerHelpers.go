@@ -27,7 +27,7 @@ func prettifyPortsList(ports []types.Port) string {
 		} else {
 			sourcePort = fmt.Sprintf("%d->", val.PublicPort)
 		}
-		portsString += fmt.Sprintf("%s/%s%d  ", val.Type, sourcePort, val.PrivatePort)
+		portsString += fmt.Sprintf("%s/%s%d\n", val.Type, sourcePort, val.PrivatePort)
 	}
 	return portsString
 }
@@ -113,4 +113,20 @@ func MapNameToId(cli *client.Client, containerName string) (string, error) {
 	}
 
 	return containerInfo.ID, nil
+}
+
+func getComposeStackName(cli *client.Client, containerID string) (string, error) {
+	isStack := false
+	containerInfo, err := cli.ContainerInspect(context.Background(), containerID)
+	if err != nil {
+		return "", err
+	}
+	labels := containerInfo.Config.Labels
+	_, isStack = labels["com.docker.compose.project"]
+
+	if isStack {
+		return containerInfo.Config.Labels["com.docker.compose.project"], nil
+	} else {
+		return "", nil
+	}
 }
