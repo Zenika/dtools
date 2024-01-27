@@ -17,5 +17,5 @@
 - [ ] corner case where `dtools rmi` removes an image when a container is running ? <-- needs investigation
 - [ ] `dtools volume` subcommands
 - [ ] `dtools volume driverlist` is not working <<-- slated for v1.00.00+
-
+- [ ] dtools log not functionning anymore ??
 <br><br><br>
