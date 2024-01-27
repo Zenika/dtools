@@ -40,13 +40,18 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"Container ID", "Image", "Name", "Created", "Exposed ports", "State", "Status"})
+	t.AppendHeader(table.Row{"Container ID", "Image", "Name", "Created", "Exposed ports", "State", "Status", "Compose stack"})
 	for _, container := range containers {
+		var composeStackName string
+		var err error
 		// This is a design decision: I'll take only the first name in the container slice
 		cn := container.Names[0]
 		containerImage := getImageTag(container.Image)
 		ports := prettifyPortsList(container.Ports)
-		t.AppendRow([]interface{}{container.ID[:10], containerImage, cn[1:], time.Unix(container.Created, 0).Format("2006.01.02 15:04:05"), ports, container.State, container.Status})
+		if composeStackName, err = getComposeStackName(cli, container.ID); err != nil {
+			panic(err)
+		}
+		t.AppendRow([]interface{}{container.ID[:10], containerImage, cn[1:], time.Unix(container.Created, 0).Format("2006.01.02 15:04:05"), ports, container.State, container.Status, composeStackName})
 	}
 	t.SortBy([]table.SortBy{
 		{Name: "Container name", Mode: table.Asc},
