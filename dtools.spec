@@ -53,6 +53,12 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Sat Jan 27 2024 RPM Builder <builder@famillegratton.net> 00.72.00-0
+- Prettified dtools ls output, version bump (jean-francois@famillegratton.net)
+- buildDeps + go version bumps (jean-francois@famillegratton.net)
+- Renamed a file, no biggie (jean-francois@famillegratton.net)
+- Fixed APK release number (builder@famillegratton.net)
+
 * Sat Dec 23 2023 RPM Builder <builder@famillegratton.net> 00.70.00-0
 - Fixed unresolved reference (jean-francois@famillegratton.net)
 - Completed vol subcommands (jean-francois@famillegratton.net)
