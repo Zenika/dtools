@@ -53,6 +53,9 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Sat Jan 27 2024 RPM Builder <builder@famillegratton.net> 00.73.00-0
+- New output for dtools lsi (jean-francois@famillegratton.net)
+
 * Sat Jan 27 2024 RPM Builder <builder@famillegratton.net> 00.72.00-0
 - Prettified dtools ls output, version bump (jean-francois@famillegratton.net)
 - buildDeps + go version bumps (jean-francois@famillegratton.net)
