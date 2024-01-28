@@ -75,5 +75,14 @@ func ListImages(allImg bool) {
 		t.SetStyle(table.StyleBold)
 	}
 	t.Style().Format.Header = text.FormatDefault
+	t.SetRowPainter(func(row table.Row) text.Colors {
+		switch row[5] {
+		case 0:
+			return text.Colors{text.FgWhite}
+		default:
+			return text.Colors{text.FgHiYellow}
+		}
+		return nil
+	})
 	t.Render()
 }

@@ -79,3 +79,20 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 	t.Render()
 	return nil
 }
+
+/*
+t.SetRowPainter(func(row table.Row) text.Colors {
+		switch row[5] {
+		case "running":
+			//return text.Colors{text.BgBlack, text.FgHiGreen}
+			return text.Colors{text.FgHiGreen}
+		case "crashed":
+			return text.Colors{text.BgBlack, text.FgHiRed}
+		case "blocked":
+		case "suspended":
+		case "paused":
+			return text.Colors{text.FgHiYellow}
+		}
+		return nil
+	})
+*/

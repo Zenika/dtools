@@ -20,6 +20,7 @@ func ChangeLog() {
 	fmt.Print(`
 VERSION			DATE			COMMENT
 -------			----			-------
+00.73.00		2024.01.27		Prettified dtools lsi as well
 00.72.00		2024.01.27		Added a "compose stack name" to dtools ls, GO version bump, prettify output
 00.70.00		2023.12.23		dtools volume subcommands completed
 00.60.00		2023.12.20		dtools exec now works
