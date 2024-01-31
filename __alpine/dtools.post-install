@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env ash
 
 cd /opt/bin
 sudo chgrp -R 0:devops .
