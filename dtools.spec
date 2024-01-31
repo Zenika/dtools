@@ -3,7 +3,7 @@
 %define _name dtools
 %define _prefix /opt
 %define _version 00.73.00
-%define _rel 1
+%define _rel 2
 %define _arch x86_64
 %define _binaryname dtools
 
@@ -52,7 +52,7 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 %post
 cd /opt/bin
-sudo chgrp -R 0:devops .
+sudo chgrp -R devops .
 sudo chmod 775 /opt/bin/dtools
 
 %preun

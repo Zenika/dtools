@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd /opt/bin
-sudo chgrp -R 0:devops .
+sudo chgrp -R devops .
 sudo chmod 775 /opt/bin/dtools
 
