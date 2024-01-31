@@ -65,6 +65,9 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Wed Jan 31 2024 RPM Builder <builder@famillegratton.net> 00.73.00-2
+- Fixed post-inst typos (jean-francois@famillegratton.net)
+
 * Wed Jan 31 2024 RPM Builder <builder@famillegratton.net> 00.73.00-1
 - Bumped release number (jean-francois@famillegratton.net)
 - Added pre/post install scripts for all package types (jean-
