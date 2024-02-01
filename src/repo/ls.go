@@ -18,15 +18,15 @@ func Ls() error {
 	var err error
 	var jsonfile []byte
 
-	jsonfile, err = os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
+	jsonfile, err = os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaultRegistry.json"))
 	if err != nil {
-		return helpers.CustomError{Message: "Unable to read defaults file"}
+		return helpers.CustomError{Message: "Unable to read default registry file"}
 	}
 	err = json.Unmarshal(jsonfile, &defaultRepo)
 	if err != nil {
 		return helpers.CustomError{Message: "Unable to parse JSON: " + err.Error()}
 	}
 
-	fmt.Printf("REGISTRY: %s\nUSENAME: %s\nCOMMENTS: %s\n", helpers.White(defaultRepo.Registry), helpers.White(defaultRepo.Username), helpers.White(defaultRepo.Comments))
+	fmt.Printf("REGISTRY: %s\nUSERNAME: %s\nCOMMENTS: %s\n", helpers.White(defaultRepo.Registry), helpers.White(defaultRepo.Username), helpers.White(defaultRepo.Comments))
 	return nil
 }

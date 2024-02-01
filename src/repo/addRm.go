@@ -12,20 +12,20 @@ import (
 )
 
 func WriteDefaultFile() error {
-	rcdir := filepath.Join(os.Getenv("HOME"), ".config", "dtools")
+	rcdir := filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools")
 	if _, err := os.Stat(rcdir); os.IsNotExist(err) {
 		os.MkdirAll(rcdir, os.ModePerm)
 	}
 
-	if _, err := os.Stat(filepath.Join(rcdir, "defaults.json")); os.IsExist(err) {
-		os.Remove(filepath.Join(rcdir, "defaults.json"))
+	if _, err := os.Stat(filepath.Join(rcdir, "defaultRegistry.json")); os.IsExist(err) {
+		os.Remove(filepath.Join(rcdir, "defaultRegistry.json"))
 	}
 
 	jStream, err := json.MarshalIndent(RegistryInfo, "", "  ")
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(filepath.Join(rcdir, "defaults.json"), jStream, 0600)
+	err = os.WriteFile(filepath.Join(rcdir, "defaultRegistry.json"), jStream, 0600)
 	if err != nil {
 		return err
 	} else {

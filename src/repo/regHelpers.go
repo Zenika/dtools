@@ -24,16 +24,10 @@ var RegistryInfo = DefaultRegistryStruct{
 var DefaultRegistryFlag = false
 
 func (payload DefaultRegistryStruct) ReadDefaultFile() error {
-	//var payload = DefaultRegistryStruct{"", "", ""}
-
-	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
+	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaultRegistry.json"))
 	if err != nil {
 		return err
 	}
 
-	err = json.Unmarshal(jsonfile, &payload)
-	if err != nil {
-		return err
-	}
-	return nil
+	return json.Unmarshal(jsonfile, &payload)
 }
