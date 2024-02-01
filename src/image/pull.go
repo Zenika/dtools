@@ -28,7 +28,7 @@ func PullImage(args []string) error {
 	cli := auth.ClientConnect(true)
 
 	if repo.DefaultRegistryFlag {
-		if err = reg.ReadDefaultFile(); err != nil {
+		if reg, err = repo.ReadDefaultFile(); err != nil {
 			reg = repo.DefaultRegistryStruct{}
 		}
 	}
@@ -42,7 +42,7 @@ func PullImage(args []string) error {
 			repository = strings.TrimPrefix(repository, "https://")
 			repository = strings.TrimPrefix(repository, "http://")
 		}
-		fmt.Printf("Pulling image %s...\n", argElement)
+		fmt.Printf("Pulling image %s%s ...\n", repository, argElement)
 		argElement = fiximageTag(argElement)
 		pullResponse, pullerr := cli.ImagePull(context.Background(), repository+argElement, pullOptions)
 		if pullerr != nil {

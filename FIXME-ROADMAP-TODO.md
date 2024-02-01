@@ -2,10 +2,10 @@
 - [x] dtools pull prepends a / before the args (??)
 - [ ] more work on `repo add` to prompt for values
 - [x] better error handling (connection refused on `pull`)
-- [ ] Multiple prints of errors with `pull` (<-- needs re-investigation, unsure it is a valid use)
+- [ ] ~~Multiple prints of errors with `pull` (<-- needs re-investigation, unsure it is a valid use)~~
 - [x] "prettify" `repo ls` <<-- it's good enough for now.
 - [x] complete the so-far sparse `system info` subcommand
-- [ ] push is not pushing anything
+- [ ] **push is not pushing anything**
 - [x] push reports success pushing an image that does not even exist ( !! )
 - [ ] minimal Docker API version is currently hardcoded in main() 
 - [x] Refactor all functions in the repo package, so they use type receivers
@@ -17,5 +17,5 @@
 - [ ] corner case where `dtools rmi` removes an image when a container is running ? <-- needs investigation
 - [ ] `dtools volume` subcommands
 - [ ] `dtools volume driverlist` is not working <<-- slated for v1.00.00+
-- [ ] dtools log not functionning anymore ??
+- [x] dtools log not functionning anymore ??
 <br><br><br>

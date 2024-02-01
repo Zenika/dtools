@@ -44,7 +44,7 @@ func FindRemoteRegistry(remoteRegistry *string) error {
 
 	// the -d flag is used, so we need to read its config
 	if repo.DefaultRegistryFlag {
-		if err = reg.ReadDefaultFile(); err != nil {
+		if reg, err = repo.ReadDefaultFile(); err != nil {
 			return helpers.CustomError{"Unable to read registry config file:" + err.Error()}
 		}
 		if reg.Registry != "" {
