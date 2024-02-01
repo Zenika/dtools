@@ -65,6 +65,14 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Thu Feb 01 2024 RPM Builder <builder@famillegratton.net> 00.74.00-0
+- dtools get now supports insecure registries (jean-
+  francois@famillegratton.net)
+- Fixed -d issue, dtools push still not working (jean-
+  francois@famillegratton.net)
+- Fixed default registry path, more info in repo add -h (jean-
+  francois@famillegratton.net)
+
 * Wed Jan 31 2024 RPM Builder <builder@famillegratton.net> 00.73.00-2
 - Fixed post-inst typos (jean-francois@famillegratton.net)
 
