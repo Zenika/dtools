@@ -1,6 +1,6 @@
 - [x] stopall, startall, etc will try to stop/start containers even when already stopped or start<br> 
 - [x] dtools pull prepends a / before the args (??)
-- [ ] more work on `repo add` to prompt for values
+- [ ] ~~more work on `repo add` to prompt for values~~
 - [x] better error handling (connection refused on `pull`)
 - [ ] ~~Multiple prints of errors with `pull` (<-- needs re-investigation, unsure it is a valid use)~~
 - [x] "prettify" `repo ls` <<-- it's good enough for now.
@@ -18,4 +18,5 @@
 - [ ] `dtools volume` subcommands
 - [ ] `dtools volume driverlist` is not working <<-- slated for v1.00.00+
 - [x] dtools log not functionning anymore ??
+- [x] `dtools get {catalog | tags} -d` only supports https protocol, not http
 <br><br><br>
