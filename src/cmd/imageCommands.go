@@ -51,7 +51,7 @@ FIXME FIXME FIXME : full images might not be removed; NEEDS CHECKING.`,
 
 var imgPullCmd = &cobra.Command{
 	Use:     "pull",
-	Aliases: []string{"fetch", "get"},
+	Aliases: []string{"fetch"},
 	Short:   "Pulls an image from a registry",
 	Long:    `Works exactly like docker pull.`,
 	Run: func(cmd *cobra.Command, args []string) {

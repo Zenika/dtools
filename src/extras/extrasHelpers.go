@@ -39,9 +39,9 @@ func fetchJSON(url string) (map[string]interface{}, error) {
 
 // If the -d flag is used, we need to find the registered default registry to use
 func FindRemoteRegistry(remoteRegistry *string) error {
+	ishttp := false
 	var reg repo.DefaultRegistryStruct
 	var err error
-	ishttp := false
 
 	// the -d flag is used, so we need to read its config
 	if repo.DefaultRegistryFlag {
@@ -50,6 +50,8 @@ func FindRemoteRegistry(remoteRegistry *string) error {
 		}
 		if reg.Registry != "" {
 			*remoteRegistry = reg.Registry
+		} else {
+			ishttp = strings.HasPrefix(*remoteRegistry, "http://")
 		}
 	} else {
 		ishttp = strings.HasPrefix(*remoteRegistry, "http://")
