@@ -29,7 +29,7 @@ func Push(images []string) error {
 	cli := auth.ClientConnect(true)
 
 	if repo.DefaultRegistryFlag {
-		if err = reg.ReadDefaultFile(); err != nil {
+		if reg, err = repo.ReadDefaultFile(); err != nil {
 			reg = repo.DefaultRegistryStruct{}
 		}
 	}

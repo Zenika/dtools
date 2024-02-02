@@ -15,7 +15,6 @@ import (
 )
 
 func writeNewConfFile(cfgfile string, authcfg registry.AuthConfig) error {
-	//encodedAuth := base64.StdEncoding.EncodeToString([]byte(Credentials.Username + ":" + Credentials.Password))
 	if Credentials.Password == "" {
 		Credentials.Password = helpers.GetPassword(fmt.Sprintf("Please enter %s's password: ", helpers.White(Credentials.ServerAddress)))
 	}

@@ -3,7 +3,7 @@ module dtools
 go 1.21.6
 
 require (
-	github.com/docker/docker v25.0.1+incompatible
+	github.com/docker/docker v25.0.2+incompatible
 	github.com/jedib0t/go-pretty/v6 v6.5.4
 	github.com/jwalton/gchalk v1.3.0
 	github.com/moby/term v0.5.0
