@@ -1,6 +1,6 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/repo/regHelpers.go
+// Original filename: src/repo/repoHelpers.go
 // Original timestamp: 2023/11/13 22:39
 
 package repo
@@ -23,17 +23,21 @@ var RegistryInfo = DefaultRegistryStruct{
 
 var DefaultRegistryFlag = false
 
-func (payload DefaultRegistryStruct) ReadDefaultFile() error {
-	//var payload = DefaultRegistryStruct{"", "", ""}
+func ReadDefaultFile() (DefaultRegistryStruct, error) {
+<<<<<<< HEAD:src/repo/regHelpers.go
+	var payload DefaultRegistryStruct
+=======
+	var payload = DefaultRegistryStruct{"", "", ""}
 
-	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "dtools", "defaults.json"))
+>>>>>>> 00.73.00:src/repo/repoHelpers.go
+	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaultRegistry.json"))
 	if err != nil {
-		return err
+		return DefaultRegistryStruct{}, err
 	}
 
 	err = json.Unmarshal(jsonfile, &payload)
 	if err != nil {
-		return err
+		return DefaultRegistryStruct{}, err
 	}
-	return nil
+	return payload, nil
 }

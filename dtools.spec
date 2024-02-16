@@ -2,8 +2,8 @@
 %define _build_id_links none
 %define _name dtools
 %define _prefix /opt
-%define _version 00.73.00
-%define _rel 1
+%define _version 00.74.02
+%define _rel 0
 %define _arch x86_64
 %define _binaryname dtools
 
@@ -36,12 +36,24 @@ strip %{_sourcedir}/%{_binaryname}
 rm -rf $RPM_BUILD_ROOT
 
 %pre
+if getent group devops > /dev/null; then
+  exit 0
+else
+  if getent group 2500; then
+    groupadd devops
+  else
+    groupadd -g 2500 devops
+  fi
+fi
 exit 0
 
 %install
 install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryname}
 
 %post
+cd /opt/bin
+sudo chgrp -R devops .
+sudo chmod 775 /opt/bin/dtools
 
 %preun
 
@@ -53,6 +65,22 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Thu Feb 01 2024 RPM Builder <builder@famillegratton.net> 00.74.00-0
+- dtools get now supports insecure registries (jean-
+  francois@famillegratton.net)
+- Fixed -d issue, dtools push still not working (jean-
+  francois@famillegratton.net)
+- Fixed default registry path, more info in repo add -h (jean-
+  francois@famillegratton.net)
+
+* Wed Jan 31 2024 RPM Builder <builder@famillegratton.net> 00.73.00-2
+- Fixed post-inst typos (jean-francois@famillegratton.net)
+
+* Wed Jan 31 2024 RPM Builder <builder@famillegratton.net> 00.73.00-1
+- Bumped release number (jean-francois@famillegratton.net)
+- Added pre/post install scripts for all package types (jean-
+  francois@famillegratton.net)
+
 * Sat Jan 27 2024 RPM Builder <builder@famillegratton.net> 00.73.00-0
 - New output for dtools lsi (jean-francois@famillegratton.net)
 

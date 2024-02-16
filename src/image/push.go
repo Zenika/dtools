@@ -29,7 +29,7 @@ func Push(images []string) error {
 	cli := auth.ClientConnect(true)
 
 	if repo.DefaultRegistryFlag {
-		if err = reg.ReadDefaultFile(); err != nil {
+		if reg, err = repo.ReadDefaultFile(); err != nil {
 			reg = repo.DefaultRegistryStruct{}
 		}
 	}
@@ -46,7 +46,7 @@ func Push(images []string) error {
 			repository = strings.TrimPrefix(repository, "https://")
 			repository = strings.TrimPrefix(repository, "http://")
 		}
-		fmt.Printf("Pushing image %s...\n", argEl)
+		fmt.Printf("Pushing image %s%s ...\n", repository, argEl)
 		argEl = fiximageTag(argEl)
 
 		// Before even trying to push, we need to ensure that the image actually exists
