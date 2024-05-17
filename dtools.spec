@@ -65,6 +65,12 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Fri May 17 2024 RPM Builder <builder@famillegratton.net> 00.75.00-0
+- Moved some data structures to newer ones, as per the newest Docker SDK (jean-
+  francois@famillegratton.net)
+- GO version bump (jean-francois@famillegratton.net)
+- Completely fixed dtools get (jean-francois@famillegratton.net)
+
 * Thu Feb 01 2024 RPM Builder <builder@famillegratton.net> 00.74.00-0
 - dtools get now supports insecure registries (jean-
   francois@famillegratton.net)
