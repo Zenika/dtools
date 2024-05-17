@@ -10,7 +10,7 @@ import (
 	"dtools/auth"
 	"dtools/helpers"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"log"
 	"os"
 )
@@ -18,7 +18,7 @@ import (
 // RemoveContainer : removes a single or multiple container
 func RemoveContainer(containers []string) error {
 	ctx := context.Background()
-	removeOptions := types.ContainerRemoveOptions{RemoveVolumes: true, Force: true}
+	removeOptions := container.RemoveOptions{RemoveVolumes: true, Force: true}
 	client := auth.ClientConnect(true)
 
 	for _, containername := range containers {

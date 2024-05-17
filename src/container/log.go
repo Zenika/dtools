@@ -8,7 +8,7 @@ package container
 import (
 	"context"
 	"dtools/auth"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"io"
 	"os"
 )
@@ -16,7 +16,7 @@ import (
 func Log(containerName string) error {
 	cli := auth.ClientConnect(true)
 
-	logOptions := types.ContainerLogsOptions{
+	logOptions := container.LogsOptions{
 		ShowStdout: StdOut,
 		ShowStderr: StdErr,
 		Follow:     Follow,

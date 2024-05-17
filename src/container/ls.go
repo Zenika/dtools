@@ -11,6 +11,7 @@ import (
 	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
@@ -19,7 +20,7 @@ import (
 )
 
 func ListContainers(showDaemonInfo bool) []types.Container {
-	clo := types.ContainerListOptions{Size: true, All: true, Latest: true}
+	clo := container.ListOptions{Size: true, All: true, Latest: true}
 	cli := auth.ClientConnect(showDaemonInfo)
 
 	containers, err := cli.ContainerList(context.Background(), clo)

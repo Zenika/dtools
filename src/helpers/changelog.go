@@ -20,6 +20,7 @@ func ChangeLog() {
 	fmt.Print(`
 VERSION			DATE			COMMENT
 -------			----			-------
+00.75.00		2024.05.17		New docker SDK moved many types.* data types to new data structures
 00.74.02		2024.02.02		Fixed issue where the "get" subcommand was ignored
 00.74.00		2024.02.01		Moved all configs in .config/JFG/dtools/ . Now supporting insecure registries
 00.73.00		2024.01.27		Prettified dtools lsi as well

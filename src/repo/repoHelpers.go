@@ -24,12 +24,9 @@ var RegistryInfo = DefaultRegistryStruct{
 var DefaultRegistryFlag = false
 
 func ReadDefaultFile() (DefaultRegistryStruct, error) {
-<<<<<<< HEAD:src/repo/regHelpers.go
 	var payload DefaultRegistryStruct
-=======
-	var payload = DefaultRegistryStruct{"", "", ""}
+	//var payload = DefaultRegistryStruct{"", "", ""}
 
->>>>>>> 00.73.00:src/repo/repoHelpers.go
 	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaultRegistry.json"))
 	if err != nil {
 		return DefaultRegistryStruct{}, err

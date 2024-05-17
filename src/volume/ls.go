@@ -9,7 +9,7 @@ import (
 	"dtools/auth"
 	"dtools/helpers"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/volume"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
@@ -39,7 +39,7 @@ func ListVolumes() error {
 
 		// List containers using the current volume
 		args := filterArgs(volume.Name)
-		containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{Filters: args, All: true})
+		containers, err := cli.ContainerList(context.Background(), container.ListOptions{Filters: args, All: true})
 		if err != nil {
 			return helpers.CustomError{fmt.Sprint("Unable to fetch container list: %s", err)}
 		}

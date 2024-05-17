@@ -10,7 +10,6 @@ import (
 	"dtools/auth"
 	"dtools/helpers"
 	"fmt"
-	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
 	"log"
 )
@@ -51,7 +50,7 @@ func StartContainer(containers []string) error {
 	client := auth.ClientConnect(true)
 
 	for _, containername := range containers {
-		if err := client.ContainerStart(ctx, containername, types.ContainerStartOptions{}); err != nil {
+		if err := client.ContainerStart(ctx, containername, container.StartOptions{}); err != nil {
 			log.Printf("Unable to start container %s: %s", containername, err)
 			return err
 		}

@@ -10,7 +10,7 @@ import (
 	"dtools/auth"
 	"dtools/helpers"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/system"
 	"strings"
 )
 
@@ -22,7 +22,7 @@ func Info() error {
 	//	return helpers.CustomError{"You cannot set both Daemononly (-d) and ClientOnly (-c) at the same time"}
 	//}
 
-	var cInfo types.Info
+	var cInfo system.Info
 	var err error
 	var apiver float32
 

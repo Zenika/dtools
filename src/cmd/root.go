@@ -6,15 +6,17 @@ package cmd
 import (
 	"dtools/auth"
 	"dtools/helpers"
+	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"runtime"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "dtools",
 	Short:   "Docker client",
-	Version: "00.74.00-0 (2024.02.01)",
+	Version: helpers.White(fmt.Sprintf("0.75.00-0-%s (2024.04.10)", runtime.GOARCH)),
 	Long: `A modern-day docker client.
 This tools will perform the same tasks as the official docker tool, with some extra features, especially
 Where you handle remote docker repositories.`,
