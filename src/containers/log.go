@@ -1,19 +1,21 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/container/log.go
+// Original filename: src/containers/log.go
 // Original timestamp: 2023/11/14 19:33
 
-package container
+package containers
 
 import (
 	"context"
 	"dtools/auth"
+	"fmt"
 	"github.com/docker/docker/api/types/container"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"io"
 	"os"
 )
 
-func Log(containerName string) error {
+func Log(containerName string) *cerr.CustomError {
 	cli := auth.ClientConnect(true)
 
 	logOptions := container.LogsOptions{
@@ -25,14 +27,15 @@ func Log(containerName string) error {
 
 	logsReader, err := cli.ContainerLogs(context.Background(), containerName, logOptions)
 	if err != nil {
-		panic(err)
+		return &cerr.CustomError{Title: fmt.Sprintf("Error getting %s's logs:", containerName),
+			Message: err.Error()}
 	}
 	defer logsReader.Close()
 
 	// Read and print the logs to standard output
 	_, err = io.Copy(os.Stdout, logsReader)
 	if err != nil && err != io.EOF {
-		panic(err)
+		return &cerr.CustomError{Title: fmt.Sprintf("Unable to print %s's logs:", containerName), Message: err.Error()}
 	}
 	return nil
 }

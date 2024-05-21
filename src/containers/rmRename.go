@@ -1,9 +1,9 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/container/rmRename.go
+// Original filename: src/containers/rmRename.go
 // Original timestamp: 2023/11/12 21:53
 
-package container
+package containers
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 	"os"
 )
 
-// RemoveContainer : removes a single or multiple container
+// RemoveContainer : removes a single or multiple containers
 func RemoveContainer(containers []string) error {
 	ctx := context.Background()
 	removeOptions := container.RemoveOptions{RemoveVolumes: true, Force: true}
@@ -23,7 +23,7 @@ func RemoveContainer(containers []string) error {
 
 	for _, containername := range containers {
 		if err := client.ContainerRemove(ctx, containername, removeOptions); err != nil {
-			log.Printf("Unable to remove container: %s", err)
+			log.Printf("Unable to remove containers: %s", err)
 			return err
 		}
 		fmt.Printf("Container %s %s.\n", hf.White(containername), hf.Red("REMOVED"))
@@ -31,7 +31,7 @@ func RemoveContainer(containers []string) error {
 	return nil //... for now
 }
 
-// RenameContainer: renames an existing container
+// RenameContainer: renames an existing containers
 func RenameContainer(originalName string, newName string) error {
 	ctx := context.Background()
 	client := auth.ClientConnect(true)

@@ -7,7 +7,7 @@ package image
 import (
 	"context"
 	"dtools/auth"
-	"dtools/container"
+	"dtools/containers"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -50,7 +50,7 @@ func RemoveImage(args []string) {
 func remove(ctx context.Context, cli *client.Client, image string) int {
 	var err error
 	nRemovedImages := 0
-	if !ForceRemoval && container.GetRunningContainersForImage(image) > 0 {
+	if !ForceRemoval && containers.GetRunningContainersForImage(image) > 0 {
 		fmt.Printf("Cannot remove %s : image has at least one container. Use the -f option to force removal.\n", hf.Red(image))
 		return nRemovedImages
 	} else {

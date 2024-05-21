@@ -71,7 +71,7 @@ VERSION			DATE			COMMENT
 00.60.00		2023.12.20		dtools exec now works
 00.50.00		2023.12.14		dtools exec, mostly working
 00.40.00		2023.12.07		network commands, etc
-00.10.00		2023.11.18		container commands completed, img pull and rmi done
+00.10.00		2023.11.18		containers commands completed, img pull and rmi done
 00.00.01		2023.11.11		Code reset #3
 `)
 }

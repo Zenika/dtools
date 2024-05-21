@@ -25,6 +25,7 @@ var Credentials registry.AuthConfig
 func Login(args []string) *cerr.CustomError {
 	var addr string
 	var configMap = make(map[string]interface{})
+
 	ctx := context.Background()
 	cli := ClientConnect(false)
 

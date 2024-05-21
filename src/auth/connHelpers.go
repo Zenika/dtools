@@ -38,8 +38,7 @@ func ClientConnect(showHostinfo bool) *client.Client {
 	uri := buildConnectURI()
 	cli, err := client.NewClientWithOpts(client.WithHost(uri), client.WithAPIVersionNegotiation())
 	if err != nil {
-		fmt.Printf("Unable to create docker client: %s\n", err)
-		os.Exit(-1)
+		panic(err)
 	}
 	if showHostinfo {
 		ShowHost(uri, showHostinfo)

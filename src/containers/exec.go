@@ -1,24 +1,24 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/container/exec.go
+// Original filename: src/containers/exec.go
 // Original timestamp: 2023/12/13 23:37
 
-package container
+package containers
 
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"golang.org/x/term"
 	"io"
 	"os"
 )
 
-func ExecContainer(containerName string, command []string) error {
+func ExecContainer(containerName string, command []string) *cerr.CustomError {
 	cID := ""
-	var err error
+	var ce *cerr.CustomError
 	ctx := context.Background()
 	cli := auth.ClientConnect(true)
 
@@ -27,15 +27,15 @@ func ExecContainer(containerName string, command []string) error {
 	// Get the current terminal state and disable echo
 	oldState, err := term.MakeRaw(fd)
 	if err != nil {
-		return helpers.CustomError{fmt.Sprintf("Unable to get the terminal state: %s", err)}
+		return &cerr.CustomError{Title: "Unable to get the terminal state:", Message: err.Error()}
 	}
 	defer func() {
 		_ = term.Restore(fd, oldState)
 	}()
 
 	// First, we need to get the containerID
-	if cID, err = MapNameToId(cli, containerName); err != nil {
-		return helpers.CustomError{fmt.Sprintf("Unable to translate container name to container ID: %s", err)}
+	if cID, ce = MapNameToId(cli, containerName); ce != nil {
+		return ce
 	}
 
 	// Setup exec context
@@ -51,8 +51,7 @@ func ExecContainer(containerName string, command []string) error {
 	// Create exec instance
 	resp, err := cli.ContainerExecCreate(ctx, cID, execConfig)
 	if err != nil {
-		fmt.Printf("Error creating exec instance: %s\n", err)
-		os.Exit(1)
+		return &cerr.CustomError{Title: "Unable to create the containers:", Message: err.Error()}
 	}
 
 	execID := resp.ID
@@ -60,8 +59,7 @@ func ExecContainer(containerName string, command []string) error {
 		Tty: Tty,
 	})
 	if err != nil {
-		fmt.Printf("Error attaching to exec instance: %s\n", err)
-		os.Exit(1)
+		return &cerr.CustomError{Title: "Unable to start the containers:", Message: err.Error()}
 	}
 	defer respStart.Close()
 
@@ -86,13 +84,11 @@ func ExecContainer(containerName string, command []string) error {
 	// Cleanup
 	respInspect, err := cli.ContainerExecInspect(ctx, execID)
 	if err != nil {
-		fmt.Printf("Error inspecting exec instance: %s\n", err)
-		os.Exit(1)
+		return &cerr.CustomError{Title: "Unable to inspect the containers:", Message: err.Error()}
 	}
 
 	if respInspect.ExitCode != 0 {
 		fmt.Printf("Command exited with non-zero status: %d\n", respInspect.ExitCode)
 	}
-
 	return nil
 }

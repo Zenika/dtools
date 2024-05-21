@@ -8,7 +8,7 @@ package network
 import (
 	"context"
 	"dtools/auth"
-	"dtools/container"
+	"dtools/containers"
 	"dtools/helpers"
 )
 
@@ -21,7 +21,7 @@ func ConnectNetwork(networkName, containerName string) error {
 	if nID, err = MapNameToId(cli, networkName); err != nil {
 		return helpers.CustomError{"Unable to map network name to network ID: " + err.Error()}
 	}
-	if cID, err = container.MapNameToId(cli, containerName); err != nil {
+	if cID, err = containers.MapNameToId(cli, containerName); err != nil {
 		return helpers.CustomError{"Unable to map container name to container ID: " + err.Error()}
 	}
 
@@ -37,7 +37,7 @@ func DisconnectNetwork(networkName, containerName string) error {
 	if nID, err = MapNameToId(cli, networkName); err != nil {
 		return helpers.CustomError{"Unable to map network name to network ID: " + err.Error()}
 	}
-	if cID, err = container.MapNameToId(cli, containerName); err != nil {
+	if cID, err = containers.MapNameToId(cli, containerName); err != nil {
 		return helpers.CustomError{"Unable to map container name to container ID: " + err.Error()}
 	}
 

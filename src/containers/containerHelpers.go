@@ -1,9 +1,9 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/container/containerHelpers.go
+// Original filename: src/containers/containerHelpers.go
 // Original timestamp: 2023/11/12 21:27
 
-package container
+package containers
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"strings"
 )
 
@@ -32,16 +33,20 @@ func prettifyPortsList(ports []types.Port) string {
 	return portsString
 }
 
-// Returns all container names in a sliced string
+// Returns all containers names in a sliced string
 // NOTE: This function might become redundant with the usage of FilterContainersByStatus()
-func getContainerNames() []string {
-	containers := ListContainers(false)
+func getContainerNames() ([]string, *cerr.CustomError) {
+	var containers []types.Container
+	var ce *cerr.CustomError
+	if containers, ce = ListContainers(false); ce != nil {
+		return nil, ce
+	}
 	var containerNames []string
 
 	for _, container := range containers {
 		containerNames = append(containerNames, container.Names[0][1:])
 	}
-	return containerNames
+	return containerNames, nil
 }
 
 // Returns the number of running containers for the given image
@@ -50,7 +55,7 @@ func GetRunningContainersForImage(imageID string) int {
 	containers := ListContainers(false)
 
 	for _, container := range containers {
-		//containerimg := getImageTag(container.Image)
+		//containerimg := getImageTag(containers.Image)
 		if getImageTag(container.Image) == imageID || container.ImageID == imageID {
 			numContainers++
 		}
@@ -77,14 +82,14 @@ func getImageTag(name string) string {
 	return name + ":latest"
 }
 
-// Unused so far, but maybe later: get the container ID (the hex value) from its name
-func getContainerID(containerName string) (string, error) {
+// Unused so far, but maybe later: get the containers ID (the hex value) from its name
+func getContainerID(containerName string) (string, *cerr.CustomError) {
 	cli := auth.ClientConnect(false)
 
-	// Inspect the container to get its ID
+	// Inspect the containers to get its ID
 	containerInfo, err := cli.ContainerInspect(context.Background(), containerName)
 	if err != nil {
-		return "", err
+		return "", &cerr.CustomError{Title: err.Error()}
 	}
 
 	return containerInfo.ID, nil
@@ -103,23 +108,23 @@ func FilterContainersByStatus(status string) []string {
 	return filtered
 }
 
-// mapNameToID() : fetches the container ID from the hashed container name
+// mapNameToID() : fetches the containers ID from the hashed containers name
 // Basically, we need this function because most dtools functions use human-readable names, while the SDK mostly uses
 // hashes (IDs). We need a way to "translate" those names/IDs
-func MapNameToId(cli *client.Client, containerName string) (string, error) {
+func MapNameToId(cli *client.Client, containerName string) (string, *cerr.CustomError) {
 	containerInfo, err := cli.ContainerInspect(context.Background(), containerName)
 	if err != nil {
-		return "", err
+		return "", &cerr.CustomError{Title: err.Error()}
 	}
 
 	return containerInfo.ID, nil
 }
 
-func getComposeStackName(cli *client.Client, containerID string) (string, error) {
+func getComposeStackName(cli *client.Client, containerID string) (string, *cerr.CustomError) {
 	isStack := false
 	containerInfo, err := cli.ContainerInspect(context.Background(), containerID)
 	if err != nil {
-		return "", err
+		return "", &cerr.CustomError{Title: err.Error()}
 	}
 	labels := containerInfo.Config.Labels
 	_, isStack = labels["com.docker.compose.project"]

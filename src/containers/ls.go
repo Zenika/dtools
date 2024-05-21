@@ -1,9 +1,9 @@
 // dtools
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/container/ls.go
+// Original filename: src/containers/ls.go
 // Original timestamp: 2023/11/12 21:21
 
-package container
+package containers
 
 import (
 	"context"
@@ -11,7 +11,8 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
-	hf "github.com/jeanfrancoisgratton/helperFunctions"
+	"github.com/docker/docker/client"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
@@ -19,24 +20,26 @@ import (
 	"time"
 )
 
-func ListContainers(showDaemonInfo bool) []types.Container {
+func ListContainers(showDaemonInfo bool) ([]types.Container, *cerr.CustomError) {
+	var ce *cerr.CustomError
+	var cli *client.Client
 	clo := container.ListOptions{Size: true, All: true, Latest: true}
-	cli := auth.ClientConnect(showDaemonInfo)
+	if cli, ce = auth.ClientConnect(showDaemonInfo); ce != nil {
+		return nil, ce
+	}
 
 	containers, err := cli.ContainerList(context.Background(), clo)
 	if err != nil {
 		errmsg := fmt.Sprintf("%v", err)
 		if strings.HasPrefix(errmsg, "Cannot connect to the Docker daemon at") {
-
-			fmt.Printf("Unable to connect to %s. Is the Docker daemon running ?\n", hf.Red(auth.ConnectURI))
-			os.Exit(-1)
+			return nil, &cerr.CustomError{Title: "Cannot connect to the docker daemon:", Message: "Is the daemon runnning ?"}
 		} else {
-			panic(err)
+			return nil, &cerr.CustomError{Message: err.Error()}
 		}
 	}
 
 	if !showDaemonInfo {
-		return containers
+		return containers, nil
 	}
 
 	t := table.NewWriter()
@@ -45,12 +48,12 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 	for _, container := range containers {
 		var composeStackName string
 		var err error
-		// This is a design decision: I'll take only the first name in the container slice
+		// This is a design decision: I'll take only the first name in the containers slice
 		cn := container.Names[0]
 		containerImage := getImageTag(container.Image)
 		ports := prettifyPortsList(container.Ports)
 		if composeStackName, err = getComposeStackName(cli, container.ID); err != nil {
-			panic(err)
+			err.Error() // <-- same here as panic(err)
 		}
 		t.AppendRow([]interface{}{container.ID[:10], containerImage, cn[1:], time.Unix(container.Created, 0).Format("2006.01.02 15:04:05"), ports, container.State, container.Status, composeStackName})
 	}
@@ -75,5 +78,5 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 		return nil
 	})
 	t.Render()
-	return nil
+	return containers, nil
 }

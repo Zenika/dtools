@@ -8,7 +8,7 @@ package image
 import (
 	"context"
 	"dtools/auth"
-	"dtools/container"
+	"dtools/containers"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -52,7 +52,7 @@ func ListImages(allImg bool) {
 			imageInfo.created = time.Unix(image.Created, 0).Format("2006.01.02 15:04:05")
 			imageInfo.size = image.Size
 			imageInfo.formattedSize = formatImageSize(image.Size)
-			imageInfo.nContainers = container.GetRunningContainersForImage(tag)
+			imageInfo.nContainers = containers.GetRunningContainersForImage(tag)
 
 			imageInfoSlice = append(imageInfoSlice, imageInfo)
 		}
@@ -63,7 +63,7 @@ func ListImages(allImg bool) {
 	t.SetOutputMirror(os.Stdout)
 	t.AppendHeader(table.Row{"Repository/image name", "Image tag", "Image ID", "Creation time", "Size", "# containers"})
 	for _, imgspec := range imageInfoSlice {
-		// This is a design decision: I'll take only the first name in the container slice
+		// This is a design decision: I'll take only the first name in the containers slice
 		t.AppendRow([]interface{}{imgspec.reponame, imgspec.tag, imgspec.id[:12], imgspec.created, imgspec.formattedSize, imgspec.nContainers})
 	}
 	t.SortBy([]table.SortBy{
