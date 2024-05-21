@@ -8,8 +8,8 @@ package container
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"log"
 )
 
@@ -23,7 +23,7 @@ func PauseContainer(containers []string) error {
 			log.Printf("Unable to stop container %s: %s", containername, err)
 			return err
 		}
-		fmt.Printf("Container %s is %s\n", containername, helpers.Yellow("PAUSED."))
+		fmt.Printf("Container %s is %s\n", containername, hf.Yellow("PAUSED."))
 	}
 	return nil
 }
@@ -38,7 +38,7 @@ func UnpauseContainer(containers []string) error {
 			log.Printf("Unable to resume container %s: %s", containername, err)
 			return err
 		}
-		fmt.Printf("Container %s is %s\n", containername, helpers.Green("RESUMED."))
+		fmt.Printf("Container %s is %s\n", containername, hf.Green("RESUMED."))
 	}
 	return nil
 }

@@ -8,9 +8,9 @@ package container
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types/container"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"log"
 )
 
@@ -24,7 +24,7 @@ func StopContainer(containers []string) error {
 			log.Printf("Unable to stop container %s: %s", containername, err)
 			return err
 		}
-		fmt.Printf("Container %s is %s\n", containername, helpers.Red("STOPPED."))
+		fmt.Printf("Container %s is %s\n", containername, hf.Red("STOPPED."))
 	}
 	return nil
 }
@@ -39,7 +39,7 @@ func KillContainer(containers []string) error {
 			log.Printf("Unable to kill container %s: %s", containername, err)
 			return err
 		}
-		fmt.Printf("Container %s is %s.\n", containername, helpers.Red("KILLED."))
+		fmt.Printf("Container %s is %s.\n", containername, hf.Red("KILLED."))
 	}
 	return nil
 }
@@ -55,7 +55,7 @@ func StartContainer(containers []string) error {
 			return err
 		}
 
-		fmt.Printf("Container %s is %s\n", containername, helpers.Green("STARTED."))
+		fmt.Printf("Container %s is %s\n", containername, hf.Green("STARTED."))
 	}
 	return nil
 }

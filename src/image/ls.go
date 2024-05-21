@@ -9,7 +9,6 @@ import (
 	"context"
 	"dtools/auth"
 	"dtools/container"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -69,11 +68,7 @@ func ListImages(allImg bool) {
 	}
 	t.SortBy([]table.SortBy{
 		{Name: "Image name", Mode: table.Asc}})
-	if helpers.PlainOutput {
-		t.SetStyle(table.StyleDefault)
-	} else {
-		t.SetStyle(table.StyleBold)
-	}
+	t.SetStyle(table.StyleDefault)
 	t.Style().Format.Header = text.FormatDefault
 	t.SetRowPainter(func(row table.Row) text.Colors {
 		switch row[5] {

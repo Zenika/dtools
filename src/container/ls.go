@@ -8,10 +8,10 @@ package container
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
@@ -28,7 +28,7 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 		errmsg := fmt.Sprintf("%v", err)
 		if strings.HasPrefix(errmsg, "Cannot connect to the Docker daemon at") {
 
-			fmt.Printf("Unable to connect to %s. Is the Docker daemon running ?\n", helpers.Red(auth.ConnectURI))
+			fmt.Printf("Unable to connect to %s. Is the Docker daemon running ?\n", hf.Red(auth.ConnectURI))
 			os.Exit(-1)
 		} else {
 			panic(err)
@@ -57,11 +57,8 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 	t.SortBy([]table.SortBy{
 		{Name: "Container name", Mode: table.Asc},
 	})
-	if helpers.PlainOutput {
-		t.SetStyle(table.StyleDefault)
-	} else {
-		t.SetStyle(table.StyleBold)
-	}
+	t.SetStyle(table.StyleBold)
+
 	t.Style().Format.Header = text.FormatDefault
 	t.SetRowPainter(func(row table.Row) text.Colors {
 		switch row[5] {
@@ -80,20 +77,3 @@ func ListContainers(showDaemonInfo bool) []types.Container {
 	t.Render()
 	return nil
 }
-
-/*
-t.SetRowPainter(func(row table.Row) text.Colors {
-		switch row[5] {
-		case "running":
-			//return text.Colors{text.BgBlack, text.FgHiGreen}
-			return text.Colors{text.FgHiGreen}
-		case "crashed":
-			return text.Colors{text.BgBlack, text.FgHiRed}
-		case "blocked":
-		case "suspended":
-		case "paused":
-			return text.Colors{text.FgHiYellow}
-		}
-		return nil
-	})
-*/

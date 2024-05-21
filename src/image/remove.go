@@ -8,10 +8,10 @@ import (
 	"context"
 	"dtools/auth"
 	"dtools/container"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"strconv"
 	"strings"
 )
@@ -41,9 +41,9 @@ func RemoveImage(args []string) {
 		}
 	}
 	if nRemovedImages == 0 {
-		fmt.Printf("Removed %s image. Did you mispell the name(s) ?\n", helpers.Red("0"))
+		fmt.Printf("Removed %s image. Did you mispell the name(s) ?\n", hf.Red("0"))
 	} else {
-		fmt.Printf("Removed %s image(s).\n", helpers.Green(strconv.Itoa(nRemovedImages)))
+		fmt.Printf("Removed %s image(s).\n", hf.Green(strconv.Itoa(nRemovedImages)))
 	}
 }
 
@@ -51,7 +51,7 @@ func remove(ctx context.Context, cli *client.Client, image string) int {
 	var err error
 	nRemovedImages := 0
 	if !ForceRemoval && container.GetRunningContainersForImage(image) > 0 {
-		fmt.Printf("Cannot remove %s : image has at least one container. Use the -f option to force removal.\n", helpers.Red(image))
+		fmt.Printf("Cannot remove %s : image has at least one container. Use the -f option to force removal.\n", hf.Red(image))
 		return nRemovedImages
 	} else {
 		_, err = cli.ImageRemove(ctx, image, types.ImageRemoveOptions{Force: ForceRemoval, PruneChildren: false})
@@ -60,7 +60,7 @@ func remove(ctx context.Context, cli *client.Client, image string) int {
 		fmt.Println(err)
 	} else {
 		nRemovedImages++
-		fmt.Printf("Image removal of %s is successful.\n", helpers.Green(image))
+		fmt.Printf("Image removal of %s is successful.\n", hf.Green(image))
 	}
 	return nRemovedImages
 }

@@ -9,6 +9,7 @@ import (
 	"dtools/helpers"
 	"encoding/json"
 	"fmt"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"os"
 	"path/filepath"
 )
@@ -27,6 +28,6 @@ func Ls() error {
 		return helpers.CustomError{Message: "Unable to parse JSON: " + err.Error()}
 	}
 
-	fmt.Printf("REGISTRY: %s\nUSERNAME: %s\nCOMMENTS: %s\n", helpers.White(defaultRepo.Registry), helpers.White(defaultRepo.Username), helpers.White(defaultRepo.Comments))
+	fmt.Printf("REGISTRY: %s\nUSERNAME: %s\nCOMMENTS: %s\n", hf.White(defaultRepo.Registry), hf.White(defaultRepo.Username), hf.White(defaultRepo.Comments))
 	return nil
 }

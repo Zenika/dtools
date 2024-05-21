@@ -8,7 +8,6 @@ package network
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"github.com/docker/docker/api/types"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
@@ -51,11 +50,7 @@ func ListNetworks() error {
 	}
 	t.SortBy([]table.SortBy{
 		{Name: "Name", Mode: table.Asc}})
-	if helpers.PlainOutput {
-		t.SetStyle(table.StyleDefault)
-	} else {
-		t.SetStyle(table.StyleBold)
-	}
+	t.SetStyle(table.StyleBold)
 	t.Style().Format.Header = text.FormatDefault
 	t.SetRowPainter(func(row table.Row) text.Colors {
 		switch row[4] {

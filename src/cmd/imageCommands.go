@@ -6,7 +6,6 @@
 package cmd
 
 import (
-	"dtools/helpers"
 	"dtools/image"
 	"dtools/repo"
 	"fmt"
@@ -87,7 +86,6 @@ func init() {
 	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd, imgPushCmd, imgTagCmd, imgRmCmd)
 	imageCmd.AddCommand(imgLsCmd, imgPullCmd, imgPushCmd, imgTagCmd, imgRmCmd)
 
-	imgLsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
 	imgTagCmd.PersistentFlags().BoolVarP(&image.OverwriteTag, "overwritetag", "o", false, "If tag already exists, ")
 	imgPullCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
 	imgPushCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")

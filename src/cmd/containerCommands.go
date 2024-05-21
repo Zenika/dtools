@@ -7,7 +7,6 @@ package cmd
 
 import (
 	"dtools/container"
-	"dtools/helpers"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -199,8 +198,6 @@ var dioffCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(lsCmd, pauseCmd, unpauseCmd, renameCmd, rmCmd, inspectCmd, logCmd, runCmd, execCmd)
 	rootCmd.AddCommand(stopCmd, killCmd, stopallCmd, killallCmd, startCmd, startCallmd, restartCmd)
-
-	lsCmd.PersistentFlags().BoolVarP(&helpers.PlainOutput, "plain", "P", false, "Tables are shown with less decorations")
 
 	logCmd.PersistentFlags().BoolVarP(&container.StdOut, "stdout", "o", true, "Shows stdout")
 	logCmd.PersistentFlags().BoolVarP(&container.StdErr, "stderr", "e", true, "Shows stderr")

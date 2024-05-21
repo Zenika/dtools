@@ -36,6 +36,10 @@ github.com/grpc-ecosystem/grpc-gateway/v2 v2.16.0 h1:YBftPWNWd4WwGqtY2yeZL2ef8rH
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.16.0/go.mod h1:YN5jB8ie0yfIUg6VvR9Kz84aCaG7AsGZnLjhHbUqwPg=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
+github.com/jeanfrancoisgratton/helperFunctions v1.4.0 h1:zLoICWaREdnExMH9Mzk7ROnzussfv0WW4nOBFCisZGo=
+github.com/jeanfrancoisgratton/helperFunctions v1.4.0/go.mod h1:QaUfvS2IrS/2qDXlzVebBxNlsarCOh3lM7+OSy9rUYg=
+github.com/jeanfrancoisgratton/helperFunctions v1.4.1 h1:PnUbueYvp+36cT3IJnPORZF3RJ3pqzOMQIiWARQP8BY=
+github.com/jeanfrancoisgratton/helperFunctions v1.4.1/go.mod h1:QaUfvS2IrS/2qDXlzVebBxNlsarCOh3lM7+OSy9rUYg=
 github.com/jedib0t/go-pretty/v6 v6.5.9 h1:ACteMBRrrmm1gMsXe9PSTOClQ63IXDUt03H5U+UV8OU=
 github.com/jedib0t/go-pretty/v6 v6.5.9/go.mod h1:zbn98qrYlh95FIhwwsbIip0LYpwSG8SUOScs+v9/t0E=
 github.com/jwalton/gchalk v1.3.0 h1:uTfAaNexN8r0I9bioRTksuT8VGjrPs9YIXR1PQbtX/Q=

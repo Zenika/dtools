@@ -7,10 +7,10 @@ package network
 
 import (
 	"context"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 )
 
 // var UnusedOnly bool
@@ -28,7 +28,7 @@ func mapNetworks(networks []types.NetworkResource, cli *client.Client) []network
 	for _, network := range networks {
 		containers, err := cli.NetworkInspect(context.Background(), network.ID, types.NetworkInspectOptions{})
 		if err != nil {
-			fmt.Printf("Error inspecting network %s: %s\n", helpers.Red(network.Name), err)
+			fmt.Printf("Error inspecting network %s: %s\n", hf.Red(network.Name), err)
 			continue
 		}
 

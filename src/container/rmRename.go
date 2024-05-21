@@ -8,9 +8,9 @@ package container
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types/container"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"log"
 	"os"
 )
@@ -26,7 +26,7 @@ func RemoveContainer(containers []string) error {
 			log.Printf("Unable to remove container: %s", err)
 			return err
 		}
-		fmt.Printf("Container %s %s.\n", helpers.White(containername), helpers.Red("REMOVED"))
+		fmt.Printf("Container %s %s.\n", hf.White(containername), hf.Red("REMOVED"))
 	}
 	return nil //... for now
 }
@@ -39,9 +39,9 @@ func RenameContainer(originalName string, newName string) error {
 	err := client.ContainerRename(ctx, originalName, newName)
 
 	if err == nil {
-		fmt.Printf("%s %s to %s.\n", helpers.Green("Successfully renamed"), helpers.White(originalName), helpers.White(newName))
+		fmt.Printf("%s %s to %s.\n", hf.Green("Successfully renamed"), hf.White(originalName), hf.White(newName))
 	} else {
-		fmt.Printf("%s %s %s %s: %s\n", helpers.Red("Error renaming"), originalName, "to", newName, err.Error())
+		fmt.Printf("%s %s %s %s: %s\n", hf.Red("Error renaming"), originalName, "to", newName, err.Error())
 		os.Exit(-1)
 	}
 	return err

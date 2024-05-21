@@ -10,6 +10,7 @@ import (
 	"dtools/auth"
 	"dtools/helpers"
 	"fmt"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"strings"
 )
 
@@ -23,13 +24,13 @@ func RemoveVolume(volumes []string) error {
 				//a := "Unable to remove " + vol + " "
 				//return helpers.CustomError{fmt.Sprintf("Unable to remove %s : volume is in use. Consider using -f\n%s\n", helpers.Red(vol),
 				//	helpers.Yellow("Please be aware that using -f might have unintended consequences on the container using the volume !"))}
-				return helpers.CustomError{fmt.Sprintf("Unable to remove volume %s: the volume is used by a container\n", helpers.Red(vol))}
+				return helpers.CustomError{fmt.Sprintf("Unable to remove volume %s: the volume is used by a container\n", hf.Red(vol))}
 
 			} else {
 				return helpers.CustomError{fmt.Sprintf("Error removing the volume: %s", err)}
 			}
 		} else {
-			fmt.Printf("Removed volume %s\n", helpers.Green(vol))
+			fmt.Printf("Removed volume %s\n", hf.Green(vol))
 		}
 	}
 	return nil

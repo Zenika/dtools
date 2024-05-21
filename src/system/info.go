@@ -8,9 +8,9 @@ package system
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
 	"github.com/docker/docker/api/types/system"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"strings"
 )
 
@@ -31,7 +31,7 @@ func Info() error {
 		return err
 	}
 
-	fmt.Printf("\n%s info\n===========\n", helpers.Blue("DAEMON"))
+	fmt.Printf("\n%s info\n===========\n", hf.Blue("DAEMON"))
 	if apiver, err = CheckAPIversion(); err == nil {
 		fmt.Printf("• API version: v%v\n", apiver)
 	}

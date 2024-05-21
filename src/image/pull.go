@@ -11,8 +11,9 @@ import (
 	"dtools/helpers"
 	"dtools/repo"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/pkg/jsonmessage"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"github.com/moby/term"
 	"os"
 	"runtime"
@@ -32,7 +33,7 @@ func PullImage(args []string) error {
 			reg = repo.DefaultRegistryStruct{}
 		}
 	}
-	pullOptions := types.ImagePullOptions{bAllImages, "", nil, runtime.GOARCH}
+	pullOptions := image.PullOptions{bAllImages, "", nil, runtime.GOARCH}
 
 	// loop tru all command line args
 	for _, argElement := range args {
@@ -48,15 +49,15 @@ func PullImage(args []string) error {
 		if pullerr != nil {
 			a := pullerr.Error()
 			if strings.HasPrefix(a, "Error response from daemon: pull access denied") {
-				fmt.Printf("%s: either the repository %s does not exist, or login access has not been provided.\n", helpers.Red("Denied"), helpers.White(argElement))
-				return helpers.CustomError{Message: fmt.Sprintf("%s: either the repository %s does not exist, or login access has not been provided.\n", helpers.Red("Denied"), helpers.White(argElement))}
+				fmt.Printf("%s: either the repository %s does not exist, or login access has not been provided.\n", hf.Red("Denied"), hf.White(argElement))
+				return helpers.CustomError{Message: fmt.Sprintf("%s: either the repository %s does not exist, or login access has not been provided.\n", hf.Red("Denied"), hf.White(argElement))}
 			}
 			if strings.HasPrefix(a, "Error response from daemon: manifest for ") {
-				fmt.Printf("%s %s: manifest not found\n", helpers.Red("Unable to pull"), helpers.Red(argElement))
-				return helpers.CustomError{Message: fmt.Sprintf("%s %s: manifest not found\n", helpers.Red("Unable to pull"), helpers.Red(argElement))}
+				fmt.Printf("%s %s: manifest not found\n", hf.Red("Unable to pull"), hf.Red(argElement))
+				return helpers.CustomError{Message: fmt.Sprintf("%s %s: manifest not found\n", hf.Red("Unable to pull"), hf.Red(argElement))}
 			}
 			if strings.HasSuffix(a, "connect: connection refused") {
-				return helpers.CustomError{Message: fmt.Sprintf("Connection %s at %s. Are you sure that the daemon is running ?", helpers.Red("REFUSED"), helpers.Blue(repository[:len(repository)-1]))}
+				return helpers.CustomError{Message: fmt.Sprintf("Connection %s at %s. Are you sure that the daemon is running ?", hf.Red("REFUSED"), hf.Blue(repository[:len(repository)-1]))}
 			} else {
 				panic(pullerr)
 			}
@@ -66,7 +67,7 @@ func PullImage(args []string) error {
 		termFd, isTerm := term.GetFdInfo(os.Stdout)
 		jsonmessage.DisplayJSONMessagesStream(pullResponse, os.Stdout, termFd, isTerm, nil)
 
-		fmt.Printf("%s %s\n", helpers.Green("Successfully pulled"), helpers.Normal(repository+argElement))
+		fmt.Printf("%s %s\n", hf.Green("Successfully pulled"), hf.White(repository+argElement))
 	}
 	return nil
 }

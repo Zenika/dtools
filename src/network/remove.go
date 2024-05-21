@@ -8,8 +8,8 @@ package network
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 )
 
 // RemoveNetwork() :
@@ -25,7 +25,7 @@ func RemoveNetwork(args []string) error {
 		if err = cli.NetworkRemove(context.Background(), nID); err != nil {
 			return err
 		}
-		fmt.Printf("%s %s\n", helpers.Green("Successfully removed"), arg)
+		fmt.Printf("%s %s\n", hf.Green("Successfully removed"), arg)
 	}
 	return nil
 }

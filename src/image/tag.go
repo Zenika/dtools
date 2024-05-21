@@ -10,6 +10,7 @@ import (
 	"dtools/auth"
 	"dtools/helpers"
 	"fmt"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 )
 
 func Tag(sourceTag, newTag string) error {
@@ -23,7 +24,7 @@ func Tag(sourceTag, newTag string) error {
 	// Now that we've settled the issue of error, let's concentrate on the outcome
 	if !OverwriteTag && tExsts {
 		return helpers.CustomError{Message: fmt.Sprintf("Tag %s exists and 'overwritetag' is set to false",
-			helpers.Blue(newTag))}
+			hf.Blue(newTag))}
 	}
 
 	// ... and now we tag
@@ -31,7 +32,7 @@ func Tag(sourceTag, newTag string) error {
 	if err != nil {
 		return helpers.CustomError{Message: "Error tagging image: " + err.Error()}
 	}
-	fmt.Printf("%s %s to %s\n", helpers.Green("Successfully tagged"), helpers.White(sourceTag),
-		helpers.White(newTag))
+	fmt.Printf("%s %s to %s\n", hf.Green("Successfully tagged"), hf.White(sourceTag),
+		hf.White(newTag))
 	return nil
 }

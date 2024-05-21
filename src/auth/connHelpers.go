@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/client"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"os"
 	"path/filepath"
 	"strings"
@@ -54,7 +55,7 @@ func ShowHost(uri string, showNow bool) string {
 		uri = "localhost (unix socket)"
 	}
 	if showNow {
-		fmt.Printf("\nDocker host is: %s.\n", helpers.White(uri))
+		fmt.Printf("\nDocker host is: %s.\n", hf.White(uri))
 	}
 	return uri
 }
@@ -80,10 +81,10 @@ func GetAuthString(remoteReg string) (string, error) {
 			if authValue, ok := remoteRegAuth["auth"].(string); ok {
 				authString = authValue
 			} else {
-				return "", helpers.CustomError{Message: fmt.Sprintf("Auth value for %s is not a string.\n", helpers.Red(remoteReg))}
+				return "", helpers.CustomError{Message: fmt.Sprintf("Auth value for %s is not a string.\n", hf.Red(remoteReg))}
 			}
 		} else {
-			return "", helpers.CustomError{Message: fmt.Sprintf("%s section not found in config file\n", helpers.Red(remoteReg))}
+			return "", helpers.CustomError{Message: fmt.Sprintf("%s section not found in config file\n", hf.Red(remoteReg))}
 		}
 	} else {
 		return "", helpers.CustomError{Message: "No auths section found in config file."}

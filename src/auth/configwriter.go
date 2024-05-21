@@ -6,17 +6,17 @@
 package auth
 
 import (
-	"dtools/helpers"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/api/types/registry"
+	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"os"
 )
 
 func writeNewConfFile(cfgfile string, authcfg registry.AuthConfig) error {
 	if Credentials.Password == "" {
-		Credentials.Password = helpers.GetPassword(fmt.Sprintf("Please enter %s's password: ", helpers.White(Credentials.ServerAddress)))
+		Credentials.Password = hf.GetPassword(fmt.Sprintf("Please enter %s's password: ", hf.White(Credentials.ServerAddress)))
 	}
 	configData := map[string]map[string]map[string]string{
 		"auths": {
