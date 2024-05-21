@@ -10,11 +10,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/api/types/registry"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"os"
 )
 
-func writeNewConfFile(cfgfile string, authcfg registry.AuthConfig) error {
+func writeNewConfFile(cfgfile string, authcfg registry.AuthConfig) *cerr.CustomError {
 	if Credentials.Password == "" {
 		Credentials.Password = hf.GetPassword(fmt.Sprintf("Please enter %s's password: ", hf.White(Credentials.ServerAddress)))
 	}
@@ -27,10 +28,10 @@ func writeNewConfFile(cfgfile string, authcfg registry.AuthConfig) error {
 	}
 	cfgJson, err := json.MarshalIndent(configData, "", "  ")
 	if err != nil {
-		return err
+		return &cerr.CustomError{Title: "Unable to marshal config data", Message: err.Error()}
 	}
 	if err := os.WriteFile(cfgfile, cfgJson, 0644); err != nil {
-		return err
+		return &cerr.CustomError{Title: "Unable to write config file", Message: err.Error()}
 	}
 	return nil
 }

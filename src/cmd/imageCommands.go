@@ -55,7 +55,7 @@ var imgPullCmd = &cobra.Command{
 	Long:    `Works exactly like docker pull.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := image.PullImage(args); err != nil {
-			fmt.Println(err)
+			_ = err.Error()
 		}
 	},
 }
@@ -66,7 +66,7 @@ var imgPushCmd = &cobra.Command{
 	Long:  `Works exactly like docker push.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := image.Push(args); err != nil {
-			fmt.Println(err)
+			_ = err.Error()
 		}
 	},
 }
@@ -77,7 +77,7 @@ var imgTagCmd = &cobra.Command{
 	Long:  `Works exactly like docker tag.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := image.Tag(args[0], args[1]); err != nil {
-			fmt.Println(err)
+			_ = err.Error()
 		}
 	},
 }

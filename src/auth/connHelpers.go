@@ -6,10 +6,10 @@
 package auth
 
 import (
-	"dtools/helpers"
 	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/client"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"os"
 	"path/filepath"
@@ -60,7 +60,7 @@ func ShowHost(uri string, showNow bool) string {
 	return uri
 }
 
-func GetAuthString(remoteReg string) (string, error) {
+func GetAuthString(remoteReg string) (string, *cerr.CustomError) {
 	var cfgData map[string]interface{}
 	authString := ""
 
@@ -69,25 +69,25 @@ func GetAuthString(remoteReg string) (string, error) {
 	// Read the config file
 	cfgFile, err := os.ReadFile(cfgFilepath)
 	if err != nil {
-		return "", helpers.CustomError{Message: "Unable to load the auth file: " + err.Error()}
+		return "", &cerr.CustomError{Title: "Unable to load the auth file:", Message: err.Error()}
 	}
 
 	// Parse the config file
 	if err := json.Unmarshal(cfgFile, &cfgData); err != nil {
-		return "", helpers.CustomError{Message: "Unable to parse the auth file: " + err.Error()}
+		return "", &cerr.CustomError{Title: "Unable to parse the auth file:", Message: err.Error()}
 	}
 	if auths, ok := cfgData["auths"].(map[string]interface{}); ok {
 		if remoteRegAuth, ok := auths[remoteReg].(map[string]interface{}); ok {
 			if authValue, ok := remoteRegAuth["auth"].(string); ok {
 				authString = authValue
 			} else {
-				return "", helpers.CustomError{Message: fmt.Sprintf("Auth value for %s is not a string.\n", hf.Red(remoteReg))}
+				return "", &cerr.CustomError{Title: "Error parsing environment file", Message: fmt.Sprintf("Auth value for %s is not a string.\n", remoteReg)}
 			}
 		} else {
-			return "", helpers.CustomError{Message: fmt.Sprintf("%s section not found in config file\n", hf.Red(remoteReg))}
+			return "", &cerr.CustomError{Title: "Error parsing environment file", Message: fmt.Sprintf("%s section not found in config file\n", remoteReg)}
 		}
 	} else {
-		return "", helpers.CustomError{Message: "No auths section found in config file."}
+		return "", &cerr.CustomError{Title: "Error parsing environment file", Message: "No auths section found in config file."}
 	}
 
 	return authString, nil

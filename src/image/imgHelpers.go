@@ -8,8 +8,9 @@ package image
 import (
 	"context"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/client"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"math"
 	"strings"
 )
@@ -70,10 +71,10 @@ func fiximageTag(imagetag string) string {
 
 // ImgExists() : checks if a given image exists locally.
 // Mostly needed by push
-func ImgExists(cli *client.Client, imageName string) (bool, error) {
-	images, err := cli.ImageList(context.Background(), types.ImageListOptions{})
+func ImgExists(cli *client.Client, imageName string) (bool, *cerr.CustomError) {
+	images, err := cli.ImageList(context.Background(), image.ListOptions{})
 	if err != nil {
-		return false, err
+		return false, &cerr.CustomError{Title: "Error listing images:", Message: err.Error()}
 	}
 
 	for _, image := range images {
@@ -88,12 +89,12 @@ func ImgExists(cli *client.Client, imageName string) (bool, error) {
 
 // FIXME: might need some firming up, here....
 // TagExists() : checks if the given tag already exists
-func TagExists(cli *client.Client, newTag string) (bool, error) {
+func TagExists(cli *client.Client, newTag string) (bool, *cerr.CustomError) {
 	_, _, err := cli.ImageInspectWithRaw(context.Background(), newTag)
 	if err == nil {
-		return true, nil
+		return true, &cerr.CustomError{Title: err.Error()}
 	} else if !client.IsErrNotFound(err) {
-		return false, err
+		return false, &cerr.CustomError{Title: err.Error()}
 	}
 
 	return false, nil

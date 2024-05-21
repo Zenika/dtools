@@ -9,6 +9,8 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
+
 	//"github.com/docker/docker/api/types"
 	"context"
 	"github.com/docker/docker/api/types/registry"
@@ -20,7 +22,7 @@ var ConnectURI = ""
 
 var Credentials registry.AuthConfig
 
-func Login(args []string) error {
+func Login(args []string) *cerr.CustomError {
 	var addr string
 	var configMap = make(map[string]interface{})
 	ctx := context.Background()
@@ -41,7 +43,7 @@ func Login(args []string) error {
 	}
 	_, err := cli.RegistryLogin(ctx, authConfig)
 	if err != nil {
-		return err
+		return &cerr.CustomError{Title: "Unable to authenticate:", Message: err.Error()}
 	}
 
 	// Get the path to the Docker config file
@@ -53,7 +55,7 @@ func Login(args []string) error {
 		if os.IsNotExist(err) {
 			return writeNewConfFile(configFile, authConfig)
 		} else {
-			return err
+			return &cerr.CustomError{Message: err.Error()}
 		}
 	}
 
@@ -61,28 +63,23 @@ func Login(args []string) error {
 	//configMap := make(map[string]interface{})
 	err = json.Unmarshal(configData, &configMap)
 	if err != nil {
-		return err
+		return &cerr.CustomError{Message: err.Error()}
 	}
 
 	// Update the auth info for the given registry
 	addr = Credentials.ServerAddress
-	//if !strings.HasPrefix(Credentials.ServerAddress, "http") {
-	//	addr = "https://" + Credentials.ServerAddress
-	//} else {
-	//	addr = Credentials.ServerAddress
-	//}
 	configMap["auths"].(map[string]interface{})[addr] = map[string]string{"auth": encodedAuth}
 
 	// Marshal the updated data back into JSON format
 	updatedConfigData, err := json.MarshalIndent(configMap, "", "  ")
 	if err != nil {
-		return err
+		return &cerr.CustomError{Message: err.Error()}
 	}
 
 	// Write the updated config data back to the config file
 	err = os.WriteFile(configFile, updatedConfigData, 0600)
 	if err != nil {
-		return err
+		return &cerr.CustomError{Message: err.Error()}
 	}
 	fmt.Printf("Logged in and authentication information saved to %s\n", filepath.Join(os.Getenv("HOME"), ".docker", "config.json"))
 	return nil

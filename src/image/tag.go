@@ -8,29 +8,31 @@ package image
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 )
 
-func Tag(sourceTag, newTag string) error {
+func Tag(sourceTag, newTag string) *cerr.CustomError {
+	tExsts := false
+	var ce *cerr.CustomError
 	cli := auth.ClientConnect(true)
 
-	tExsts, err := TagExists(cli, newTag)
-	if err != nil {
-		return helpers.CustomError{Message: "Unable to tag image: " + err.Error()}
+	if tExsts, ce = TagExists(cli, newTag); ce != nil {
+		return ce
 	}
 
 	// Now that we've settled the issue of error, let's concentrate on the outcome
 	if !OverwriteTag && tExsts {
-		return helpers.CustomError{Message: fmt.Sprintf("Tag %s exists and 'overwritetag' is set to false",
-			hf.Blue(newTag))}
+		return &cerr.CustomError{Title: "Could not write tag",
+			Message: fmt.Sprintf("Tag %s exists and 'overwritetag' is set to false",
+				hf.Blue(newTag))}
 	}
 
 	// ... and now we tag
-	err = cli.ImageTag(context.Background(), sourceTag, newTag)
+	err := cli.ImageTag(context.Background(), sourceTag, newTag)
 	if err != nil {
-		return helpers.CustomError{Message: "Error tagging image: " + err.Error()}
+		return &cerr.CustomError{Title: "Error tagging image: ", Message: err.Error()}
 	}
 	fmt.Printf("%s %s to %s\n", hf.Green("Successfully tagged"), hf.White(sourceTag),
 		hf.White(newTag))
