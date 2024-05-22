@@ -65,6 +65,17 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Wed May 22 2024 RPM Builder <builder@famillegratton.net> 00.80.00-0
+- Version bump (jean-francois@famillegratton.net)
+- Completed phase 1 or customError migration (jean-francois@famillegratton.net)
+- Sync bergen -> (jean-francois@famillegratton.net)
+- Changed package name (jean-francois@famillegratton.net)
+- Completed migrating the auth subpackage (jean-francois@famillegratton.net)
+- Initial stub for customError migration (jean-francois@famillegratton.net)
+- Migrated from helpers/* to github's helperFunctions (jean-
+  francois@famillegratton.net)
+- dtools version bump, go version bump (jean-francois@famillegratton.net)
+
 * Fri May 17 2024 RPM Builder <builder@famillegratton.net> 00.75.00-0
 - Moved some data structures to newer ones, as per the newest Docker SDK (jean-
   francois@famillegratton.net)
