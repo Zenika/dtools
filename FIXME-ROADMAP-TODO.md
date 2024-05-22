@@ -19,4 +19,5 @@
 - [ ] `dtools volume driverlist` is not working <<-- slated for v1.00.00+
 - [x] dtools log not functionning anymore ??
 - [x] `dtools get {catalog | tags} -d` only supports https protocol, not http
+- [ ] ensure that all calls properly handle errors 
 <br><br><br>

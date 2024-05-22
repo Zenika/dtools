@@ -10,7 +10,7 @@ import (
 	"dtools/auth"
 	"dtools/containers"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/image"
 	cerr "github.com/jeanfrancoisgratton/customError"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
@@ -25,21 +25,20 @@ import (
 // nexus:9820/nginx        latest     d15176bc14c2   28 hours ago   86MB
 
 // f*ckin' huge mess in here.... :(
-func ListImages(allImg bool) {
+func ListImages(allImg bool) *cerr.CustomError {
 	var imageInfoSlice []imageInfoStruct
 	var imageInfo imageInfoStruct
 
 	ctx := context.Background()
 	cli := auth.ClientConnect(true)
 
-	images, err := cli.ImageList(ctx, types.ImageListOptions{All: true})
+	images, err := cli.ImageList(ctx, image.ListOptions{All: allImg})
 	if err != nil {
 		errmsg := fmt.Sprintf("%v", err)
 		if errmsg == "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?" {
-			fmt.Println(errmsg)
-			os.Exit(-1)
+			return &cerr.CustomError{Title: "Cannot connect to the daemon docker", Message: "Is the daemon running ?"}
 		} else {
-			panic(err)
+			return &cerr.CustomError{Title: "Panic", Message: err.Error()}
 		}
 	}
 
@@ -54,7 +53,9 @@ func ListImages(allImg bool) {
 			imageInfo.created = time.Unix(image.Created, 0).Format("2006.01.02 15:04:05")
 			imageInfo.size = image.Size
 			imageInfo.formattedSize = formatImageSize(image.Size)
-			imageInfo.nContainers = containers.GetRunningContainersForImage(tag)
+			if imageInfo.nContainers, ce = containers.GetRunningContainersForImage(tag); ce != nil {
+				return ce
+			}
 
 			imageInfoSlice = append(imageInfoSlice, imageInfo)
 		}
@@ -82,4 +83,6 @@ func ListImages(allImg bool) {
 		return nil
 	})
 	t.Render()
+
+	return nil
 }

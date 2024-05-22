@@ -102,7 +102,12 @@ func getContainerID(containerName string) (string, *cerr.CustomError) {
 
 // FilterContainersByStatus
 func FilterContainersByStatus(status string) []string {
-	containerList := ListContainers(false)
+	var containerList []types.Container
+	var ce *cerr.CustomError
+
+	if containerList, ce = ListContainers(false); ce != nil {
+		ce.Error()
+	}
 	var filtered []string
 
 	for _, container := range containerList {
