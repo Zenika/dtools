@@ -11,6 +11,7 @@ import (
 	"dtools/containers"
 	"fmt"
 	"github.com/docker/docker/api/types"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
@@ -45,6 +46,7 @@ func ListImages(allImg bool) {
 	// 1. Iterate throught all images and fetch all their tags
 	for _, image := range images {
 		for _, tag := range image.RepoTags {
+			var ce *cerr.CustomError
 			// 2. Iterate through all tags and collect the information
 			imageInfo.reponame, imageInfo.tag = splitURI(tag)
 			imageInfo.id = image.ID[7:] // FIXME: [7:] is to get rid of "sha256:" .. we might need to get _that_ refined

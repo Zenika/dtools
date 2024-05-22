@@ -50,9 +50,14 @@ func getContainerNames() ([]string, *cerr.CustomError) {
 }
 
 // Returns the number of running containers for the given image
-func GetRunningContainersForImage(imageID string) int {
+func GetRunningContainersForImage(imageID string) (int, *cerr.CustomError) {
+	var containers []types.Container
+	var ce *cerr.CustomError
 	numContainers := 0
-	containers := ListContainers(false)
+
+	if containers, ce = ListContainers(false); ce != nil {
+		return -1, ce
+	}
 
 	for _, container := range containers {
 		//containerimg := getImageTag(containers.Image)
@@ -60,7 +65,7 @@ func GetRunningContainersForImage(imageID string) int {
 			numContainers++
 		}
 	}
-	return numContainers
+	return numContainers, nil
 }
 
 // Standardizes the image:tag format (ie: add :latest to name if it's omitted)

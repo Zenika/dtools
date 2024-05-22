@@ -21,11 +21,10 @@ import (
 )
 
 func ListContainers(showDaemonInfo bool) ([]types.Container, *cerr.CustomError) {
-	var ce *cerr.CustomError
 	var cli *client.Client
 	clo := container.ListOptions{Size: true, All: true, Latest: true}
-	if cli, ce = auth.ClientConnect(showDaemonInfo); ce != nil {
-		return nil, ce
+	if cli = auth.ClientConnect(showDaemonInfo); cli != nil {
+		return nil, &cerr.CustomError{Title: "Failed to connect the Docker client"}
 	}
 
 	containers, err := cli.ContainerList(context.Background(), clo)
