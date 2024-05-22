@@ -20,6 +20,8 @@ import (
 // nexus:9820/rpmbuilder   10.00.00-arm64   d7f4c25238e4   3 days ago   414MB
 // rocky                   test             662704dd4eee   3 days ago   301MB
 
+var ImageShowAll = true
+
 type imageInfoStruct struct {
 	id, reponame, tag, created, formattedSize string
 	size                                      int64
