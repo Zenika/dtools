@@ -65,6 +65,11 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Wed May 22 2024 RPM Builder <builder@famillegratton.net> 00.80.01-0
+- Fixed dtools lsi and dtools ls (jean-francois@famillegratton.net)
+- stub for 0.81 (jean-francois@famillegratton.net)
+- Forgot one version number in script (builder@famillegratton.net)
+
 * Wed May 22 2024 RPM Builder <builder@famillegratton.net> 00.80.00-0
 - Version bump (jean-francois@famillegratton.net)
 - Completed phase 1 or customError migration (jean-francois@famillegratton.net)
