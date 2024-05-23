@@ -19,7 +19,7 @@ var lsCmd = &cobra.Command{
 	Long:    `Equivalent to docker ps -a.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if _, ce := containers.ListContainers(true); ce != nil {
-			ce.Error()
+			_ = ce.Error()
 		}
 	},
 }

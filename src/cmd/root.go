@@ -16,7 +16,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "dtools",
 	Short:   "Docker client",
-	Version: hf.White(fmt.Sprintf("0.80.01-0-%s (2024.05.22)", runtime.GOARCH)),
+	Version: hf.White(fmt.Sprintf("0.80.02-0-%s (2024.05.23)", runtime.GOARCH)),
 	Long: `A modern-day docker client.
 This tools will perform the same tasks as the official docker tool, with some extra features, especially
 Where you handle remote docker repositories.`,
@@ -61,6 +61,7 @@ func changeLog() {
 	fmt.Print(`
 VERSION			DATE			COMMENT
 -------			----			-------
+00.80.02		2024.05.23		Fixed dtools ls that I've broken in 00.80.00
 00.80.01		2024.05.22		Moved all functions from the helpers package to my github helperFunctions package
 00.75.00		2024.05.17		New docker SDK moved many types.* data types to new data structures
 00.74.02		2024.02.02		Fixed issue where the "get" subcommand was ignored

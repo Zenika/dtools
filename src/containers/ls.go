@@ -46,7 +46,7 @@ func ListContainers(showDaemonInfo bool) ([]types.Container, *cerr.CustomError) 
 	t.AppendHeader(table.Row{"Container ID", "Image", "Name", "Created", "Exposed ports", "State", "Status", "Compose stack"})
 	for _, container := range containers {
 		var composeStackName string
-		var err error
+		var err *cerr.CustomError
 		// This is a design decision: I'll take only the first name in the containers slice
 		cn := container.Names[0]
 		containerImage := getImageTag(container.Image)
