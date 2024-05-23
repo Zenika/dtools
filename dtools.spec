@@ -65,6 +65,9 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Thu May 23 2024 RPM Builder <builder@famillegratton.net> 00.80.02-0
+- Fixed dtools ls (jean-francois@famillegratton.net)
+
 * Wed May 22 2024 RPM Builder <builder@famillegratton.net> 00.80.01-0
 - Fixed dtools lsi and dtools ls (jean-francois@famillegratton.net)
 - stub for 0.81 (jean-francois@famillegratton.net)
