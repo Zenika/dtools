@@ -25,14 +25,14 @@ import (
 // nexus:9820/nginx        latest     d15176bc14c2   28 hours ago   86MB
 
 // f*ckin' huge mess in here.... :(
-func ListImages(allImg bool) *cerr.CustomError {
+func ListImages() *cerr.CustomError {
 	var imageInfoSlice []imageInfoStruct
 	var imageInfo imageInfoStruct
 
 	ctx := context.Background()
 	cli := auth.ClientConnect(true)
 
-	images, err := cli.ImageList(ctx, image.ListOptions{All: allImg})
+	images, err := cli.ImageList(ctx, image.ListOptions{All: ImageShowAll})
 	if err != nil {
 		errmsg := fmt.Sprintf("%v", err)
 		if errmsg == "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?" {
@@ -42,17 +42,17 @@ func ListImages(allImg bool) *cerr.CustomError {
 		}
 	}
 
-	// 1. Iterate throught all images and fetch all their tags
-	for _, image := range images {
-		for _, tag := range image.RepoTags {
+	// 1. Iterate through all images and fetch all of their tags
+	for _, imgrng := range images {
+		for _, tag := range imgrng.RepoTags {
 			var ce *cerr.CustomError
 			// 2. Iterate through all tags and collect the information
 			imageInfo.reponame, imageInfo.tag = splitURI(tag)
-			imageInfo.id = image.ID[7:] // FIXME: [7:] is to get rid of "sha256:" .. we might need to get _that_ refined
+			imageInfo.id = imgrng.ID[7:] // FIXME: [7:] is to get rid of "sha256:" .. we might need to get _that_ refined
 			// Then we add creation time & size
-			imageInfo.created = time.Unix(image.Created, 0).Format("2006.01.02 15:04:05")
-			imageInfo.size = image.Size
-			imageInfo.formattedSize = formatImageSize(image.Size)
+			imageInfo.created = time.Unix(imgrng.Created, 0).Format("2006.01.02 15:04:05")
+			imageInfo.size = imgrng.Size
+			imageInfo.formattedSize = formatImageSize(imgrng.Size)
 			if imageInfo.nContainers, ce = containers.GetRunningContainersForImage(tag); ce != nil {
 				return ce
 			}
@@ -64,7 +64,7 @@ func ListImages(allImg bool) *cerr.CustomError {
 	// 3. We now print the results
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"Repository/image name", "Image tag", "Image ID", "Creation time", "Size", "# containers"})
+	t.AppendHeader(table.Row{"Repository/imgrng name", "Image tag", "Image ID", "Creation time", "Size", "# containers"})
 	for _, imgspec := range imageInfoSlice {
 		// This is a design decision: I'll take only the first name in the containers slice
 		t.AppendRow([]interface{}{imgspec.reponame, imgspec.tag, imgspec.id[:12], imgspec.created, imgspec.formattedSize, imgspec.nContainers})

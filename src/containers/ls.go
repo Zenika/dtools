@@ -23,7 +23,7 @@ import (
 func ListContainers(showDaemonInfo bool) ([]types.Container, *cerr.CustomError) {
 	var cli *client.Client
 	clo := container.ListOptions{Size: true, All: true, Latest: true}
-	if cli = auth.ClientConnect(showDaemonInfo); cli != nil {
+	if cli = auth.ClientConnect(showDaemonInfo); cli == nil {
 		return nil, &cerr.CustomError{Title: "Failed to connect the Docker client"}
 	}
 

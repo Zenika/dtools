@@ -29,11 +29,13 @@ var imgLsCmd = &cobra.Command{
 	Short:   "Image list",
 	Long:    `Similar to docker image, this will give you an inventory of all images on the hosts.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		allImages := image.ImageShowAll
-		if len(args) > 0 && args[0] == "all" {
-			allImages = true
+		//allImages := image.ImageShowAll
+		//if len(args) > 0 && args[0] == "all" {
+		//	allImages = true
+		//}
+		if err := image.ListImages(); err != nil {
+			_ = err.Error()
 		}
-		image.ListImages(allImages)
 	},
 }
 
@@ -86,7 +88,7 @@ func init() {
 	rootCmd.AddCommand(imageCmd, imgLsCmd, imgPullCmd, imgPushCmd, imgTagCmd, imgRmCmd)
 	imageCmd.AddCommand(imgLsCmd, imgPullCmd, imgPushCmd, imgTagCmd, imgRmCmd)
 
-	//imgLsCmd.PersistentFlags().BoolVarP(&image.ImageShowAll,"showall", "a", true, "Hides ")
+	imgLsCmd.PersistentFlags().BoolVarP(&image.ImageShowAll, "showall", "a", true, "Hides some images if set")
 	imgTagCmd.PersistentFlags().BoolVarP(&image.OverwriteTag, "overwritetag", "o", false, "If tag already exists, ")
 	imgPullCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
 	imgPushCmd.PersistentFlags().BoolVarP(&repo.DefaultRegistryFlag, "defaultreg", "d", false, "Use the default registry")
