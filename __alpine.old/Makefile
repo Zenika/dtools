@@ -1,4 +1,4 @@
-all:
+all: 
 	cd ../src
 	CGO_ENABLED=0 go build . -o ./dtools.exe
 
