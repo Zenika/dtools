@@ -65,6 +65,11 @@ sudo chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Mon May 27 2024 RPM Builder <builder@famillegratton.net> 00.81.00-0
+- Re-registered the 'get' command. Why was it un-registered ??? (jean-
+  francois@famillegratton.net)
+- Update to FIXME (jean-francois@famillegratton.net)
+
 * Thu May 23 2024 RPM Builder <builder@famillegratton.net> 00.80.02-0
 - Fixed dtools ls (jean-francois@famillegratton.net)
 
