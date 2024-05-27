@@ -14,7 +14,7 @@ import (
 )
 
 var getCommand = &cobra.Command{
-	//Use:   "get { catalog | tags } [flags]",
+	Use:   "get { catalog | tags } [flags]",
 	Short: "Lists all images/tags in remote registry",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Usage: dtools get { catalog | tags } [-d]")

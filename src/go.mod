@@ -4,7 +4,7 @@ go 1.22.3
 
 require (
 	github.com/docker/docker v26.1.3+incompatible
-	github.com/jeanfrancoisgratton/customError v1.7.1
+	github.com/jeanfrancoisgratton/customError v1.7.2
 	github.com/jeanfrancoisgratton/helperFunctions v1.4.1
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/moby/term v0.5.0

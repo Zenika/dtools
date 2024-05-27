@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PKGDIR="dtools-00.80.02-0_amd64"
+PKGDIR="dtools-00.81.00-0_amd64"
 mkdir -p ${PKGDIR}/opt/bin ${PKGDIR}/DEBIAN
 mkdir -p ${PKGDIR}/opt/bin ${PKGDIR}/DEBIAN
 for i in control preinst prerm postinst postrm;do
