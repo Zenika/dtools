@@ -21,4 +21,5 @@
 - [x] `dtools get {catalog | tags} -d` only supports https protocol, not http
 - [ ] ensure that all calls properly handle errors 
 - [ ] tagging an image with an already-existing tag throws a panic
+- [ ] io timeouts are not well handled in the pull subcommand (see nexus-io-timeout.png)
 <br><br><br>
