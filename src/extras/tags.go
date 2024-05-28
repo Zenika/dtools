@@ -22,9 +22,9 @@ func GetTags(imageName, remoteRegistry string) error {
 		return err
 	}
 
-	jsonBytes, err := json.MarshalIndent(jsonData, "", " ")
-	if err != nil {
-		return helpers.CustomError{"Error formatting JSON: " + err.Error()}
+	jsonBytes, mErr := json.MarshalIndent(jsonData, "", " ")
+	if mErr != nil {
+		return helpers.CustomError{"Error formatting JSON: " + mErr.Error()}
 	}
 
 	fmt.Println(string(jsonBytes))

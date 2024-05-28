@@ -29,7 +29,9 @@ var catalogCommand = &cobra.Command{
 		if len(args) != 0 {
 			remoteReg = args[0]
 		}
-		extras.GetCatalog(remoteReg)
+		if err := extras.GetCatalog(remoteReg); err != nil {
+			err.Error()
+		}
 	},
 }
 

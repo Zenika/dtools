@@ -6,15 +6,15 @@
 package extras
 
 import (
-	"dtools/helpers"
 	"encoding/json"
 	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
 )
 
 // GetCatalog() : this is my equivalent of dockergetcatalog.sh, which lists all images hosted in a remote registry
-func GetCatalog(remoteRegistry string) error {
+func GetCatalog(remoteRegistry string) *cerr.CustomError {
 	if err := FindRemoteRegistry(&remoteRegistry); err != nil {
-		return err
+		return &cerr.CustomError{Title: "Error reading default registry config file", Message: err.Error()}
 	}
 
 	jsonData, err := fetchJSON(remoteRegistry + "v2/_catalog")
@@ -22,9 +22,9 @@ func GetCatalog(remoteRegistry string) error {
 		return err
 	}
 
-	jsonBytes, err := json.MarshalIndent(jsonData, "", " ")
-	if err != nil {
-		return helpers.CustomError{"Error formatting JSON: " + err.Error()}
+	jsonBytes, mErr := json.MarshalIndent(jsonData, "", " ")
+	if mErr != nil {
+		return &cerr.CustomError{Title: "Error formatting JSON: ", Message: mErr.Error()}
 	}
 
 	fmt.Println(string(jsonBytes))

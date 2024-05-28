@@ -9,6 +9,7 @@ import (
 	"dtools/helpers"
 	"dtools/repo"
 	"encoding/json"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"io"
 	"net/http"
 	"strings"
@@ -16,22 +17,22 @@ import (
 
 // genericFetch() : this is the actual function that fetches the JSON payload from the URL provided
 // This way, we use the same function for "dockergettags" or "dockergetcatalog"
-func fetchJSON(url string) (map[string]interface{}, error) {
+func fetchJSON(url string) (map[string]interface{}, *cerr.CustomError) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, helpers.CustomError{"Error getting JSON payload from url endpoint: " + err.Error()}
+		return nil, &cerr.CustomError{Title: "Error getting JSON payload from url endpoint: ", Message: err.Error()}
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, helpers.CustomError{"Error reading JSON payload from url endpoint: " + err.Error()}
+		return nil, &cerr.CustomError{Title: "Error reading JSON payload from url endpoint: ", Message: err.Error()}
 	}
 
 	var data map[string]interface{}
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		return nil, err
+		return nil, &cerr.CustomError{Title: "Error unmarshalling JSON payload from url endpoint: ", Message: err.Error()}
 	}
 
 	return data, nil

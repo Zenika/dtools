@@ -22,4 +22,5 @@
 - [ ] ensure that all calls properly handle errors 
 - [ ] tagging an image with an already-existing tag throws a panic
 - [ ] io timeouts are not well handled in the pull subcommand (see nexus-io-timeout.png)
+- [ ] extracommands still use the old error handling
 <br><br><br>
