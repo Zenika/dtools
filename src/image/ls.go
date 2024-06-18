@@ -71,7 +71,7 @@ func ListImages() *cerr.CustomError {
 	}
 	t.SortBy([]table.SortBy{
 		{Name: "Image name", Mode: table.Asc}})
-	t.SetStyle(table.StyleDefault)
+	t.SetStyle(table.StyleBold)
 	t.Style().Format.Header = text.FormatDefault
 	t.SetRowPainter(func(row table.Row) text.Colors {
 		switch row[5] {

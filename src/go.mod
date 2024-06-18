@@ -1,6 +1,6 @@
 module dtools
 
-go 1.22.3
+go 1.22.4
 
 require (
 	github.com/docker/docker v26.1.3+incompatible
