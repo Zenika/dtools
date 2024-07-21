@@ -45,10 +45,14 @@ var tagsCommand = &cobra.Command{
 				fmt.Println("You need to provide at least a docker image name")
 				os.Exit(0)
 			} else {
-				extras.GetTags(args[0], "")
+				if err := extras.GetTags(args[0], ""); err != nil {
+					fmt.Println(err)
+				}
 			}
 		} else {
-			extras.GetTags(args[0], args[1])
+			if err := extras.GetTags(args[0], args[1]); err != nil {
+				fmt.Println(err)
+			}
 		}
 	},
 }

@@ -46,7 +46,7 @@ var volumeCreateCmd = &cobra.Command{
 			os.Exit(0)
 		}
 		if err := volume.CreateVolume(args); err != nil {
-			fmt.Printf("%s\n", err)
+			fmt.Println(err.Error())
 		}
 	},
 }
@@ -61,7 +61,7 @@ var volumeRemoveCmd = &cobra.Command{
 			os.Exit(0)
 		}
 		if err := volume.RemoveVolume(args); err != nil {
-			fmt.Printf("%s\n", err)
+			fmt.Println(err.Error())
 		}
 	},
 }

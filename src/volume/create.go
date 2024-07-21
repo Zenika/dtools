@@ -9,9 +9,10 @@ import (
 	"context"
 	"dtools/auth"
 	"github.com/docker/docker/api/types/volume"
+	cerr "github.com/jeanfrancoisgratton/customError"
 )
 
-func CreateVolume(volumes []string) error {
+func CreateVolume(volumes []string) *cerr.CustomError {
 	var err error
 	cli := auth.ClientConnect(true)
 
@@ -19,7 +20,7 @@ func CreateVolume(volumes []string) error {
 		createOps := volume.CreateOptions{Driver: DriverName, Name: vol}
 		_, err = cli.VolumeCreate(context.Background(), createOps)
 		if err != nil {
-			return err
+			return &cerr.CustomError{Title: "Unable to create volume", Message: err.Error()}
 		}
 	}
 	return nil

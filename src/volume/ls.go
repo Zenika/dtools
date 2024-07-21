@@ -7,10 +7,9 @@ package volume
 
 import (
 	"dtools/auth"
-	"dtools/helpers"
-	"fmt"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/volume"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"os"
@@ -22,7 +21,7 @@ type volumeInfoStruct struct {
 	Driver, Name, UsedBy string
 }
 
-func ListVolumes() error {
+func ListVolumes() *cerr.CustomError {
 	var volInfo volumeInfoStruct
 	var volInfoSlice []volumeInfoStruct
 
@@ -31,7 +30,7 @@ func ListVolumes() error {
 	// List volumes
 	volumes, err := cli.VolumeList(context.Background(), volume.ListOptions{})
 	if err != nil {
-		return helpers.CustomError{fmt.Sprintf("Error getting volume list: %s", err)}
+		return &cerr.CustomError{Title: "Error getting volume list: %s", Message: err.Error()}
 	}
 
 	for _, volume := range volumes.Volumes {
@@ -41,7 +40,7 @@ func ListVolumes() error {
 		args := filterArgs(volume.Name)
 		containers, err := cli.ContainerList(context.Background(), container.ListOptions{Filters: args, All: true})
 		if err != nil {
-			return helpers.CustomError{fmt.Sprint("Unable to fetch container list: %s", err)}
+			return &cerr.CustomError{Title: "Unable to fetch container list: %s", Message: err.Error()}
 		}
 
 		//fmt.Println("Containers using this volume:")

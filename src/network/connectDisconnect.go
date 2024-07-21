@@ -9,37 +9,48 @@ import (
 	"context"
 	"dtools/auth"
 	"dtools/containers"
-	"dtools/helpers"
+	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
 )
 
-func ConnectNetwork(networkName, containerName string) error {
+func ConnectNetwork(networkName, containerName string) *cerr.CustomError {
 	var nID, cID string
-	var err error
+	//var err error
+	var ce *cerr.CustomError
 
 	cli := auth.ClientConnect(true)
 
-	if nID, err = MapNameToId(cli, networkName); err != nil {
-		return helpers.CustomError{"Unable to map network name to network ID: " + err.Error()}
+	if nID, ce = MapNameToId(cli, networkName); ce != nil {
+		return ce
 	}
-	if cID, err = containers.MapNameToId(cli, containerName); err != nil {
-		return helpers.CustomError{"Unable to map container name to container ID: " + err.Error()}
+	if cID, ce = containers.MapNameToId(cli, containerName); ce != nil {
+		return ce
 	}
 
-	return cli.NetworkConnect(context.Background(), nID, cID, nil)
+	if err := cli.NetworkConnect(context.Background(), nID, cID, nil); err != nil {
+		return &cerr.CustomError{Title: fmt.Sprintf("Unable to connect %s to network %s", containerName, networkName),
+			Message: err.Error()}
+	}
+
+	return nil
 }
 
-func DisconnectNetwork(networkName, containerName string) error {
+func DisconnectNetwork(networkName, containerName string) *cerr.CustomError {
 	var nID, cID string
-	var err error
+	var err *cerr.CustomError
 
 	cli := auth.ClientConnect(true)
 
 	if nID, err = MapNameToId(cli, networkName); err != nil {
-		return helpers.CustomError{"Unable to map network name to network ID: " + err.Error()}
+		return err
 	}
 	if cID, err = containers.MapNameToId(cli, containerName); err != nil {
-		return helpers.CustomError{"Unable to map container name to container ID: " + err.Error()}
+		return err
 	}
 
-	return cli.NetworkDisconnect(context.Background(), nID, cID, ForceDisconnect)
+	if nE := cli.NetworkDisconnect(context.Background(), nID, cID, ForceDisconnect); nE != nil {
+		return &cerr.CustomError{}
+	}
+
+	return nil
 }

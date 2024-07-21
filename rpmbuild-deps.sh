@@ -5,7 +5,7 @@ grep ^BuildRequires "dtools.spec" |awk -F\: '{print "dnf install -y"$2}'|sed -e 
 echo;echo;echo "Done. Now installing the Go binaries"
 
 echo "Fetching archive..."
-wget -q https://go.dev/dl/go1.22.4.linux-amd64.tar.gz -O /tmp/go.tar.gz
+wget -q https://go.dev/dl/go1.22.5.linux-amd64.tar.gz -O /tmp/go.tar.gz
 
 echo "Unarchiving..."
 cd /opt ; rm -rf go ; tar zxf /tmp/go.tar.gz ; rm -f /tmp/go.tar.gz

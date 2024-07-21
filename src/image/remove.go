@@ -9,7 +9,7 @@ import (
 	"dtools/auth"
 	"dtools/containers"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	dimage "github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/client"
 	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
@@ -25,7 +25,7 @@ func RemoveImage(args []string) *cerr.CustomError {
 	cli := auth.ClientConnect(true)
 
 	for _, imgList := range args {
-		images, _ := cli.ImageList(context.Background(), types.ImageListOptions{})
+		images, _ := cli.ImageList(context.Background(), dimage.ListOptions{})
 		for _, image := range images {
 			var ce *cerr.CustomError
 			if image.ID[7:19] == imgList { // ID[7:19] corresponds to the "Image ID" column in dtools lsi
@@ -74,7 +74,7 @@ func remove(ctx context.Context, cli *client.Client, image string) (int, *cerr.C
 				Title:   fmt.Sprintf("Cannot remove %s: there are %d running containers within", image, nRunningContainers),
 				Message: "Consider using the -f option to force removal"}
 		} else {
-			_, err = cli.ImageRemove(ctx, image, types.ImageRemoveOptions{Force: ForceRemoval, PruneChildren: false})
+			_, err = cli.ImageRemove(ctx, image, dimage.RemoveOptions{Force: ForceRemoval, PruneChildren: true})
 		}
 		if err != nil {
 			return 0, &cerr.CustomError{Title: err.Error()}

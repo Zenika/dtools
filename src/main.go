@@ -4,16 +4,15 @@ import (
 	"dtools/cmd"
 	"dtools/system"
 	"fmt"
-	"os"
+	cerr "github.com/jeanfrancoisgratton/customError"
 )
 
 func main() {
 	var minimalVersion float32 = 1.43
-	var err error
+	var err *cerr.CustomError
 	var goodVer float32
 	if goodVer, err = system.CheckAPIversion(); err != nil {
-		fmt.Printf("Unable to fetch API version: %s", err)
-		os.Exit(0)
+		fmt.Println(err.Error())
 	}
 
 	if goodVer < minimalVersion {

@@ -7,6 +7,7 @@ package repo
 
 import (
 	"encoding/json"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"os"
 	"path/filepath"
 )
@@ -23,18 +24,18 @@ var RegistryInfo = DefaultRegistryStruct{
 
 var DefaultRegistryFlag = false
 
-func ReadDefaultFile() (DefaultRegistryStruct, error) {
+func ReadDefaultFile() (DefaultRegistryStruct, *cerr.CustomError) {
 	var payload DefaultRegistryStruct
 	//var payload = DefaultRegistryStruct{"", "", ""}
 
 	jsonfile, err := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaultRegistry.json"))
 	if err != nil {
-		return DefaultRegistryStruct{}, err
+		return DefaultRegistryStruct{}, &cerr.CustomError{Title: "Unable to read default registry file", Message: err.Error()}
 	}
 
 	err = json.Unmarshal(jsonfile, &payload)
 	if err != nil {
-		return DefaultRegistryStruct{}, err
+		return DefaultRegistryStruct{}, &cerr.CustomError{Title: "Unable to unmarshal data", Message: err.Error()}
 	}
 	return payload, nil
 }

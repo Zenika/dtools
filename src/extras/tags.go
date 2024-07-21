@@ -6,13 +6,13 @@
 package extras
 
 import (
-	"dtools/helpers"
 	"encoding/json"
 	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
 )
 
 // GetTags() : my equivalent to dockergettags.sh, which fetches all tags of a given docker image hosted in a remote reg
-func GetTags(imageName, remoteRegistry string) error {
+func GetTags(imageName, remoteRegistry string) *cerr.CustomError {
 	if err := FindRemoteRegistry(&remoteRegistry); err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func GetTags(imageName, remoteRegistry string) error {
 
 	jsonBytes, mErr := json.MarshalIndent(jsonData, "", " ")
 	if mErr != nil {
-		return helpers.CustomError{"Error formatting JSON: " + mErr.Error()}
+		return &cerr.CustomError{Title: "Error formatting JSON: " + mErr.Error()}
 	}
 
 	fmt.Println(string(jsonBytes))

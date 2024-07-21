@@ -8,24 +8,26 @@ package system
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	"strconv"
 	"strings"
 )
 
-func CheckAPIversion() (float32, error) {
+func CheckAPIversion() (float32, *cerr.CustomError) {
 	cli := auth.ClientConnect(false)
 
 	// Get Docker server version
 	version, err := cli.ServerVersion(context.Background())
 	if err != nil {
-		return 0.0, helpers.CustomError{Message: "Failed to get Docker server version:" + err.Error()}
+		return 0.0, &cerr.CustomError{Title: "Failed to get Docker server version:", Message: err.Error()}
 	}
 
 	// Parse the installed Docker API version to compare
 	installedVersion, err := strconv.ParseFloat(strings.TrimPrefix(version.APIVersion, "v"), 64)
 	if err != nil {
-		return 0.0, helpers.CustomError{Message: "Failed to parse installed API version:" + err.Error()}
+		return 0.0, &cerr.CustomError{Fatality: cerr.Continuable,
+			Title:   "Failed to parse installed API version:",
+			Message: err.Error()}
 	}
 
 	return (float32)(installedVersion), nil

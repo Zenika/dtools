@@ -8,8 +8,9 @@ package network
 import (
 	"context"
 	"fmt"
-	"github.com/docker/docker/api/types"
+	dnetwork "github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/client"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 )
 
@@ -22,11 +23,11 @@ var ForceDisconnect = false
 // mapNetworks() :
 // This function is needed to determine if a network is used by any container.
 // This mainly a matter of prettifying the output of `dtools network ls`
-func mapNetworks(networks []types.NetworkResource, cli *client.Client) []networkInfoStruct {
+func mapNetworks(networks []dnetwork.Inspect, cli *client.Client) []networkInfoStruct {
 	var networkInfoList []networkInfoStruct
 
 	for _, network := range networks {
-		containers, err := cli.NetworkInspect(context.Background(), network.ID, types.NetworkInspectOptions{})
+		containers, err := cli.NetworkInspect(context.Background(), network.ID, dnetwork.InspectOptions{})
 		if err != nil {
 			fmt.Printf("Error inspecting network %s: %s\n", hf.Red(network.Name), err)
 			continue
@@ -46,13 +47,13 @@ func mapNetworks(networks []types.NetworkResource, cli *client.Client) []network
 	return networkInfoList
 }
 
-// mapNameToID() : fetches the network ID from the human-readable network name
+// Fetches the network ID from the human-readable network name
 // Basically, we need this function because most dtools functions use human-readable names, while the SDK mostly uses
 // hashes (IDs). We need a way to "translate" those names/IDs
-func MapNameToId(cli *client.Client, networkName string) (string, error) {
-	networkSpecs, err := cli.NetworkInspect(context.Background(), networkName, types.NetworkInspectOptions{})
+func MapNameToId(cli *client.Client, networkName string) (string, *cerr.CustomError) {
+	networkSpecs, err := cli.NetworkInspect(context.Background(), networkName, dnetwork.InspectOptions{})
 	if err != nil {
-		return "", err
+		return "", &cerr.CustomError{Title: "Unable to map name to ID", Message: err.Error()}
 	}
 
 	return networkSpecs.ID, nil

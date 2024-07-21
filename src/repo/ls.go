@@ -6,9 +6,9 @@
 package repo
 
 import (
-	"dtools/helpers"
 	"encoding/json"
 	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"os"
 	"path/filepath"
@@ -21,11 +21,11 @@ func Ls() error {
 
 	jsonfile, err = os.ReadFile(filepath.Join(os.Getenv("HOME"), ".config", "JFG", "dtools", "defaultRegistry.json"))
 	if err != nil {
-		return helpers.CustomError{Message: "Unable to read default registry file"}
+		return &cerr.CustomError{Title: "Unable to read default registry file", Message: err.Error()}
 	}
 	err = json.Unmarshal(jsonfile, &defaultRepo)
 	if err != nil {
-		return helpers.CustomError{Message: "Unable to parse JSON: " + err.Error()}
+		return &cerr.CustomError{Title: "Unable to parse JSON: ", Message: err.Error()}
 	}
 
 	fmt.Printf("REGISTRY: %s\nUSERNAME: %s\nCOMMENTS: %s\n", hf.White(defaultRepo.Registry), hf.White(defaultRepo.Username), hf.White(defaultRepo.Comments))

@@ -57,7 +57,7 @@ var imgPullCmd = &cobra.Command{
 	Long:    `Works exactly like docker pull.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := image.PullImage(args); err != nil {
-			_ = err.Error()
+			fmt.Println(err.Error())
 		}
 	},
 }

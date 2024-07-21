@@ -124,7 +124,7 @@ func FilterContainersByStatus(status string) []string {
 func MapNameToId(cli *client.Client, containerName string) (string, *cerr.CustomError) {
 	containerInfo, err := cli.ContainerInspect(context.Background(), containerName)
 	if err != nil {
-		return "", &cerr.CustomError{Title: err.Error()}
+		return "", &cerr.CustomError{Title: "Unable to map network name to ID", Message: err.Error()}
 	}
 
 	return containerInfo.ID, nil

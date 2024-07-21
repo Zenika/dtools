@@ -6,7 +6,6 @@
 package extras
 
 import (
-	"dtools/helpers"
 	"dtools/repo"
 	"encoding/json"
 	cerr "github.com/jeanfrancoisgratton/customError"
@@ -39,15 +38,16 @@ func fetchJSON(url string) (map[string]interface{}, *cerr.CustomError) {
 }
 
 // If the -d flag is used, we need to find the registered default registry to use
-func FindRemoteRegistry(remoteRegistry *string) error {
+func FindRemoteRegistry(remoteRegistry *string) *cerr.CustomError {
 	ishttp := false
 	var reg repo.DefaultRegistryStruct
-	var err error
+	//var err error
 
 	// the -d flag is used, so we need to read its config
 	if repo.DefaultRegistryFlag {
-		if reg, err = repo.ReadDefaultFile(); err != nil {
-			return helpers.CustomError{"Unable to read registry config file:" + err.Error()}
+		var ce *cerr.CustomError
+		if reg, ce = repo.ReadDefaultFile(); ce != nil {
+			return ce
 		}
 		if reg.Registry != "" {
 			*remoteRegistry = reg.Registry

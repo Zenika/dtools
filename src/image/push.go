@@ -17,7 +17,6 @@ import (
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"github.com/moby/term"
 	"os"
-	"runtime"
 	"strings"
 )
 
@@ -69,7 +68,7 @@ func Push(images []string) *cerr.CustomError {
 
 // The actual push function with output display
 func push(cli *client.Client, repository, imgname, authStr string) *cerr.CustomError {
-	pushResponse, pusherr := cli.ImagePush(context.Background(), repository+imgname, image.PushOptions{false, authStr, nil, runtime.GOARCH})
+	pushResponse, pusherr := cli.ImagePush(context.Background(), repository+imgname, image.PushOptions{false, authStr, nil, nil})
 	if pusherr != nil {
 		a := pusherr.Error()
 		if strings.HasPrefix(a, "invalid reference format") {

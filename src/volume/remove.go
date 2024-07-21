@@ -8,26 +8,25 @@ package volume
 import (
 	"context"
 	"dtools/auth"
-	"dtools/helpers"
 	"fmt"
+	cerr "github.com/jeanfrancoisgratton/customError"
 	hf "github.com/jeanfrancoisgratton/helperFunctions"
 	"strings"
 )
 
-func RemoveVolume(volumes []string) error {
+func RemoveVolume(volumes []string) *cerr.CustomError {
 	cli := auth.ClientConnect(true)
 
 	// Loop tru volumes
 	for _, vol := range volumes {
 		if err := cli.VolumeRemove(context.Background(), vol, ForceRemoval); err != nil {
 			if strings.Contains(err.Error(), "Error response from daemon: remove "+vol+": volume is in use") {
-				//a := "Unable to remove " + vol + " "
-				//return helpers.CustomError{fmt.Sprintf("Unable to remove %s : volume is in use. Consider using -f\n%s\n", helpers.Red(vol),
-				//	helpers.Yellow("Please be aware that using -f might have unintended consequences on the container using the volume !"))}
-				return helpers.CustomError{fmt.Sprintf("Unable to remove volume %s: the volume is used by a container\n", hf.Red(vol))}
+				return &cerr.CustomError{Title: fmt.Sprintf("Unable to remove volume %s: the volume is used by a container", vol),
+					Message: err.Error()}
 
 			} else {
-				return helpers.CustomError{fmt.Sprintf("Error removing the volume: %s", err)}
+				return &cerr.CustomError{Title: fmt.Sprintf("Error removing volume: %s", vol),
+					Message: err.Error()}
 			}
 		} else {
 			fmt.Printf("Removed volume %s\n", hf.Green(vol))
