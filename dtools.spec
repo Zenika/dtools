@@ -65,6 +65,9 @@ chmod 775 /opt/bin/dtools
 
 
 %changelog
+* Sat Jul 20 2024 DEB Builder <builder@famillegratton.net> 00.90.00-0
+- new package built with tito
+
 * Mon May 27 2024 RPM Builder <builder@famillegratton.net> 00.81.00-0
 - Re-registered the 'get' command. Why was it un-registered ??? (jean-
   francois@famillegratton.net)
