@@ -11,7 +11,7 @@ echo "Building binary from source"
 cd ../src
 go build -o ../__debian/${PKGDIR}/opt/bin/dtools .
 strip ../__debian/${PKGDIR}/opt/bin/dtools
-chown 0:0 ../__debian/${PKGDIR}/opt/bin/dtools
+sudo chown 0:0 ../__debian/${PKGDIR}/opt/bin/dtools
 
 echo "Binary built. Now packaging..."
 cd ../__debian/
